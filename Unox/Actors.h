@@ -1,6 +1,5 @@
-#pragma once
-#ifndef ACTORS_H    // To make sure you don't declare the function more than once by including the header multiple times.
-#define ACTORS_H
+#ifndef _ACTORS_H_    // To make sure you don't declare the function more than once by including the header multiple times.
+#define _ACTORS_H_
 
 #include <vector>
 
@@ -63,22 +62,13 @@ private:
 	string Name; //Name of the actor.
 
 	//Char//
-	char glyth;//The visible character which is drawn to the screen.
+	char Glyth;//The visible character which is drawn to the screen.
 
 	//Bool//
 	bool Attackable; //Checks whether the Actor can be attacked or not. Useful for invulnerable Actors.
 	bool Visible; //Checks whether the Actor is currently invisibly on the Screen.
 	bool Walkable; //Whether the Actor can be moved through.
 };
-
-Actors::Actors(int X, int Y, char Glyth, bool Visible, int ID)
-{
-}
-
-Actors::~Actors()
-{
-}
-
 
 //----------------------------------//
 
@@ -124,14 +114,6 @@ private:
 	//Bool//
 	bool Equippable; //Checks whether the item can be equipped or not.
 };
-
-Props::Props()
-{
-}
-
-Props::~Props()
-{
-}
 
 //----------------------------------//
 
@@ -185,15 +167,7 @@ private:
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
 };
 
-Set::Set()
-{
 
-}
-
-Set::~Set()
-{
-
-}
 
 //Gets and sets//
 
@@ -246,7 +220,7 @@ inline void Actors::Set_Name()
 //Glyth
 inline char Actors::Get_Glyth()
 {
-	return 0;
+	return Glyth;
 }
 inline char Actors::Set_Glyth()
 {
@@ -282,7 +256,7 @@ inline void Actors::Set_Visible()
 //Location
 inline int Actors::Get_Location_X()
 {
-	return 0;
+	return X;
 }
 
 inline void Actors::Set_Location_X()
@@ -291,7 +265,7 @@ inline void Actors::Set_Location_X()
 
 inline int Actors::Get_Location_Y()
 {
-	return 0;
+	return Y;
 }
 
 inline void Actors::Set_Location_Y()
@@ -433,6 +407,7 @@ inline void Set::Set_Location()
 }
 #pragma endregion
 
+void New_Actor(int X, int Y, char Glyth, bool Visible, int ID);
 
 //----------------------------------//
 //Bags//
@@ -441,6 +416,8 @@ extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
 extern vector<Set> SetBag;
 
-void New_Actor(int X, int Y, char Glyth, bool Visible, int ID);
+extern int ActorID;
+extern int ProbID;
+extern int SetID;
 
 #endif
