@@ -9,7 +9,12 @@ void ActorLogic()
 {
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-
+		if (BagIterator->Get_Logic() && BagIterator->Get_ID > 2)
+		{
+			//FOV()
+			//AI()
+			BagIterator->Set_Logic(false);
+		}
 	}
 }
 
@@ -28,3 +33,14 @@ void SetLogic()
 
 	}
 }
+
+
+//AI//
+
+
+
+//FOV//
+
+
+
+//MOVEMENT//

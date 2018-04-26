@@ -46,7 +46,6 @@ public:
 
 	bool Get_Logic();
 	void Set_Logic(bool logic);
-
 	#pragma endregion
 
 private:

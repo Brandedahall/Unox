@@ -4,6 +4,4 @@
 void ActorLogic();
 void PropLogic();
 void SetLogic();
-
-
 #endif
