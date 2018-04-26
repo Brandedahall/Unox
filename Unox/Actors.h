@@ -76,11 +76,18 @@ class Props
 {
 public:
 	//Constructor and destructor.
-	Props();
+	Props(int X, int Y, char Glyth, int ID);
 	~Props();
 
 #pragma region Gets and Sets
 	//Gets and sets for the private variables.
+
+	int Get_Location_X();
+	void Set_Location_X();
+
+	int Get_Location_Y();
+	void Set_Location_Y();
+
 	int Get_ID();
 	void Set_ID();
 
@@ -95,13 +102,12 @@ public:
 
 	bool Get_Equippable();
 	void Set_Equippable();
-
-	int Get_Location();
-	void Set_Location();
 	#pragma endregion
 
 private:
 	//Int//
+	int X;
+	int Y;
 	int ID; //The ID of the Prop object.
 	int Type; //Uses a lookup table to determine the type of object.
 
@@ -117,20 +123,24 @@ private:
 
 //----------------------------------//
 
-class Set
+class Sets
 {
 public:
 	//Constructor and destructor.
-	Set();
-	~Set();
+	Sets(int X, int Y, char Glyth, bool Visible, int ID);
+	~Sets();
 
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
+
+	int Get_Location_X();
+	void Set_Location_X();
+
+	int Get_Location_Y();
+	void Set_Location_Y();
+
 	int Get_Colour();
 	void Set_Colour();
-
-	int Get_Location();
-	void Set_Location();
 
 	int Get_Damage();
 	void Set_Damage();
@@ -149,10 +159,14 @@ public:
 
 	bool Get_Damaging();
 	void Set_Damaging();
+
+
 	#pragma endregion
 
 private:
 	//Int//
+	int X;
+	int Y;
 	int Colour[3]; //Sets the colour of the glyth
 	int Damage; //If a character walks across a floor which has 'Damaging' set to true.
 	int ID; //The ID of the set object.
@@ -321,100 +335,120 @@ inline void Props::Set_Equippable()
 {
 }
 
-//Location//
-inline int Props::Get_Location()
+//Location
+inline int Props::Get_Location_X()
 {
-	return 0;
+	return X;
 }
 
-inline void Props::Set_Location()
+inline void Props::Set_Location_X()
+{
+}
+
+inline int Props::Get_Location_Y()
+{
+	return Y;
+}
+
+inline void Props::Set_Location_Y()
 {
 }
 #pragma endregion
 
 #pragma region Gets and Sets | Sets
 //Color//
-inline int Set::Get_Colour()
+inline int Sets::Get_Colour()
 {
 	return 0;
 }
-inline void Set::Set_Colour()
+inline void Sets::Set_Colour()
 {
 }
 
 //Damage//
-inline int Set::Get_Damage()
+inline int Sets::Get_Damage()
 {
 	return 0;
 }
-inline void Set::Set_Damage()
+inline void Sets::Set_Damage()
 {
 }
 
 //Glyth//
-inline char Set::Get_Glyth()
+inline char Sets::Get_Glyth()
 {
 	return 0;
 }
-inline void Set::Set_Glyth()
+inline void Sets::Set_Glyth()
 {
 }
 
 //Attackable//
-inline bool Set::Get_Attackable()
+inline bool Sets::Get_Attackable()
 {
 	return false;
 }
-inline void Set::Set_Attackable()
+inline void Sets::Set_Attackable()
 {
 }
 
 //Walkable//
-inline bool Set::Get_Walkable()
+inline bool Sets::Get_Walkable()
 {
 	return false;
 }
-inline void Set::Set_Walkable()
+inline void Sets::Set_Walkable()
 {
 }
 
 //Visible//
-inline bool Set::Get_Visible()
+inline bool Sets::Get_Visible()
 {
 	return false;
 }
-inline void Set::Set_Visible()
+inline void Sets::Set_Visible()
 {
 }
 
 //Damaging//
-inline bool Set::Get_Damaging()
+inline bool Sets::Get_Damaging()
 {
 	return false;
 }
-inline void Set::Set_Damaging()
+inline void Sets::Set_Damaging()
 {
 }
 
-//Location//
-inline int Set::Get_Location()
+//Location
+inline int Sets::Get_Location_X()
 {
-	return 0;
+	return X;
 }
 
-inline void Set::Set_Location()
+inline void Sets::Set_Location_X()
+{
+}
+
+inline int Sets::Get_Location_Y()
+{
+	return Y;
+}
+
+inline void Sets::Set_Location_Y()
 {
 }
 #pragma endregion
 
-void New_Actor(int X, int Y, char Glyth, bool Visible, int ID);
+void New_Actor(int X, int Y, char Glyth, bool Visible);
+void New_Prop(int X, int Y, char Glyth);
+void New_Set(int X, int Y, char Glyth, bool Visible);
 
 //----------------------------------//
 //Bags//
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
-extern vector<Set> SetBag;
+extern vector<Sets> SetBag;
 
 extern int ActorID;
 extern int ProbID;
