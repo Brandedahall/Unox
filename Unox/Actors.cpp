@@ -10,7 +10,7 @@ vector<Sets> SetBag = {};
 int ActorId = 0;
 int PropId = 0;
 int SetId = 0;
-
+#pragma region Methods
 //----------------------------------//
 void New_Actor(int X, int Y, char Glyth, bool Visible)
 {
@@ -27,6 +27,7 @@ void New_Set(int X, int Y, char Glyth, bool Visible)
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId);
 	SetBag.push_back(Set);
 }
+#pragma endregion
 
 //----------------------------------//
 #pragma region Constructors
