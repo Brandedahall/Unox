@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ACTORS_H    // To make sure you don't declare the function more than once by including the header multiple times.
+#define ACTORS_H
+
 #include <vector>
 
 using namespace std;
@@ -7,10 +10,16 @@ class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors();
+	Actors(int X, int Y, char Glyth, bool Visible, int ID);
 	~Actors();
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
+	int Get_Location_X();
+	void Set_Location_X();
+
+	int Get_Location_Y();
+	void Set_Location_Y();
+
 	int Get_Color();
 	void Set_Color();
 
@@ -42,6 +51,9 @@ public:
 
 private:
 	//Int//
+	int X; //X and Y coordinates for each Actor.
+	int Y;
+
 	int Color[3]; //Sets the colour of the glyth.
 	int ID; //The Id of the Actor.
 	int Reach; //How far the Actor can attack from.
@@ -59,13 +71,14 @@ private:
 	bool Walkable; //Whether the Actor can be moved through.
 };
 
-Actors::Actors()
+Actors::Actors(int X, int Y, char Glyth, bool Visible, int ID)
 {
 }
 
 Actors::~Actors()
 {
 }
+
 
 //----------------------------------//
 
@@ -75,6 +88,8 @@ public:
 	//Constructor and destructor.
 	Props();
 	~Props();
+
+#pragma region Gets and Sets
 	//Gets and sets for the private variables.
 	int Get_ID();
 	void Set_ID();
@@ -91,6 +106,9 @@ public:
 	bool Get_Equippable();
 	void Set_Equippable();
 
+	int Get_Location();
+	void Set_Location();
+	#pragma endregion
 
 private:
 	//Int//
@@ -128,6 +146,9 @@ public:
 	//Gets and sets for the private variables.
 	int Get_Colour();
 	void Set_Colour();
+
+	int Get_Location();
+	void Set_Location();
 
 	int Get_Damage();
 	void Set_Damage();
@@ -257,6 +278,27 @@ inline bool Actors::Get_Visible()
 inline void Actors::Set_Visible()
 {
 }
+
+//Location
+inline int Actors::Get_Location_X()
+{
+	return 0;
+}
+
+inline void Actors::Set_Location_X()
+{
+}
+
+inline int Actors::Get_Location_Y()
+{
+	return 0;
+}
+
+inline void Actors::Set_Location_Y()
+{
+}
+
+
 #pragma endregion
 
 #pragma region Gets and Sets | Props
@@ -302,6 +344,16 @@ inline bool Props::Get_Equippable()
 	return false;
 }
 inline void Props::Set_Equippable()
+{
+}
+
+//Location//
+inline int Props::Get_Location()
+{
+	return 0;
+}
+
+inline void Props::Set_Location()
 {
 }
 #pragma endregion
@@ -369,12 +421,26 @@ inline bool Set::Get_Damaging()
 inline void Set::Set_Damaging()
 {
 }
+
+//Location//
+inline int Set::Get_Location()
+{
+	return 0;
+}
+
+inline void Set::Set_Location()
+{
+}
 #pragma endregion
 
 
 //----------------------------------//
 //Bags//
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
-vector<Actors> ActorBag;
-vector<Props> PropBag;
-vector<Set> SetBag;
+extern vector<Actors> ActorBag;
+extern vector<Props> PropBag;
+extern vector<Set> SetBag;
+
+void New_Actor(int X, int Y, char Glyth, bool Visible, int ID);
+
+#endif

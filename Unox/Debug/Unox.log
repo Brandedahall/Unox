@@ -1,3 +1,13 @@
 ﻿  Actors.cpp
-  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe
-  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.pdb (Full PDB)
+  Generating Code...
+  Compiling...
+  main.cpp
+  Generating Code...
+main.obj : error LNK2005: "public: __thiscall Actors::Actors(int,int,char,bool,int)" (??0Actors@@QAE@HHD_NH@Z) already defined in Actors.obj
+main.obj : error LNK2005: "public: __thiscall Props::Props(void)" (??0Props@@QAE@XZ) already defined in Actors.obj
+main.obj : error LNK2005: "public: __thiscall Set::Set(void)" (??0Set@@QAE@XZ) already defined in Actors.obj
+main.obj : error LNK2005: "public: __thiscall Actors::~Actors(void)" (??1Actors@@QAE@XZ) already defined in Actors.obj
+main.obj : error LNK2005: "public: __thiscall Props::~Props(void)" (??1Props@@QAE@XZ) already defined in Actors.obj
+main.obj : error LNK2005: "public: __thiscall Set::~Set(void)" (??1Set@@QAE@XZ) already defined in Actors.obj
+Actors.obj : error LNK2001: unresolved external symbol "class std::vector<class Actors,class std::allocator<class Actors> > ActorBag" (?ActorBag@@3V?$vector@VActors@@V?$allocator@VActors@@@std@@@std@@A)
+C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe : fatal error LNK1120: 1 unresolved externals
