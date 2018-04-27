@@ -12,27 +12,63 @@ int PropId = 0;
 int SetId = 0;
 #pragma region Methods
 //----------------------------------//
-void New_Actor(int X, int Y, char Glyth, bool Visible)
+inline void New_Actor(string Name, int X, int Y, char Glyth, bool Visible)
 {
-	Actors Actor = Actors(X, Y, Glyth, Visible, ActorId);
+	Actors Actor = Actors(Name, X, Y, Glyth, Visible, ActorId);
 	ActorBag.push_back(Actor);
 }
-void New_Prop(int X, int Y, char Glyth)
+inline void New_Prop(int X, int Y, char Glyth)
 {
 	Props Prop = Props(X, Y, Glyth, PropId);
 	PropBag.push_back(Prop);
 }
-void New_Set(int X, int Y, char Glyth, bool Visible)
+inline void New_Set(int X, int Y, char Glyth, bool Visible)
 {
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId);
 	SetBag.push_back(Set);
+}
+
+inline void AI()
+{
+
 }
 #pragma endregion
 
 //----------------------------------//
 #pragma region Constructors
 //Constructors//
-Actors::Actors(int x, int y, char glyth, bool visible, int id)
+inline Actors::Actors(string name, int x, int y, char glyth, bool visible, int id)
+{
+	Name = name;
+	X = x;
+	Y = y;
+	Glyth = glyth;
+	Visible = visible;
+	ID = id;
+}
+
+inline Actors::~Actors()
+{
+}
+
+inline void Actors::AI()
+{
+
+}
+
+inline Props::Props(int x, int y, char glyth, int id)
+{
+	X = x;
+	Y = y;
+	Glyth = glyth;
+	ID = id;
+}
+
+inline Props::~Props()
+{
+}
+
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id)
 {
 	X = x;
 	Y = y;
@@ -41,32 +77,7 @@ Actors::Actors(int x, int y, char glyth, bool visible, int id)
 	ID = id;
 }
 
-Actors::~Actors()
-{
-}
-
-Props::Props(int x, int y, char glyth, int id)
-{
-	X = x;
-	Y = y;
-	Glyth = glyth;
-	ID = id;
-}
-
-Props::~Props()
-{
-}
-
-Sets::Sets(int x, int y, char glyth, bool visible, int id)
-{
-	X = x;
-	Y = y;
-	Glyth = glyth;
-	Visible = visible;
-	ID = id;
-}
-
-Sets::~Sets()
+inline Sets::~Sets()
 {
 
 }

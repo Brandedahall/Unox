@@ -9,7 +9,7 @@ class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors(int X, int Y, char Glyth, bool Visible, int ID);
+	Actors(string Name, int X, int Y, char Glyth, bool Visible, int ID);
 	~Actors();
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
@@ -48,6 +48,7 @@ public:
 	void Set_Logic(bool logic);
 	#pragma endregion
 
+	inline void AI();
 private:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
@@ -442,10 +443,9 @@ inline void Sets::Set_Location_Y()
 
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
-void New_Actor(int X, int Y, char Glyth, bool Visible);
+void New_Actor(string Name, int X, int Y, char Glyth, bool Visible);
 void New_Prop(int X, int Y, char Glyth);
 void New_Set(int X, int Y, char Glyth, bool Visible);
-
 
 #pragma endregion
 //----------------------------------//

@@ -3,6 +3,7 @@
 #include "BearLibTerminal.h"
 #include "main.h"
 #include "Actors.h"
+#include "Logic.h"
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
 	terminal_color("flame");
 	while (true)
 	{
+		GameStart();
 		terminal_refresh();
 	}
 	return 0;
