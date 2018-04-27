@@ -9,7 +9,7 @@ class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors(string Name, int X, int Y, char Glyth, bool Visible, int ID);
+	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID);
 	~Actors();
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
@@ -444,7 +444,7 @@ inline void Sets::Set_Location_Y()
 
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
-extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible);
+extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
 extern void New_Prop(int X, int Y, char Glyth);
 extern void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
 
@@ -460,5 +460,7 @@ extern vector<Sets> SetBag;
 extern int ActorID;
 extern int ProbID;
 extern int SetID;
+
+extern bool Walk_;
 
 #endif

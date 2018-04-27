@@ -11,4 +11,9 @@ extern void GameStart();
 inline void Keyboard();
 inline void Map();
 void MapFill();
+
+
+//Extern Variables
+extern bool ActorWalk;
+extern bool SetWalk;
 #endif

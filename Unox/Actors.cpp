@@ -10,11 +10,14 @@ vector<Sets> SetBag = {};
 int ActorId = 0;
 int PropId = 0;
 int SetId = 0;
+
+bool Walk_ = true;
+
 #pragma region Methods
 //----------------------------------//
-extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible)
+extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
-	Actors Actor = Actors(Name, X, Y, Glyth, Visible, ActorId);
+	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId);
 	ActorId +=1;
 	ActorBag.push_back(Actor);
 }
@@ -48,6 +51,10 @@ void Actors::Movement()
 		{
 			Set_Location_X(1);
 		}
+		else
+		{
+
+		}
 	}
 	if (ActorBag[0].Get_Location_Y() > Get_Location_Y())
 	{
@@ -55,6 +62,10 @@ void Actors::Movement()
 		if (Walkable)
 		{
 			Set_Location_Y(1);
+		}
+		else
+		{
+
 		}
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X())
@@ -64,6 +75,10 @@ void Actors::Movement()
 		{
 			Set_Location_X(-1);
 		}
+		else
+		{
+
+		}
 	}
 	if (ActorBag[0].Get_Location_Y() < Get_Location_Y())
 	{
@@ -71,6 +86,10 @@ void Actors::Movement()
 		if (Walkable)
 		{
 			Set_Location_Y(-1);
+		}
+		else
+		{
+
 		}
 	}
 
@@ -83,6 +102,10 @@ void Actors::Movement()
 			Set_Location_X(1);
 			Set_Location_Y(1);
 		}
+		else
+		{
+
+		}
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X() && ActorBag[0].Get_Location_Y() < Get_Location_Y())
 	{
@@ -91,6 +114,10 @@ void Actors::Movement()
 		{
 			Set_Location_X(-1);
 			Set_Location_Y(-1);
+		}
+		else
+		{
+
 		}
 	}
 	if (ActorBag[0].Get_Location_X() > Get_Location_X() && ActorBag[0].Get_Location_Y() < Get_Location_Y())
@@ -101,6 +128,10 @@ void Actors::Movement()
 			Set_Location_X(1);
 			Set_Location_Y(-1);
 		}
+		else
+		{
+
+		}
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X() && ActorBag[0].Get_Location_Y() > Get_Location_Y())
 	{
@@ -110,17 +141,32 @@ void Actors::Movement()
 			Set_Location_X(-1);
 			Set_Location_Y(1);
 		}
+		else
+		{
+
+		}
 	}
 }
 #pragma endregion
 
 bool walk(int X, int Y)
 {
-	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y())
+		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y() == Y)
 		{
 			if (BagIterator->Get_Walkable())
+			{
+				Walk_ = true;
+			}
+		}
+	}
+
+	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+	{
+		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y() == Y)
+		{
+			if (BagIterator->Get_Walkable() && Walk_)
 			{
 				return true;
 			}
@@ -135,7 +181,7 @@ bool walk(int X, int Y)
 //----------------------------------//
 #pragma region Constructors
 //Constructors//
-inline Actors::Actors(string name, int x, int y, char glyth, bool visible, int id)
+inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id)
 {
 	Name = name;
 	X = x;
@@ -144,6 +190,7 @@ inline Actors::Actors(string name, int x, int y, char glyth, bool visible, int i
 	Visible = visible;
 	ID = id;
 	Logic = true;
+	Walkable = walkable;
 }
 
 inline Actors::~Actors()

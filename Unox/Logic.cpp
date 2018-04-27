@@ -6,6 +6,9 @@
 
 using namespace std;
 
+bool ActorWalk = true;
+bool SetWalk;
+
 extern void GameStart()
 {
 	Keyboard();
@@ -55,23 +58,142 @@ void Keyboard()
 	int key = terminal_read();
 	if (key == TK_W && ActorBag[0].Get_Location_Y() > 1)
 	{
-		ActorBag[0].Set_Location_Y(-1);
-		ActorBag[0].Set_Logic(true);
+		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() -1 == BagIterator->Get_Location_Y())
+			{
+				if (!BagIterator->Get_Walkable())
+				{
+					ActorWalk = false;
+				}
+				else
+				{
+					ActorWalk = true;
+				}
+			}
+		}
+
+		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == BagIterator->Get_Location_Y())
+			{
+				if (BagIterator->Get_Walkable())
+				{
+					SetWalk = true;
+				}
+			}
+		}
+
+		if (ActorWalk && SetWalk)
+		{
+			ActorBag[0].Set_Location_Y(-1);
+			ActorBag[0].Set_Logic(true);
+		}
 	}
+
 	else if (key == TK_A && ActorBag[0].Get_Location_X() > 1)
 	{
-		ActorBag[0].Set_Location_X(-1);
-		ActorBag[0].Set_Logic(true);
+		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() -1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			{
+				if (!BagIterator->Get_Walkable())
+				{
+					ActorWalk = false;
+				}
+				else
+				{
+					ActorWalk = true;
+				}
+			}
+		}
+
+		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() - 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			{
+				if (BagIterator->Get_Walkable())
+				{
+					SetWalk = true;
+				}
+			}
+		}
+
+		if (ActorWalk && SetWalk)
+		{
+			ActorBag[0].Set_Location_X(-1);
+			ActorBag[0].Set_Logic(true);
+		}
 	}
+
 	else if (key == TK_S && ActorBag[0].Get_Location_Y() < 23)
 	{
-		ActorBag[0].Set_Location_Y(1);
-		ActorBag[0].Set_Logic(true);
+		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() +1 == BagIterator->Get_Location_Y())
+			{
+				if (!BagIterator->Get_Walkable())
+				{
+					ActorWalk = false;
+				}
+				else
+				{
+					ActorWalk = true;
+				}
+			}
+		}
+
+		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() +1 == BagIterator->Get_Location_Y())
+			{
+				if (BagIterator->Get_Walkable())
+				{
+					SetWalk = true;
+				}
+			}
+		}
+
+		if (ActorWalk && SetWalk)
+		{
+			ActorBag[0].Set_Location_Y(1);
+			ActorBag[0].Set_Logic(true);
+		}
 	}
+
 	else if (key == TK_D && ActorBag[0].Get_Location_X() < 78)
 	{
-		ActorBag[0].Set_Location_X(1);
-		ActorBag[0].Set_Logic(true);
+		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() +1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			{
+				if (!BagIterator->Get_Walkable())
+				{
+					ActorWalk = false;
+				}
+				else
+				{
+					ActorWalk = true;
+				}
+			}
+		}
+
+		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() +1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			{
+				if (BagIterator->Get_Walkable())
+				{
+					SetWalk = true;
+				}
+			}
+		}
+
+		if (ActorWalk && SetWalk)
+		{
+			ActorBag[0].Set_Location_X(1);
+			ActorBag[0].Set_Logic(true);
+		}
 	}
 	else
 	{
@@ -87,11 +209,11 @@ inline void Map()
 	}
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-			terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
 	for (vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
 	{
-			terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
 
 }
@@ -108,7 +230,7 @@ void MapFill()
 	}
 	terminal_layer(2);
 	cout << (terminal_check(TK_LAYER));
-	New_Actor("Player", 39, 12, '@', true);
-	New_Actor("Steve", 20, 20, '#', true);
+	New_Actor("Player", 39, 12, '@', true, false);
+	New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
 }
