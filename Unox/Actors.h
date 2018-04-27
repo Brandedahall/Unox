@@ -49,6 +49,7 @@ public:
 	#pragma endregion
 
 	void AI();
+	void Movement();
 private:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
@@ -130,7 +131,7 @@ class Sets
 {
 public:
 	//Constructor and destructor.
-	Sets(int X, int Y, char Glyth, bool Visible, int ID);
+	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable);
 	~Sets();
 
 	#pragma region Gets and Sets
@@ -445,8 +446,9 @@ inline void Sets::Set_Location_Y()
 //These methods create new Actors, Props, and Sets.
 extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible);
 extern void New_Prop(int X, int Y, char Glyth);
-extern void New_Set(int X, int Y, char Glyth, bool Visible);
+extern void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
 
+extern bool walk(int X, int Y);
 #pragma endregion
 //----------------------------------//
 //Bags//

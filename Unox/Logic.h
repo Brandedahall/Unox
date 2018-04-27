@@ -8,6 +8,7 @@ inline void PropLogic();
 inline void SetLogic();
 
 extern void GameStart();
-inline void KeyboardMovement();
+inline void Keyboard();
 inline void Map();
+void MapFill();
 #endif

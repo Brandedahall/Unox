@@ -9,7 +9,7 @@ void main()
 {
 	terminal_open();
 	terminal_color("flame");
-	New_Actor("Player", 2, 2, '@', true);
+	MapFill();
 	while (true)
 	{
 		GameStart();
