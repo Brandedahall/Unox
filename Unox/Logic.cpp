@@ -5,11 +5,8 @@
 
 using namespace std;
 
-inline void GameStart()
+extern void GameStart()
 {
-
-	New_Actor("Player", 2, 2, '@', true);
-
 	KeyboardMovement();
 	ActorLogic();
 	PropLogic();
@@ -22,7 +19,7 @@ inline void ActorLogic()
 {
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-		if (BagIterator->Get_Logic() && BagIterator->Get_ID() > 2)
+		if (BagIterator->Get_Logic() == true && BagIterator->Get_ID() > 2)
 		{
 			BagIterator->AI();
 		}
@@ -50,28 +47,28 @@ inline void SetLogic()
 
 
 //MOVEMENT//
-inline void KeyboardMovement()
+void KeyboardMovement()
 {
 	int key = terminal_read();
-	if (key = TK_W)
+	if (key == TK_W)
 	{
-		ActorBag[0].Set_Location_X--;
-		ActorBag[0].Set_Logic = true;
+		ActorBag[0].Set_Location_Y(-1);
+		ActorBag[0].Set_Logic(true);
 	}
-	else if (key = TK_A)
+	else if (key == TK_A)
 	{
-		ActorBag[0].Set_Location_Y--;
-		ActorBag[0].Set_Logic = true;
+		ActorBag[0].Set_Location_X(-1);
+		ActorBag[0].Set_Logic(true);
 	}
-	else if (key = TK_S)
+	else if (key == TK_S)
 	{
-		ActorBag[0].Set_Location_Y++;
-		ActorBag[0].Set_Logic = true;
+		ActorBag[0].Set_Location_Y(1);
+		ActorBag[0].Set_Logic(true);
 	}
-	else if (key = TK_D)
+	else if (key == TK_D)
 	{
-		ActorBag[0].Set_Location_X++;
-		ActorBag[0].Set_Logic = true;
+		ActorBag[0].Set_Location_X(1);
+		ActorBag[0].Set_Logic(true);
 	}
 }
 
@@ -79,10 +76,17 @@ inline void Map()
 {
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-		if (BagIterator->Get_Logic())
-		{
 			terminal_clear();
 			terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
-		}
+	}
+	for (vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
+	{
+			terminal_clear();
+			terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+	}
+	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+	{
+			terminal_clear();
+			terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
 }

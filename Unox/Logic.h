@@ -7,7 +7,7 @@ inline void ActorLogic();
 inline void PropLogic();
 inline void SetLogic();
 
-inline void GameStart();
+extern void GameStart();
 inline void KeyboardMovement();
 inline void Map();
 #endif

@@ -369,7 +369,7 @@ TERMINAL_INLINE const char* terminal_vsprintf(const char* s, va_list args)
 	return rc >= 0? buffer: NULL;
 }
 
-TERMINAL_INLINE const wchar_t* terminal_vswprintf(const wchar_t* s, va_list args)
+TERMINAL_INLINE const wchar_t* terminal_vswprintf_s(const wchar_t* s, va_list args)
 {
 	static int buffer_size = 512;
 	static wchar_t* buffer = NULL;
@@ -441,7 +441,7 @@ TERMINAL_INLINE int terminal_wset(const wchar_t* s)
 
 TERMINAL_INLINE int terminal_wsetf(const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(int, terminal_wset(terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(int, terminal_wset(terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE void terminal_font(const char* name)
@@ -475,7 +475,7 @@ TERMINAL_INLINE dimensions_t terminal_wprint(int x, int y, const wchar_t* s)
 
 TERMINAL_INLINE dimensions_t terminal_wprintf(int x, int y, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint(x, y, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint(x, y, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_print_ext(int x, int y, int w, int h, int align, const char* s)
@@ -499,7 +499,7 @@ TERMINAL_INLINE dimensions_t terminal_wprint_ext(int x, int y, int w, int h, int
 
 TERMINAL_INLINE dimensions_t terminal_wprintf_ext(int x, int y, int w, int h, int align, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint_ext(x, y, w, h, align, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint_ext(x, y, w, h, align, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_measure(const char* s)
@@ -523,7 +523,7 @@ TERMINAL_INLINE dimensions_t terminal_wmeasure(const wchar_t* s)
 
 TERMINAL_INLINE dimensions_t terminal_wmeasuref(const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure(terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure(terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_measure_ext(int w, int h, const char* s)
@@ -547,7 +547,7 @@ TERMINAL_INLINE dimensions_t terminal_wmeasure_ext(int w, int h, const wchar_t* 
 
 TERMINAL_INLINE dimensions_t terminal_wmeasuref_ext(int w, int h, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure_ext(w, h, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure_ext(w, h, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE int terminal_read_str(int x, int y, char* buffer, int max)
@@ -592,7 +592,7 @@ TERMINAL_INLINE int terminal_set(const wchar_t* s)
 
 TERMINAL_INLINE int terminal_setf(const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(int, terminal_wset(terminal_vswprintf(s, args)));
+	TERMINAL_FORMATTED_WRAP(int, terminal_wset(terminal_vswprintf_s(s, args)));
 }
 
 TERMINAL_INLINE void terminal_color(const char* name)
@@ -632,7 +632,7 @@ TERMINAL_INLINE dimensions_t terminal_print(int x, int y, const wchar_t* s)
 
 TERMINAL_INLINE dimensions_t terminal_printf(int x, int y, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint(x, y, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint(x, y, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_print_ext(int x, int y, int w, int h, int align, const wchar_t* s)
@@ -642,7 +642,7 @@ TERMINAL_INLINE dimensions_t terminal_print_ext(int x, int y, int w, int h, int 
 
 TERMINAL_INLINE dimensions_t terminal_printf_ext(int x, int y, int w, int h, int align, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint_ext(x, y, w, h, align, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wprint_ext(x, y, w, h, align, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_measure(const wchar_t* s)
@@ -652,7 +652,7 @@ TERMINAL_INLINE dimensions_t terminal_measure(const wchar_t* s)
 
 TERMINAL_INLINE dimensions_t terminal_measuref(const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure(terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure(terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE dimensions_t terminal_measure_ext(int w, int h, const wchar_t* s)
@@ -662,7 +662,7 @@ TERMINAL_INLINE dimensions_t terminal_measure_ext(int w, int h, const wchar_t* s
 
 TERMINAL_INLINE dimensions_t terminal_measuref_ext(int w, int h, const wchar_t* s, ...)
 {
-	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure_ext(w, h, terminal_vswprintf(s, args)))
+	TERMINAL_FORMATTED_WRAP(dimensions_t, terminal_wmeasure_ext(w, h, terminal_vswprintf_s(s, args)))
 }
 
 TERMINAL_INLINE int terminal_read_str(int x, int y, wchar_t* buffer, int max)

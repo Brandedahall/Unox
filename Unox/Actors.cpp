@@ -12,25 +12,20 @@ int PropId = 0;
 int SetId = 0;
 #pragma region Methods
 //----------------------------------//
-inline void New_Actor(string Name, int X, int Y, char Glyth, bool Visible)
+extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible)
 {
 	Actors Actor = Actors(Name, X, Y, Glyth, Visible, ActorId);
 	ActorBag.push_back(Actor);
 }
-inline void New_Prop(int X, int Y, char Glyth)
+extern void New_Prop(int X, int Y, char Glyth)
 {
 	Props Prop = Props(X, Y, Glyth, PropId);
 	PropBag.push_back(Prop);
 }
-inline void New_Set(int X, int Y, char Glyth, bool Visible)
+extern void New_Set(int X, int Y, char Glyth, bool Visible)
 {
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId);
 	SetBag.push_back(Set);
-}
-
-inline void AI()
-{
-
 }
 #pragma endregion
 
@@ -51,7 +46,7 @@ inline Actors::~Actors()
 {
 }
 
-inline void Actors::AI()
+void Actors::AI()
 {
 
 }

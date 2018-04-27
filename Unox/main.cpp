@@ -5,14 +5,14 @@
 #include "Actors.h"
 #include "Logic.h"
 
-int main()
+void main()
 {
 	terminal_open();
 	terminal_color("flame");
+	New_Actor("Player", 2, 2, '@', true);
 	while (true)
 	{
 		GameStart();
 		terminal_refresh();
 	}
-	return 0;
 }

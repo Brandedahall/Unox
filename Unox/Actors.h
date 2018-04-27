@@ -48,7 +48,7 @@ public:
 	void Set_Logic(bool logic);
 	#pragma endregion
 
-	inline void AI();
+	void AI();
 private:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
@@ -284,7 +284,7 @@ inline int Actors::Get_Location_X()
 
 inline void Actors::Set_Location_X(int x)
 {
-	X = x;
+	X += x;
 }
 
 inline int Actors::Get_Location_Y()
@@ -294,7 +294,7 @@ inline int Actors::Get_Location_Y()
 
 inline void Actors::Set_Location_Y(int y)
 {
-	Y = y;
+	Y += y;
 }
 
 
@@ -443,9 +443,9 @@ inline void Sets::Set_Location_Y()
 
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
-void New_Actor(string Name, int X, int Y, char Glyth, bool Visible);
-void New_Prop(int X, int Y, char Glyth);
-void New_Set(int X, int Y, char Glyth, bool Visible);
+extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible);
+extern void New_Prop(int X, int Y, char Glyth);
+extern void New_Set(int X, int Y, char Glyth, bool Visible);
 
 #pragma endregion
 //----------------------------------//
