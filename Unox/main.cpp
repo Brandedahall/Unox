@@ -4,15 +4,18 @@
 #include "main.h"
 #include "Actors.h"
 #include "Logic.h"
+#include "Mapgen.h"
 
-void main()
+void main() //Main entry point of the program.
 {
-	terminal_open();
-	terminal_color("flame");
-	MapFill();
-	while (true)
+	terminal_open(); //Opens the terminal window.
+	terminal_set("window: title='Unox', size=160x50, minimum-size=80x25"); //Sets with title, size and minimum size of the terminal.
+	terminal_color("flame"); //Sets the terminal color.
+	terminal_refresh(); //Refreshes the terminal so that it shows up.
+	MapFill(); //Places the ground and temporary player character. \\TO BE REPLACED//
+	while (true) //Cannot be exited out of, by normal means.
 	{
-		GameStart();
-		terminal_refresh();
+		GameStart(); //This is the main logic of the program.
+		terminal_refresh(); //Refreshes the terminal so that any graphical updates that occur will show up on screen.
 	}
 }

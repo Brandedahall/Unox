@@ -1,6 +1,8 @@
-﻿  Generating code
-c:\users\isabelle\documents\github\unox\unox\actors.cpp(179): warning C4715: 'walk': not all control paths return a value
-  All 352 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  Logic.cpp
+  Generating code
+  3 of 355 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.pdb (Full PDB)

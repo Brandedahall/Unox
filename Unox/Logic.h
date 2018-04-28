@@ -12,6 +12,8 @@ inline void Keyboard();
 inline void Map();
 void MapFill();
 
+void UI();
+
 
 //Extern Variables
 extern bool ActorWalk;
