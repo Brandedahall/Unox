@@ -31,7 +31,7 @@ void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable);
 	SetId++;
-	SetBag[X][Y] = Sets(X, Y, Glyth, Visible, SetId, Walkable);;
+	SetBag[X][Y] = Set;
 }
 
 void Actors::AI()
@@ -146,6 +146,7 @@ void Actors::Movement()
 		}
 	}
 }
+
 #pragma endregion
 
 bool walk(int X, int Y)

@@ -5,7 +5,9 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-
-
+extern void Num_Gen();
+extern void Corridor();
+extern void Room(int x, int y, int xmax, int ymax);
+extern int getRand(int min, int max);
 
 #endif

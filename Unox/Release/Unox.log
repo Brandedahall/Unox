@@ -3,10 +3,10 @@
   Mapgen.cpp
   main.cpp
   Generating code
-c:\users\isabelle\documents\github\unox\unox\actors.cpp(181): warning C4715: 'walk': not all control paths return a value
-  457 of 547 functions (83.5%) were compiled, the rest were copied from previous compilation.
-    417 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+c:\users\isabelle\documents\github\unox\unox\actors.cpp(182): warning C4715: 'walk': not all control paths return a value
+  196 of 465 functions (42.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    19 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.pdb (Full PDB)

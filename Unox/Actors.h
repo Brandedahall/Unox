@@ -12,8 +12,8 @@ public:
 	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID);
 	~Actors();
 
-	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
+	#pragma region Gets and Sets
 	int Get_Location_X();
 	void Set_Location_X(int x);
 
@@ -57,6 +57,12 @@ public:
 	int Get_Type();
 	void Set_Type(int type);
 
+	int Get_Level();
+	void Set_Level(int level);
+
+	int Get_Experience();
+	void Set_Experience(int experience);
+
 	bool Get_Attackable();
 	void Set_Attackable(bool attackable);
 
@@ -96,14 +102,17 @@ protected:
 	bool Logic;
 
 	//Stats and RPG stuff//
-	int Health;
-	int Mana;
+	int Health;  //Health of the creature.
+	int Level;
+	int Experience;
+	int Mana; //How much Magical points the creature has.
 	//Attributes
-	int Strength;
-	int Wisdom;
-	int Agility;
-	int Intelligence;
-	int Perception;
+	int Strength; //How much Strength the creature has.
+	int Wisdom; //How much Wisdom the creature has.
+	int Agility; //How much Agility the creature has.
+	int Intelligence; //How much Intelligence the creature has.
+	int Perception; //How much Perception the creature has.
+
 };
 
 //----------------------------------//
@@ -196,8 +205,6 @@ public:
 	#pragma endregion
 
 	//Methods//
-	vector<int> Get_Contents();
-	void Set_Contents(int id);
 	
 private:
 	//Int//
@@ -215,10 +222,9 @@ private:
 	bool Movable; //Whether characters can move the prop.
 	bool Walkable;//Whether characters can walk through the prop.
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
-
-	vector<int> Contents;
 };
 
+//----------------------------------//
 //Gets and sets//
 
 #pragma region Gets and sets | Actors
@@ -263,6 +269,26 @@ inline int Actors::Get_Type()
 inline void Actors::Set_Type(int type)
 {
 	Type = type;
+}
+
+inline int Actors::Get_Level()
+{
+	return Level;
+}
+
+inline void Actors::Set_Level(int level)
+{
+	Level = level;
+}
+
+inline int Actors::Get_Experience()
+{
+	return Experience;
+}
+
+inline void Actors::Set_Experience(int experience)
+{
+	Experience = experience;
 }
 
 //Name
@@ -409,7 +435,6 @@ inline void Actors::Set_Perception(int perception)
 	Perception = perception;
 }
 
-
 #pragma endregion
 
 #pragma region Gets and Sets | Props
@@ -533,16 +558,6 @@ inline void Sets::Set_Damaging()
 {
 }
 
-inline vector<int> Sets::Get_Contents()
-{
-	return Contents;
-}
-
-inline void Sets::Set_Contents(int id)
-{
-	Contents.push_back(id);
-}
-
 //Location
 inline int Sets::Get_Location_X()
 {
@@ -563,6 +578,8 @@ inline void Sets::Set_Location_Y()
 }
 #pragma endregion
 
+//----------------------------------//
+
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
 void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
@@ -582,9 +599,4 @@ extern vector<vector<Sets>> SetBag;
 extern int ActorID;
 extern int ProbID;
 extern int SetID;
-
-extern bool Walk_;
-
-//Different classes//
-
 #endif

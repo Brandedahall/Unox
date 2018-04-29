@@ -62,7 +62,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
-			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() -1 == BagIterator->Get_Location_Y())
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == BagIterator->Get_Location_Y())
 			{
 				if (!BagIterator->Get_Walkable())
 				{
@@ -74,19 +74,13 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 				}
 			}
 		}
-
-		for (auto row : SetBag)
+		if (SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() - 1].Get_Walkable())
 		{
-			for (auto tile : row)
-			{
-				if (ActorBag[0].Get_Location_X() == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == tile.Get_Location_Y())
-				{
-					if (tile.Get_Walkable())
-					{
-						SetWalk = true;
-					}
-				}
-			}
+			SetWalk = true;
+		}
+		else
+		{
+			SetWalk = false;
 		}
 
 		if (ActorWalk && SetWalk)
@@ -101,7 +95,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
-			if (ActorBag[0].Get_Location_X() -1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			if (ActorBag[0].Get_Location_X() - 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
 				if (!BagIterator->Get_Walkable())
 				{
@@ -114,19 +108,16 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (auto row : SetBag)
+
+		if (SetBag[ActorBag[0].Get_Location_X() - 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
 		{
-			for (auto tile : row)
-			{
-				if (ActorBag[0].Get_Location_X() - 1 == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() == tile.Get_Location_Y())
-				{
-					if (tile.Get_Walkable())
-					{
-						SetWalk = true;
-					}
-				}
-			}
+			SetWalk = true;
 		}
+		else
+		{
+			SetWalk = false;
+		}
+
 
 		if (ActorWalk && SetWalk)
 		{
@@ -140,7 +131,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
-			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() +1 == BagIterator->Get_Location_Y())
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() + 1 == BagIterator->Get_Location_Y())
 			{
 				if (!BagIterator->Get_Walkable())
 				{
@@ -153,18 +144,13 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (auto row : SetBag)
+		if (SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() + 1].Get_Walkable())
 		{
-			for (auto tile : row)
-			{
-				if (ActorBag[0].Get_Location_X() == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() + 1 == tile.Get_Location_Y())
-				{
-					if (tile.Get_Walkable())
-					{
-						SetWalk = true;
-					}
-				}
-			}
+			SetWalk = true;
+		}
+		else
+		{
+			SetWalk = false;
 		}
 
 		if (ActorWalk && SetWalk)
@@ -179,7 +165,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
-			if (ActorBag[0].Get_Location_X() +1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			if (ActorBag[0].Get_Location_X() + 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
 				if (!BagIterator->Get_Walkable())
 				{
@@ -192,18 +178,13 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (auto row : SetBag)
+		if (SetBag[ActorBag[0].Get_Location_X() + 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
 		{
-			for (auto tile : row)
-			{
-				if (ActorBag[0].Get_Location_X() + 1 == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() == tile.Get_Location_Y())
-				{
-					if (tile.Get_Walkable())
-					{
-						SetWalk = true;
-					}
-				}
-			}
+			SetWalk = true;
+		}
+		else
+		{
+			SetWalk = false;
 		}
 
 		if (ActorWalk && SetWalk)
@@ -249,7 +230,7 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 	{
 		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
-} 
+}
 
 void MapFill()
 {
@@ -262,7 +243,7 @@ void MapFill()
 		}
 	}
 	terminal_layer(2);
-	New_Actor("Player", 39, 12, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", 66, 16, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
 }
@@ -292,6 +273,8 @@ void UI()
 
 }
 
+
+//Required at startup to initialize the map.
 void Init_Map()
 {
 	for (int x = 0; x < 130; x++) {
