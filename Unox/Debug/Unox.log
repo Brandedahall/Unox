@@ -1,9 +1,10 @@
-﻿  Mapgen.cpp
-c:\users\isabelle\documents\github\unox\unox\mapgen.cpp(27): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-c:\users\isabelle\documents\github\unox\unox\mapgen.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  Actors.cpp
   Generating Code...
+c:\users\isabelle\documents\github\unox\unox\actors.cpp(179): warning C4715: 'walk': not all control paths return a value
   Compiling...
   main.cpp
+  Mapgen.cpp
+  Logic.cpp
   Generating Code...
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.pdb (Full PDB)

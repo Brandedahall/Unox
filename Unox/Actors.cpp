@@ -180,7 +180,7 @@ bool walk(int X, int Y)
 
 //----------------------------------//
 #pragma region Constructors
-//Constructors//
+//Base Constructors//
 inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id)
 {
 	Name = name;
@@ -223,4 +223,6 @@ inline Sets::~Sets()
 {
 
 }
+
 #pragma endregion
+

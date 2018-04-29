@@ -11,6 +11,7 @@ public:
 	//Constructor and destructor.
 	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID);
 	~Actors();
+
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
 	int Get_Location_X();
@@ -18,6 +19,27 @@ public:
 
 	int Get_Location_Y();
 	void Set_Location_Y(int y);
+
+	int Get_Health();
+	void Set_Health(int health);
+
+	int Get_Mana();
+	void Set_Mana(int mana);
+
+	int Get_Strength();
+	void Get_Strength(int strength);
+
+	int Get_Wisdom();
+	void Set_Wisdom(int wisdom);
+
+	int Get_Agility();
+	void Set_Agility(int agility);
+
+	int Get_Intelligence();
+	void Set_Intelligence(int intelligence);
+
+	int Get_Perception();
+	void Set_Perception(int perception);
 
 	string Get_Name();
 	void Set_Name(string name);
@@ -50,7 +72,7 @@ public:
 
 	void AI();
 	void Movement();
-private:
+protected:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
 	int Y;
@@ -72,6 +94,16 @@ private:
 
 	//Logic//
 	bool Logic;
+
+	//Stats and RPG stuff//
+	int Health;
+	int Mana;
+	//Attributes
+	int Strength;
+	int Wisdom;
+	int Agility;
+	int Intelligence;
+	int Perception;
 };
 
 //----------------------------------//
@@ -186,6 +218,7 @@ private:
 
 #pragma region Gets and sets | Actors
 
+#pragma region Normal G+S
 //Logic//
 inline bool Actors::Get_Logic()
 {
@@ -296,6 +329,79 @@ inline int Actors::Get_Location_Y()
 inline void Actors::Set_Location_Y(int y)
 {
 	Y += y;
+}
+
+#pragma endregion
+
+//Stats//
+inline int Actors::Get_Health()
+{
+	return Health;
+}
+
+inline void Actors::Set_Health(int health)
+{
+	Health = health;
+}
+
+inline int Actors::Get_Mana()
+{
+	return Mana;
+}
+
+inline void Actors::Set_Mana(int mana)
+{
+	Mana = mana;
+}
+//Attributes//
+inline int Actors::Get_Strength()
+{
+	return Health;
+}
+
+inline void Actors::Get_Strength(int strength)
+{
+	Strength = strength;
+}
+
+inline int Actors::Get_Wisdom()
+{
+	return Wisdom;
+}
+
+inline void Actors::Set_Wisdom(int wisdom)
+{
+	Wisdom = wisdom;
+}
+
+inline int Actors::Get_Agility()
+{
+	return Agility;
+}
+
+inline void Actors::Set_Agility(int agility)
+{
+	Agility = agility;
+}
+
+inline int Actors::Get_Intelligence()
+{
+	return Intelligence;
+}
+
+inline void Actors::Set_Intelligence(int intelligence)
+{
+	Intelligence = intelligence;
+}
+
+inline int Actors::Get_Perception()
+{
+	return Perception;
+}
+
+inline void Actors::Set_Perception(int perception)
+{
+	Perception = perception;
 }
 
 
@@ -457,10 +563,13 @@ extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
 extern vector<Sets> SetBag;
 
+//IDs for the objects within the bags. Just in case they need to be found using ID's. Possibly for time-sensitive spells, lasting damage etc.
 extern int ActorID;
 extern int ProbID;
 extern int SetID;
 
 extern bool Walk_;
+
+//Different classes//
 
 #endif
