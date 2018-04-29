@@ -43,10 +43,7 @@ inline void PropLogic()
 
 inline void SetLogic()
 {
-	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
-	{
 
-	}
 }
 
 //FOV//
@@ -75,13 +72,16 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		for (auto row : SetBag)
 		{
-			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == BagIterator->Get_Location_Y())
+			for (auto tile : row)
 			{
-				if (BagIterator->Get_Walkable())
+				if (ActorBag[0].Get_Location_X() == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == tile.Get_Location_Y())
 				{
-					SetWalk = true;
+					if (tile.Get_Walkable())
+					{
+						SetWalk = true;
+					}
 				}
 			}
 		}
@@ -111,13 +111,16 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		for (auto row : SetBag)
 		{
-			if (ActorBag[0].Get_Location_X() - 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			for (auto tile : row)
 			{
-				if (BagIterator->Get_Walkable())
+				if (ActorBag[0].Get_Location_X() - 1 == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() == tile.Get_Location_Y())
 				{
-					SetWalk = true;
+					if (tile.Get_Walkable())
+					{
+						SetWalk = true;
+					}
 				}
 			}
 		}
@@ -147,13 +150,16 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		for (auto row : SetBag)
 		{
-			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() +1 == BagIterator->Get_Location_Y())
+			for (auto tile : row)
 			{
-				if (BagIterator->Get_Walkable())
+				if (ActorBag[0].Get_Location_X() == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() + 1 == tile.Get_Location_Y())
 				{
-					SetWalk = true;
+					if (tile.Get_Walkable())
+					{
+						SetWalk = true;
+					}
 				}
 			}
 		}
@@ -183,13 +189,16 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			}
 		}
 
-		for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+		for (auto row : SetBag)
 		{
-			if (ActorBag[0].Get_Location_X() +1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			for (auto tile : row)
 			{
-				if (BagIterator->Get_Walkable())
+				if (ActorBag[0].Get_Location_X() + 1 == tile.Get_Location_X() && ActorBag[0].Get_Location_Y() == tile.Get_Location_Y())
 				{
-					SetWalk = true;
+					if (tile.Get_Walkable())
+					{
+						SetWalk = true;
+					}
 				}
 			}
 		}
@@ -221,10 +230,14 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 
 inline void Map() //Basically places everything that's inside the bags onto the screen.
 {
-	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+	for (auto row : SetBag)
 	{
-		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+		for (auto tile : row)
+		{
+			terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+		}
 	}
+
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
 		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());

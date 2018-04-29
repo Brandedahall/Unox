@@ -192,10 +192,12 @@ public:
 
 	bool Get_Damaging();
 	void Set_Damaging();
-
-
 	#pragma endregion
 
+	//Methods//
+	vector<int> Get_Contents();
+	void Set_Contents(int id);
+	
 private:
 	//Int//
 	int X;
@@ -212,6 +214,8 @@ private:
 	bool Movable; //Whether characters can move the prop.
 	bool Walkable;//Whether characters can walk through the prop.
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
+
+	vector<int> Contents;
 };
 
 //Gets and sets//
@@ -528,6 +532,16 @@ inline void Sets::Set_Damaging()
 {
 }
 
+inline vector<int> Sets::Get_Contents()
+{
+	return Contents;
+}
+
+inline void Sets::Set_Contents(int id)
+{
+	Contents.push_back(id);
+}
+
 //Location
 inline int Sets::Get_Location_X()
 {
@@ -550,18 +564,18 @@ inline void Sets::Set_Location_Y()
 
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
-extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
-extern void New_Prop(int X, int Y, char Glyth);
-extern void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
+void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
+void New_Prop(int X, int Y, char Glyth);
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
 
-extern bool walk(int X, int Y);
+bool walk(int X, int Y);
 #pragma endregion
 //----------------------------------//
 //Bags//
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
-extern vector<Sets> SetBag;
+extern vector<vector<Sets>> SetBag;
 
 //IDs for the objects within the bags. Just in case they need to be found using ID's. Possibly for time-sensitive spells, lasting damage etc.
 extern int ActorID;

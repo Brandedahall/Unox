@@ -5,7 +5,7 @@
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 vector<Actors> ActorBag = {};
 vector<Props> PropBag = {};
-vector<Sets> SetBag = {};
+vector<vector<Sets>> SetBag = {};
 
 int ActorId = 0;
 int PropId = 0;
@@ -15,30 +15,29 @@ bool Walk_ = true;
 
 #pragma region Methods
 //----------------------------------//
-extern void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable)
+void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
 	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId);
 	ActorId +=1;
 	ActorBag.push_back(Actor);
 }
-extern void New_Prop(int X, int Y, char Glyth)
+void New_Prop(int X, int Y, char Glyth)
 {
 	Props Prop = Props(X, Y, Glyth, PropId);
 	PropId++;
 	PropBag.push_back(Prop);
 }
-extern void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable);
 	SetId++;
-	SetBag.push_back(Set);
+	SetBag[X][Y] = Set;
 }
 
 void Actors::AI()
 {
 	Movement();
 	//Attack//
-
 }
 
 void Actors::Movement()
@@ -162,17 +161,20 @@ bool walk(int X, int Y)
 		}
 	}
 
-	for (vector<Sets>::iterator BagIterator = SetBag.begin(); BagIterator != SetBag.end(); ++BagIterator)
+	for (auto row : SetBag)
 	{
-		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y() == Y)
+		for (auto tile : row)
 		{
-			if (BagIterator->Get_Walkable() && Walk_)
+			if (tile.Get_Location_X() == X && tile.Get_Location_Y() == Y)
 			{
-				return true;
-			}
-			else
-			{
-				return false;
+				if (tile.Get_Walkable() && Walk_)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 	}
