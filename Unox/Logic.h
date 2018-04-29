@@ -16,7 +16,6 @@ void UI();
 
 void Init_Map();
 
-
 //Extern Variables
 extern bool ActorWalk;
 extern bool SetWalk;

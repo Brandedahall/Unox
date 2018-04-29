@@ -244,6 +244,7 @@ void MapFill()
 	}
 	terminal_layer(2);
 	New_Actor("Player", 66, 16, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
 }
@@ -258,10 +259,69 @@ void UI()
 	{
 		terminal_print(i, 30, "-");
 	}
-
 	//Stats//
+	terminal_print(140, 0, "Statistics");
 
+	//Health//
+	int Health = ActorBag[0].Get_Health();
+	std::string s = std::to_string(Health);
+	char const *pchar = s.c_str();
+	terminal_print(132, 1, "Health: ");
+	terminal_print(146, 1, pchar);
 
+	//Experience//
+	int Experience = ActorBag[0].Get_Experience();
+	s = std::to_string(Experience);
+	pchar = s.c_str();
+	terminal_print(132, 2, "Exp: ");
+	terminal_print(146, 2, pchar);
+
+	int Level = ActorBag[0].Get_Level();
+	s = std::to_string(Level);
+	pchar = s.c_str();
+	terminal_print(132, 3, "Level: ");
+	terminal_print(146, 3, pchar);
+
+	//----------//
+
+	terminal_print(132, 4, "--------Attributes------------");
+
+	//----------//
+
+	//Strength
+	int Strength = ActorBag[0].Get_Strength();
+	s = std::to_string(Strength);
+	pchar = s.c_str();
+	terminal_print(132, 5, "Strength: ");
+	terminal_print(146, 5, pchar);
+
+	//Willpower//
+	int Willpower = ActorBag[0].Get_Wisdom();
+	s = std::to_string(Willpower);
+	pchar = s.c_str();
+	terminal_print(132, 6, "Willpower: ");
+	terminal_print(146, 6, pchar);
+
+	//Agility//
+	int Agility = ActorBag[0].Get_Agility();
+	s = std::to_string(Agility);
+	pchar = s.c_str();
+	terminal_print(132, 7, "Agility: ");
+	terminal_print(146, 7, pchar);
+	
+	//Intelligence//
+	int Intelligence = ActorBag[0].Get_Intelligence();
+	s = std::to_string(Intelligence);
+	pchar = s.c_str();
+	terminal_print(132, 8, "Intelligence: ");
+	terminal_print(146, 8, pchar);
+
+	//Perception//
+	int Perception = ActorBag[0].Get_Perception();
+	s = std::to_string(Perception);
+	pchar = s.c_str();
+	terminal_print(132, 9, "Perception: ");
+	terminal_print(146, 9, pchar);
 
 
 	//Items//

@@ -17,12 +17,11 @@ inline void Num_Gen()
 		int Xlength = getRand(4, 8);
 		int Ylength = getRand(4, 8);
 
-
 		Room(X, Y, Xlength, Ylength);
 	}
 }
 
-long oldseed;
+time_t oldseed;
 
 int getRand(int min, int max)
 {
