@@ -14,6 +14,8 @@ void MapFill();
 
 void UI();
 
+void Init_Map();
+
 
 //Extern Variables
 extern bool ActorWalk;

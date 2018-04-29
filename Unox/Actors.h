@@ -163,6 +163,7 @@ class Sets
 {
 public:
 	//Constructor and destructor.
+	Sets();
 	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable);
 	~Sets();
 

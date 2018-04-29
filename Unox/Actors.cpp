@@ -5,7 +5,7 @@
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 vector<Actors> ActorBag = {};
 vector<Props> PropBag = {};
-vector<vector<Sets>> SetBag = {};
+vector<vector<Sets>> SetBag(30,vector<Sets>(130, Sets()));
 
 int ActorId = 0;
 int PropId = 0;
@@ -31,7 +31,7 @@ void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
 	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable);
 	SetId++;
-	SetBag[X][Y] = Set;
+	SetBag[X][Y] = Sets(X, Y, Glyth, Visible, SetId, Walkable);;
 }
 
 void Actors::AI()
@@ -210,6 +210,8 @@ inline Props::Props(int x, int y, char glyth, int id)
 inline Props::~Props()
 {
 }
+
+inline Sets::Sets() {}
 
 inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable)
 {

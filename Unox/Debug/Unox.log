@@ -1,6 +1,10 @@
-﻿  Logic.cpp
+﻿  main.cpp
+  Logic.cpp
   Actors.cpp
   Generating Code...
-c:\users\isabelle\documents\github\unox\unox\actors.cpp(182): warning C4715: 'walk': not all control paths return a value
+c:\users\isabelle\documents\github\unox\unox\actors.cpp(181): warning C4715: 'walk': not all control paths return a value
+  Compiling...
+  Mapgen.cpp
+  Generating Code...
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.pdb (Full PDB)

@@ -8,6 +8,7 @@
 
 void main() //Main entry point of the program.
 {
+	Init_Map();
 	terminal_open(); //Opens the terminal window.
 	terminal_set("window: title='Unox', size=160x50, minimum-size=80x25"); //Sets with title, size and minimum size of the terminal.
 	MapFill(); //Places the ground and temporary player character. \\TO BE REPLACED//

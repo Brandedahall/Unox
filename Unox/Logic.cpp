@@ -6,6 +6,9 @@
 
 using namespace std;
 
+#define MAP_WIDTH = 130;
+#define MAP_HEIGHT = 30;
+
 bool ActorWalk = true;
 bool SetWalk;
 
@@ -287,4 +290,14 @@ void UI()
 
 	//Help//
 
+}
+
+void Init_Map()
+{
+	for (int x = 0; x < 130; x++) {
+		SetBag.push_back(vector<Sets>());
+		for (int y = 0; y < 30; y++) {
+			SetBag[x].push_back(Sets());
+		}
+	}
 }
