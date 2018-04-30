@@ -4,6 +4,57 @@
 #include <vector>
 
 using namespace std;
+//----------------------------------//
+class Props
+{
+public:
+	//Constructor and destructor.
+	Props(int X, int Y, char Glyth, int ID, string Name);
+	~Props();
+
+#pragma region Gets and Sets
+	//Gets and sets for the private variables.
+
+	int Get_Location_X();
+	void Set_Location_X();
+
+	int Get_Location_Y();
+	void Set_Location_Y();
+
+	int Get_ID();
+	void Set_ID();
+
+	int Get_Type();
+	void Set_Type();
+
+	string Get_Name();
+	void Set_Name();
+
+	char Get_Glyth();
+	void Set_Glyth();
+
+	bool Get_Equippable();
+	void Set_Equippable();
+#pragma endregion
+
+private:
+	//Int//
+	int X;
+	int Y;
+	int ID; //The ID of the Prop object.
+	int Type; //Uses a lookup table to determine the type of object.
+
+			  //String//
+	string Name; //Name of the Prop.
+
+				 //Char//
+	char Glyth; //The visible character which is drawn to the screen.
+
+				//Bool//
+	bool Equippable; //Checks whether the item can be equipped or not.
+};
+
+//----------------------------------//
 
 class Actors
 {
@@ -78,6 +129,8 @@ public:
 
 	void AI();
 	void Movement();
+	vector<Props> Get_Inventory();
+	void Set_Inventory(Props Item);
 protected:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
@@ -113,57 +166,8 @@ protected:
 	int Intelligence; //How much Intelligence the creature has.
 	int Perception; //How much Perception the creature has.
 
-};
-
-//----------------------------------//
-
-class Props
-{
-public:
-	//Constructor and destructor.
-	Props(int X, int Y, char Glyth, int ID);
-	~Props();
-
-#pragma region Gets and Sets
-	//Gets and sets for the private variables.
-
-	int Get_Location_X();
-	void Set_Location_X();
-
-	int Get_Location_Y();
-	void Set_Location_Y();
-
-	int Get_ID();
-	void Set_ID();
-
-	int Get_Type();
-	void Set_Type();
-
-	string Get_Name();
-	void Set_Name();
-
-	char Get_Glyth();
-	void Set_Glyth();
-
-	bool Get_Equippable();
-	void Set_Equippable();
-	#pragma endregion
-
-private:
-	//Int//
-	int X;
-	int Y;
-	int ID; //The ID of the Prop object.
-	int Type; //Uses a lookup table to determine the type of object.
-
-	//String//
-	string Name; //Name of the Prop.
-
-	//Char//
-	char Glyth; //The visible character which is drawn to the screen.
-
-	//Bool//
-	bool Equippable; //Checks whether the item can be equipped or not.
+	//Contents
+	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
 //----------------------------------//
@@ -205,7 +209,9 @@ public:
 	#pragma endregion
 
 	//Methods//
-	
+	vector<Props> Get_Inventory();
+	void Set_Inventory(Props Item);
+
 private:
 	//Int//
 	int X;
@@ -222,6 +228,7 @@ private:
 	bool Movable; //Whether characters can move the prop.
 	bool Walkable;//Whether characters can walk through the prop.
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
+	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
 //----------------------------------//
@@ -435,6 +442,16 @@ inline void Actors::Set_Perception(int perception)
 	Perception = perception;
 }
 
+inline vector<Props> Actors::Get_Inventory()
+{
+	return Inventory;
+}
+
+inline void Actors::Set_Inventory(Props Item)
+{
+	Inventory.push_back(Item);
+}
+
 #pragma endregion
 
 #pragma region Gets and Sets | Props
@@ -576,6 +593,17 @@ inline int Sets::Get_Location_Y()
 inline void Sets::Set_Location_Y()
 {
 }
+
+inline vector<Props> Sets::Get_Inventory()
+{
+	return Inventory;
+}
+
+inline void Sets::Set_Inventory(Props Item)
+{
+	Inventory.push_back(Item);
+}
+
 #pragma endregion
 
 //----------------------------------//
@@ -583,7 +611,7 @@ inline void Sets::Set_Location_Y()
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
 void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
-void New_Prop(int X, int Y, char Glyth);
+void New_Prop(int X, int Y, char Glyth, string Name);
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
 
 bool walk(int X, int Y);

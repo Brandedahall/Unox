@@ -25,6 +25,7 @@ extern void GameStart() //The main game logic. The game runs through each of the
 	//FOV//
 }
 
+//LOGIC//
 inline void ActorLogic()
 {
 	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
@@ -51,14 +52,12 @@ inline void SetLogic()
 
 //FOV//
 
-
-
 //MOVEMENT//
 void Keyboard() //Reads key inputs from the keyboard and moves the player, among other key commands.
 {
 	int key = terminal_read();
 	//Moves the player up one square
-	if (key == TK_W && ActorBag[0].Get_Location_Y() > 1)
+	if (key == TK_UP && ActorBag[0].Get_Location_Y() > 1)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -91,7 +90,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player left one square.
-	else if (key == TK_A && ActorBag[0].Get_Location_X() > 1)
+	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() > 1)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -127,7 +126,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player right one square.
-	else if (key == TK_S && ActorBag[0].Get_Location_Y() < 29)
+	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 29)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -161,7 +160,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player down one square.
-	else if (key == TK_D && ActorBag[0].Get_Location_X() < 129)
+	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 129)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -222,14 +221,16 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 		}
 	}
 
-	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
-	{
-		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
-	}
 	for (vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
 	{
 		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
+
+	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
+	{
+		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+	}
+
 }
 
 void MapFill()
@@ -242,6 +243,9 @@ void MapFill()
 			New_Set(i, j, '*', true, true); //Creates 130x30 floor tiles.
 		}
 	}
+
+	New_Prop(65, 16, '#', "Short Sword");
+
 	terminal_layer(2);
 	New_Actor("Player", 66, 16, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	ActorBag[0].Set_Health(10);
@@ -325,7 +329,29 @@ void UI()
 
 
 	//Items//
+	terminal_print(0, 31, "//----Items on the ground----\\\\");
 
+	for (int i = 31; i < 50; i++)
+	{
+		terminal_print(32, i, "|");
+	}
+
+	int Num_Items = SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory().size();
+	if (Num_Items == 0)
+	{
+		terminal_print(0, 32, "No Items on the ground");
+	}
+	else
+	{
+		for (int i = 0; i < Num_Items; i++)
+		{
+			s = std::to_string(i);
+			pchar = s.c_str();
+			terminal_print(0, 32 + i, pchar);
+			terminal_print(1, 32 + i, ".");
+			terminal_print(3, 32 + i, SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory()[i].Get_Name().c_str());
+		}
+	}
 
 
 

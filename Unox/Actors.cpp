@@ -21,11 +21,12 @@ void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkabl
 	ActorId +=1;
 	ActorBag.push_back(Actor);
 }
-void New_Prop(int X, int Y, char Glyth)
+void New_Prop(int X, int Y, char Glyth, string Name)
 {
-	Props Prop = Props(X, Y, Glyth, PropId);
+	Props Prop = Props(X, Y, Glyth, PropId, Name);
 	PropId++;
 	PropBag.push_back(Prop);
+	SetBag[X][Y].Set_Inventory(Prop);
 }
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
 {
@@ -151,33 +152,18 @@ void Actors::Movement()
 
 bool walk(int X, int Y)
 {
-	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
+	if (SetBag[X][Y].Get_Walkable())
 	{
-		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y() == Y)
-		{
-			if (BagIterator->Get_Walkable())
-			{
-				Walk_ = true;
-			}
-		}
+		Walk_ = true;
 	}
 
-	for (auto row : SetBag)
+	if (SetBag[X][Y].Get_Walkable() && Walk_)
 	{
-		for (auto tile : row)
-		{
-			if (tile.Get_Location_X() == X && tile.Get_Location_Y() == Y)
-			{
-				if (tile.Get_Walkable() && Walk_)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-		}
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -200,12 +186,13 @@ inline Actors::~Actors()
 {
 }
 
-inline Props::Props(int x, int y, char glyth, int id)
+inline Props::Props(int x, int y, char glyth, int id, string name)
 {
 	X = x;
 	Y = y;
 	Glyth = glyth;
 	ID = id;
+	Name = name;
 }
 
 inline Props::~Props()
