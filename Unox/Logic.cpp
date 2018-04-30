@@ -55,6 +55,7 @@ inline void SetLogic()
 //MOVEMENT//
 void Keyboard() //Reads key inputs from the keyboard and moves the player, among other key commands.
 {
+	ActorWalk = true;
 	int key = terminal_read();
 	//Moves the player up one square
 	if (key == TK_UP && ActorBag[0].Get_Location_Y() > 1)
@@ -63,32 +64,22 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == BagIterator->Get_Location_Y())
 			{
-				if (!BagIterator->Get_Walkable())
-				{
-					ActorWalk = false;
-				}
-				else
+				if (BagIterator->Get_Walkable())
 				{
 					ActorWalk = true;
 				}
+				else
+				{
+					ActorWalk = false;
+				}
 			}
 		}
-		if (SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() - 1].Get_Walkable())
-		{
-			SetWalk = true;
-		}
-		else
-		{
-			SetWalk = false;
-		}
-
-		if (ActorWalk && SetWalk)
+		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() - 1].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_Y(-1);
 			ActorBag[0].Set_Logic(true);
 		}
 	}
-
 	//Moves the player left one square.
 	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() > 1)
 	{
@@ -96,29 +87,18 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		{
 			if (ActorBag[0].Get_Location_X() - 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
-				if (!BagIterator->Get_Walkable())
+				if (BagIterator->Get_Walkable())
 				{
-					ActorWalk = false;
+					ActorWalk = true;
 				}
 				else
 				{
-					ActorWalk = true;
+					ActorWalk = false;
 				}
 			}
 		}
 
-
-		if (SetBag[ActorBag[0].Get_Location_X() - 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
-		{
-			SetWalk = true;
-		}
-		else
-		{
-			SetWalk = false;
-		}
-
-
-		if (ActorWalk && SetWalk)
+		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X() - 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_X(-1);
 			ActorBag[0].Set_Logic(true);
@@ -132,27 +112,17 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() + 1 == BagIterator->Get_Location_Y())
 			{
-				if (!BagIterator->Get_Walkable())
-				{
-					ActorWalk = false;
-				}
-				else
+				if (BagIterator->Get_Walkable())
 				{
 					ActorWalk = true;
 				}
+				else
+				{
+					ActorWalk = false;
+				}
 			}
 		}
-
-		if (SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() + 1].Get_Walkable())
-		{
-			SetWalk = true;
-		}
-		else
-		{
-			SetWalk = false;
-		}
-
-		if (ActorWalk && SetWalk)
+		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() + 1].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_Y(1);
 			ActorBag[0].Set_Logic(true);
@@ -166,27 +136,17 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		{
 			if (ActorBag[0].Get_Location_X() + 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
-				if (!BagIterator->Get_Walkable())
-				{
-					ActorWalk = false;
-				}
-				else
+				if (BagIterator->Get_Walkable())
 				{
 					ActorWalk = true;
 				}
+				else
+				{
+					ActorWalk = false;
+				}
 			}
 		}
-
-		if (SetBag[ActorBag[0].Get_Location_X() + 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
-		{
-			SetWalk = true;
-		}
-		else
-		{
-			SetWalk = false;
-		}
-
-		if (ActorWalk && SetWalk)
+		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X() + 1][ActorBag[0].Get_Location_Y()].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_X(1);
 			ActorBag[0].Set_Logic(true);
@@ -230,7 +190,6 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 	{
 		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
 	}
-
 }
 
 void MapFill()
@@ -244,10 +203,13 @@ void MapFill()
 		}
 	}
 
-	New_Prop(65, 16, '#', "Short Sword");
+	New_Prop(65, 16, '/', "Short Sword");
+	New_Prop(65, 16, '/', "Long Sword");
 
 	terminal_layer(2);
 	New_Actor("Player", 66, 16, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+
+	New_Actor("Goblin", 63, 16, 'g', true, false);
 	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);

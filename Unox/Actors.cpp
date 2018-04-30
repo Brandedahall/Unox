@@ -46,8 +46,7 @@ void Actors::Movement()
 	//Straight
 	if (ActorBag[0].Get_Location_X() > Get_Location_X())
 	{
-		bool Walkable = walk(Get_Location_X()+1, Get_Location_Y());
-		if (Walkable)
+		if (walk(Get_Location_X() + 1, Get_Location_Y()))
 		{
 			Set_Location_X(1);
 		}
@@ -58,8 +57,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_Y() > Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X(), Get_Location_Y()+1);
-		if (Walkable)
+		if (walk(Get_Location_X(), Get_Location_Y() + 1))
 		{
 			Set_Location_Y(1);
 		}
@@ -70,8 +68,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X())
 	{
-		bool Walkable = walk(Get_Location_X()-1, Get_Location_Y());
-		if (Walkable)
+		if (walk(Get_Location_X() - 1, Get_Location_Y()))
 		{
 			Set_Location_X(-1);
 		}
@@ -82,8 +79,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_Y() < Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X(), Get_Location_Y()-1);
-		if (Walkable)
+		if (walk(Get_Location_X(), Get_Location_Y() - 1))
 		{
 			Set_Location_Y(-1);
 		}
@@ -96,8 +92,7 @@ void Actors::Movement()
 	//Diagonal
 	if (ActorBag[0].Get_Location_X() > Get_Location_X() && ActorBag[0].Get_Location_Y() > Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X() + 1, Get_Location_Y()+1);
-		if (Walkable)
+		if (walk(Get_Location_X() + 1, Get_Location_Y() + 1))
 		{
 			Set_Location_X(1);
 			Set_Location_Y(1);
@@ -109,8 +104,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X() && ActorBag[0].Get_Location_Y() < Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X()-1, Get_Location_Y()-1);
-		if (Walkable)
+		if (walk(Get_Location_X() - 1, Get_Location_Y() - 1))
 		{
 			Set_Location_X(-1);
 			Set_Location_Y(-1);
@@ -122,8 +116,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_X() > Get_Location_X() && ActorBag[0].Get_Location_Y() < Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X() + 1, Get_Location_Y()-1);
-		if (Walkable)
+		if (walk(Get_Location_X() + 1, Get_Location_Y() - 1))
 		{
 			Set_Location_X(1);
 			Set_Location_Y(-1);
@@ -135,8 +128,7 @@ void Actors::Movement()
 	}
 	if (ActorBag[0].Get_Location_X() < Get_Location_X() && ActorBag[0].Get_Location_Y() > Get_Location_Y())
 	{
-		bool Walkable = walk(Get_Location_X()-1, Get_Location_Y()+1);
-		if (Walkable)
+		if (walk(Get_Location_X() - 1, Get_Location_Y() + 1))
 		{
 			Set_Location_X(-1);
 			Set_Location_Y(1);
@@ -152,9 +144,20 @@ void Actors::Movement()
 
 bool walk(int X, int Y)
 {
-	if (SetBag[X][Y].Get_Walkable())
+	Walk_ = true;
+	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
-		Walk_ = true;
+		if (BagIterator->Get_Location_X() == X && BagIterator->Get_Location_Y() == Y)
+		{
+			if (BagIterator->Get_Walkable())
+			{
+				Walk_ = true;
+			}
+			else
+			{
+				Walk_ = false;
+			}
+		}
 	}
 
 	if (SetBag[X][Y].Get_Walkable() && Walk_)

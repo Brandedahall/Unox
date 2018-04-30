@@ -184,28 +184,26 @@ public:
 	//Gets and sets for the private variables.
 
 	int Get_Location_X();
-	void Set_Location_X();
 
 	int Get_Location_Y();
-	void Set_Location_Y();
 
 	int Get_Damage();
-	void Set_Damage();
+	void Set_Damage(int Damage);
 
 	char Get_Glyth();
-	void Set_Glyth();
+	void Set_Glyth(char Glyth);
 
 	bool Get_Attackable();
-	void Set_Attackable();
+	void Set_Attackable(bool Attackable);
 
 	bool Get_Walkable();
-	void Set_Walkable();
+	void Set_Walkable(bool Walkable);
 
 	bool Get_Visible();
-	void Set_Visible();
+	void Set_Visible(bool Visible);
 
 	bool Get_Damaging();
-	void Set_Damaging();
+	void Set_Damaging(bool Damaging);
 	#pragma endregion
 
 	//Methods//
@@ -526,8 +524,9 @@ inline int Sets::Get_Damage()
 {
 	return Damage;
 }
-inline void Sets::Set_Damage()
+inline void Sets::Set_Damage(int damage)
 {
+	Damage = damage;
 }
 
 //Glyth//
@@ -535,8 +534,9 @@ inline char Sets::Get_Glyth()
 {
 	return Glyth;
 }
-inline void Sets::Set_Glyth()
+inline void Sets::Set_Glyth(char glyth)
 {
+	Glyth = glyth;
 }
 
 //Attackable//
@@ -544,8 +544,9 @@ inline bool Sets::Get_Attackable()
 {
 	return Attackable;
 }
-inline void Sets::Set_Attackable()
+inline void Sets::Set_Attackable(bool attackable)
 {
+	Attackable = attackable;
 }
 
 //Walkable//
@@ -553,8 +554,9 @@ inline bool Sets::Get_Walkable()
 {
 	return Walkable;
 }
-inline void Sets::Set_Walkable()
+inline void Sets::Set_Walkable(bool walkable)
 {
+	Walkable = walkable;
 }
 
 //Visible//
@@ -562,8 +564,9 @@ inline bool Sets::Get_Visible()
 {
 	return false;
 }
-inline void Sets::Set_Visible()
+inline void Sets::Set_Visible(bool visible)
 {
+	Visible = visible;
 }
 
 //Damaging//
@@ -571,8 +574,9 @@ inline bool Sets::Get_Damaging()
 {
 	return Damaging;
 }
-inline void Sets::Set_Damaging()
+inline void Sets::Set_Damaging(bool damaging)
 {
+	Damaging = damaging;
 }
 
 //Location
@@ -581,18 +585,11 @@ inline int Sets::Get_Location_X()
 	return X;
 }
 
-inline void Sets::Set_Location_X()
-{
-}
-
 inline int Sets::Get_Location_Y()
 {
 	return Y;
 }
 
-inline void Sets::Set_Location_Y()
-{
-}
 
 inline vector<Props> Sets::Get_Inventory()
 {
