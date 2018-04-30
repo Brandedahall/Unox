@@ -3,6 +3,7 @@
 #include "BearLibTerminal.h"
 #include <vector>
 #include <iostream>
+//#include "Mapgen.h"
 
 using namespace std;
 
@@ -223,21 +224,22 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 void MapFill()
 {
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
-	for (int i = 0; i < 130; i++)
+	for (int i = 0; i < 65; i++)
 	{
-		for (int j = 0; j < 30; j++)
+		for (int j = 0; j < 15; j++)
 		{
-			New_Set(i, j, '~', true, true, 1); //Creates 130x30 floor tiles.
+			New_Set(i, j, 0x1001, true, true, 1); //Creates 130x30 floor tiles.
 		}
 	}
 
-	New_Prop(65, 16, '/', "Short Sword");
-	New_Prop(65, 16, '/', "Long Sword");
+	New_Prop(34, 8, '/', "Short Sword");
+	New_Prop(34, 8, '/', "Long Sword");
 
 	terminal_layer(2);
-	New_Actor("Player", 66, 16, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", 33, 8, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	ActorBag[0].Set_Level(1);
 
-	New_Actor("Goblin", 63, 16, 'g', true, false, 2);
+	New_Actor("Goblin", 31, 8, 'g', true, false, 2);
 	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
@@ -245,40 +247,47 @@ void MapFill()
 
 void UI()
 {
-	for (int i = 0; i < 31; i++)
+	for (int i = 0; i < 16; i++)
 	{
-		terminal_print(131, i, "|");
+		terminal_print(65, i, "|");
 	}
-	for (int i = 0; i < 131; i++)
+	for (int i = 0; i < 66; i++)
 	{
-		terminal_print(i, 30, "-");
+		terminal_print(i, 15, "-");
 	}
 	//Stats//
-	terminal_print(140, 0, "Statistics");
+	terminal_print(68, 0, "Statistics");
 
 	//Health//
 	int Health = ActorBag[0].Get_Health();
 	std::string s = std::to_string(Health);
 	char const *pchar = s.c_str();
-	terminal_print(132, 1, "Health: ");
-	terminal_print(146, 1, pchar);
+	terminal_print(66, 1, "Health: ");
+	terminal_print(78, 1, pchar);
+
+	//Mana//
+	int Mana = ActorBag[0].Get_Mana();
+	s = std::to_string(Mana);
+	pchar = s.c_str();
+	terminal_print(66, 2, "Mana: ");
+	terminal_print(78, 2, pchar);
 
 	//Experience//
 	int Experience = ActorBag[0].Get_Experience();
 	s = std::to_string(Experience);
 	pchar = s.c_str();
-	terminal_print(132, 2, "Exp: ");
-	terminal_print(146, 2, pchar);
+	terminal_print(66, 3, "Exp: ");
+	terminal_print(78, 3, pchar);
 
 	int Level = ActorBag[0].Get_Level();
 	s = std::to_string(Level);
 	pchar = s.c_str();
-	terminal_print(132, 3, "Level: ");
-	terminal_print(146, 3, pchar);
+	terminal_print(66, 4, "Level: ");
+	terminal_print(78, 4, pchar);
 
 	//----------//
 
-	terminal_print(132, 4, "--------Attributes------------");
+	terminal_print(66, 5, "--Attributes--");
 
 	//----------//
 
@@ -286,50 +295,50 @@ void UI()
 	int Strength = ActorBag[0].Get_Strength();
 	s = std::to_string(Strength);
 	pchar = s.c_str();
-	terminal_print(132, 5, "Strength: ");
-	terminal_print(146, 5, pchar);
+	terminal_print(66, 6, "Str: ");
+	terminal_print(72, 6, pchar);
 
 	//Willpower//
 	int Willpower = ActorBag[0].Get_Wisdom();
 	s = std::to_string(Willpower);
 	pchar = s.c_str();
-	terminal_print(132, 6, "Willpower: ");
-	terminal_print(146, 6, pchar);
+	terminal_print(66, 7, "Wil: ");
+	terminal_print(72, 7, pchar);
 
 	//Agility//
 	int Agility = ActorBag[0].Get_Agility();
 	s = std::to_string(Agility);
 	pchar = s.c_str();
-	terminal_print(132, 7, "Agility: ");
-	terminal_print(146, 7, pchar);
+	terminal_print(66, 8, "Agi: ");
+	terminal_print(72, 8, pchar);
 	
 	//Intelligence//
 	int Intelligence = ActorBag[0].Get_Intelligence();
 	s = std::to_string(Intelligence);
 	pchar = s.c_str();
-	terminal_print(132, 8, "Intelligence: ");
-	terminal_print(146, 8, pchar);
+	terminal_print(66, 9, "Int: ");
+	terminal_print(72, 9, pchar);
 
 	//Perception//
 	int Perception = ActorBag[0].Get_Perception();
 	s = std::to_string(Perception);
 	pchar = s.c_str();
-	terminal_print(132, 9, "Perception: ");
-	terminal_print(146, 9, pchar);
+	terminal_print(66, 10, "Per: ");
+	terminal_print(72, 10, pchar);
 
 
 	//Items//
-	terminal_print(0, 31, "//----Items on the ground----\\\\");
+	terminal_print(0, 16, "//--Items on the ground--\\\\");
 
-	for (int i = 31; i < 50; i++)
+	for (int i = 16; i < 25; i++)
 	{
-		terminal_print(32, i, "|");
+		terminal_print(27, i, "|");
 	}
 
 	int Num_Items = SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory().size();
 	if (Num_Items == 0)
 	{
-		terminal_print(0, 32, "No Items on the ground");
+		terminal_print(0, 17, "No Items on the ground");
 	}
 	else
 	{
@@ -337,9 +346,9 @@ void UI()
 		{
 			s = std::to_string(i);
 			pchar = s.c_str();
-			terminal_print(0, 32 + i, pchar);
-			terminal_print(1, 32 + i, ".");
-			terminal_print(3, 32 + i, SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory()[i].Get_Name().c_str());
+			terminal_print(0, 17 + i, pchar);
+			terminal_print(1, 17 + i, ".");
+			terminal_print(3, 17 + i, SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory()[i].Get_Name().c_str());
 		}
 	}
 
@@ -353,10 +362,21 @@ void UI()
 //Required at startup to initialize the map.
 void Init_Map()
 {
-	for (int x = 0; x < 130; x++) {
+	for (int x = 0; x < 130; x++) 
+	{
 		SetBag.push_back(vector<Sets>());
-		for (int y = 0; y < 30; y++) {
+		for (int y = 0; y < 30; y++) 
+		{
 			SetBag[x].push_back(Sets());
+		}
+	}
+
+	for (int x = 0; x < 130; x++) 
+	{
+		Overworld.push_back(vector<Sets>());
+		for (int y = 0; y < 30; y++) 
+		{
+			Overworld[x].push_back(Sets());
 		}
 	}
 }

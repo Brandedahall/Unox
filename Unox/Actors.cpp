@@ -6,6 +6,7 @@
 vector<Actors> ActorBag = {};
 vector<Props> PropBag = {};
 vector<vector<Sets>> SetBag(30,vector<Sets>(130, Sets()));
+vector<vector<Sets>> Overworld(30, vector<Sets>(130, Sets()));
 
 int ActorId = 0;
 int PropId = 0;

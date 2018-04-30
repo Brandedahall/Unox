@@ -2,6 +2,8 @@
 #define _LOGIC_H_
 
 
+
+
 //Logic//
 inline void ActorLogic();
 inline void PropLogic();
@@ -11,6 +13,7 @@ extern void GameStart();
 inline void Keyboard();
 inline void Map();
 void MapFill();
+void FOV();
 
 void UI();
 

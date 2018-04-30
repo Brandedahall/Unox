@@ -285,7 +285,7 @@ inline int Actors::Get_Level()
 
 inline void Actors::Set_Level(int level)
 {
-	Level = level;
+	Level += level;
 }
 
 inline int Actors::Get_Experience()
@@ -625,6 +625,7 @@ bool walk(int X, int Y);
 extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
 extern vector<vector<Sets>> SetBag;
+extern vector<vector<Sets>> Overworld;
 
 //IDs for the objects within the bags. Just in case they need to be found using ID's. Possibly for time-sensitive spells, lasting damage etc.
 extern int ActorID;

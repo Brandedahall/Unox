@@ -6,59 +6,29 @@
 
 using namespace std;
 
-//Creates a square room at a random location on the map.
-inline void Num_Gen()
+std::random_device rd;
+std::mt19937 mt(rd());
+
+int randomInt(int exclusiveMax)
 {
-	for (int i = 0; i < 25; i++)
-	{
-		int X = getRand(10, 120);
-		int Y = getRand(5, 20);
-
-		int Xlength = getRand(4, 8);
-		int Ylength = getRand(4, 8);
-
-		Room(X, Y, Xlength, Ylength);
-	}
+	std::uniform_int_distribution<> dist(0, exclusiveMax - 1);
+	return dist(mt);
 }
 
-time_t oldseed;
-
-int getRand(int min, int max)
+int randomInt(int min, int max) // inclusive min/max
 {
-	time_t seed;
-	seed = time(NULL) + oldseed;
-	oldseed = seed;
-
-	srand(seed);
-
-	int n = max - min + 1;
-	int i = rand() % n;
-
-	if (i < 0)
-		i = -i;
-
-	return min + i;
+	std::uniform_int_distribution<> dist(0, max - min);
+	return dist(mt) + min;
 }
 
-inline void Corridor()
+bool randomBool(double probability = 0.5)
 {
-
+	std::bernoulli_distribution dist(probability);
+	return dist(mt);
 }
 
-inline void Room(int x, int y, int xmax, int ymax)
+struct Rect
 {
-	for (int i = x; i <= x + xmax; i++)
-	{
-		for (int j = y; j <= y + ymax; j++)
-		{
-			if (i > x && i < (x + xmax) && j > y && j < (y + ymax))
-			{
-				New_Set(i, j, '~', true, true, 3);
-			}
-			else
-			{
-				New_Set(i, j, '%', true, false, 1);
-			}
-		}
-	}
-}
+	int x, y;
+	int width, height;
+};
