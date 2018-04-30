@@ -177,7 +177,26 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 	{
 		for (auto tile : row)
 		{
-			terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+			switch (tile.Get_Type())
+			{
+			case 1:
+			{
+				terminal_color("orange");
+				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+				terminal_color("white");
+			}
+			case 2:
+			{
+				terminal_color("red");
+				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+				terminal_color("white");
+			}
+			default:
+			{
+				terminal_color("white");
+				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+			}
+			}
 		}
 	}
 
@@ -199,7 +218,7 @@ void MapFill()
 	{
 		for (int j = 0; j < 30; j++)
 		{
-			New_Set(i, j, '*', true, true); //Creates 130x30 floor tiles.
+			New_Set(i, j, '~', true, true, 1); //Creates 130x30 floor tiles.
 		}
 	}
 
@@ -207,9 +226,9 @@ void MapFill()
 	New_Prop(65, 16, '/', "Long Sword");
 
 	terminal_layer(2);
-	New_Actor("Player", 66, 16, '@', true, false); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", 66, 16, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 
-	New_Actor("Goblin", 63, 16, 'g', true, false);
+	New_Actor("Goblin", 63, 16, 'g', true, false, 2);
 	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);

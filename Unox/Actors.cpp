@@ -15,9 +15,9 @@ bool Walk_ = true;
 
 #pragma region Methods
 //----------------------------------//
-void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable)
+void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type)
 {
-	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId);
+	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId, Type);
 	ActorId +=1;
 	ActorBag.push_back(Actor);
 }
@@ -28,9 +28,9 @@ void New_Prop(int X, int Y, char Glyth, string Name)
 	PropBag.push_back(Prop);
 	SetBag[X][Y].Set_Inventory(Prop);
 }
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable)
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type)
 {
-	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable);
+	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type);
 	SetId++;
 	SetBag[X][Y] = Set;
 }
@@ -173,7 +173,7 @@ bool walk(int X, int Y)
 //----------------------------------//
 #pragma region Constructors
 //Base Constructors//
-inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id)
+inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
 {
 	Name = name;
 	X = x;
@@ -183,6 +183,7 @@ inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool 
 	ID = id;
 	Logic = true;
 	Walkable = walkable;
+	Type = type;
 }
 
 inline Actors::~Actors()
@@ -204,7 +205,7 @@ inline Props::~Props()
 
 inline Sets::Sets() {}
 
-inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable)
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type)
 {
 	X = x;
 	Y = y;
@@ -212,6 +213,7 @@ inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable)
 	Visible = visible;
 	ID = id;
 	Walkable = walkable;
+	Type = type;
 }
 
 inline Sets::~Sets()

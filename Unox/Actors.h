@@ -60,7 +60,7 @@ class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID);
+	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID, int Type);
 	~Actors();
 
 	//Gets and sets for the private variables.
@@ -177,15 +177,16 @@ class Sets
 public:
 	//Constructor and destructor.
 	Sets();
-	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable);
+	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type);
 	~Sets();
 
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
 
 	int Get_Location_X();
-
 	int Get_Location_Y();
+
+	int Get_Type();
 
 	int Get_Damage();
 	void Set_Damage(int Damage);
@@ -216,6 +217,7 @@ private:
 	int Y;
 	int Damage; //If a character walks across a floor which has 'Damaging' set to true.
 	int ID; //The ID of the set object.
+	int Type;
 
 	//Char//
 	char Glyth; //The visible character which is drawn to the screen.
@@ -519,6 +521,11 @@ inline void Props::Set_Location_Y()
 #pragma endregion
 
 #pragma region Gets and Sets | Sets
+//Type//
+inline int Sets::Get_Type()
+{
+	return Type;
+}
 //Damage//
 inline int Sets::Get_Damage()
 {
@@ -528,7 +535,6 @@ inline void Sets::Set_Damage(int damage)
 {
 	Damage = damage;
 }
-
 //Glyth//
 inline char Sets::Get_Glyth()
 {
@@ -607,9 +613,9 @@ inline void Sets::Set_Inventory(Props Item)
 
 #pragma region Methods definitions
 //These methods create new Actors, Props, and Sets.
-void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable);
+void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
 void New_Prop(int X, int Y, char Glyth, string Name);
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable);
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
 
 bool walk(int X, int Y);
 #pragma endregion

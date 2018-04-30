@@ -47,18 +47,17 @@ inline void Corridor()
 
 inline void Room(int x, int y, int xmax, int ymax)
 {
-
 	for (int i = x; i <= x + xmax; i++)
 	{
 		for (int j = y; j <= y + ymax; j++)
 		{
 			if (i > x && i < (x + xmax) && j > y && j < (y + ymax))
 			{
-				New_Set(i, j, '~', true, true);
+				New_Set(i, j, '~', true, true, 3);
 			}
 			else
 			{
-				New_Set(i, j, '%', true, false);
+				New_Set(i, j, '%', true, false, 1);
 			}
 		}
 	}
