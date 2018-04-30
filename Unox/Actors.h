@@ -568,7 +568,7 @@ inline void Sets::Set_Walkable(bool walkable)
 //Visible//
 inline bool Sets::Get_Visible()
 {
-	return false;
+	return Visible;
 }
 inline void Sets::Set_Visible(bool visible)
 {

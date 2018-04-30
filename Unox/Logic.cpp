@@ -22,7 +22,7 @@ extern void GameStart() //The main game logic. The game runs through each of the
 	SetLogic();
 	Map();
 	UI();
-	//FOV//
+	FOV();
 }
 
 //LOGIC//
@@ -51,6 +51,11 @@ inline void SetLogic()
 }
 
 //FOV//
+
+void FOV()
+{
+
+}
 
 //MOVEMENT//
 void Keyboard() //Reads key inputs from the keyboard and moves the player, among other key commands.
@@ -177,37 +182,41 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 	{
 		for (auto tile : row)
 		{
-			switch (tile.Get_Type())
+			if (tile.Get_Visible())
 			{
-			case 1:
-			{
-				terminal_color("orange");
-				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
-				terminal_color("white");
+				switch (tile.Get_Type())
+				{
+				case 1:
+				{
+					terminal_color("orange");
+					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+					terminal_color("white");
+				}
+				case 2:
+				{
+					terminal_color("red");
+					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+					terminal_color("white");
+				}
+				default:
+					break;
+				}
 			}
-			case 2:
+			else
 			{
-				terminal_color("red");
-				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
-				terminal_color("white");
-			}
-			default:
-			{
-				terminal_color("white");
-				terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
-			}
+
 			}
 		}
 	}
 
-	for (vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
+	for (auto Prop : PropBag)
 	{
-		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+		terminal_put(Prop.Get_Location_X(), Prop.Get_Location_Y(), Prop.Get_Glyth());
 	}
 
-	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
+	for (auto Actor : ActorBag)
 	{
-		terminal_put(BagIterator->Get_Location_X(), BagIterator->Get_Location_Y(), BagIterator->Get_Glyth());
+		terminal_put(Actor.Get_Location_X(), Actor.Get_Location_Y(), Actor.Get_Glyth());
 	}
 }
 
