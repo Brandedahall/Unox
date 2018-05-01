@@ -11,7 +11,7 @@ void main() //Main entry point of the program.
 	Init_Map();
 	terminal_open(); //Opens the terminal window.
 	terminal_set("window: title='Unox', size=80x25, minimum-size=80x25"); //Sets with title, size and minimum size of the terminal.
-	terminal_set("font: tileset.png, size = 16x16, codepage = 437");
+	terminal_set("font: tileset.bmp, size = 16x16");
 	MapFill(); //Places the ground and temporary player character. \\TO BE REPLACED//
 	//Num_Gen();
 	terminal_refresh(); //Refreshes the terminal so that it shows up.

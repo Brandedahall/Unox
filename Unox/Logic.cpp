@@ -228,18 +228,19 @@ void MapFill()
 	{
 		for (int j = 0; j < 15; j++)
 		{
-			New_Set(i, j, 0x1001, true, true, 1); //Creates 130x30 floor tiles.
+			New_Set(i, j, 0x1160, true, true, 1); //Creates 65x15 floor tiles. 
+												  //0x1160 = Dirt?
 		}
 	}
 
-	New_Prop(34, 8, '/', "Short Sword");
-	New_Prop(34, 8, '/', "Long Sword");
+	New_Prop(34, 8, 0x115C, "Short Sword");
+	New_Prop(34, 8, 0x115C, "Long Sword");
 
 	terminal_layer(2);
-	New_Actor("Player", 33, 8, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", 33, 8, 0x01, true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	ActorBag[0].Set_Level(1);
 
-	New_Actor("Goblin", 31, 8, 'g', true, false, 2);
+	New_Actor("Goblin", 31, 8, 0x47, true, false, 2);
 	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
@@ -247,14 +248,16 @@ void MapFill()
 
 void UI()
 {
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 15; i++)
 	{
-		terminal_print(65, i, "|");
+		terminal_put(65, i, 0xB3);
 	}
-	for (int i = 0; i < 66; i++)
+	for (int i = 0; i < 65; i++)
 	{
-		terminal_print(i, 15, "-");
+		terminal_put(i, 15, 0xC4);
 	}
+	terminal_put(65, 15, 0xD9);
+
 	//Stats//
 	terminal_print(68, 0, "Statistics");
 
@@ -330,9 +333,11 @@ void UI()
 	//Items//
 	terminal_print(0, 16, "//--Items on the ground--\\\\");
 
+
+	terminal_put(27, 15, 0xC2);
 	for (int i = 16; i < 25; i++)
 	{
-		terminal_print(27, i, "|");
+		terminal_put(27, i, 0xB3);
 	}
 
 	int Num_Items = SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory().size();

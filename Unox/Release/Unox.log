@@ -1,17 +1,14 @@
-﻿  noiseutils.cpp
-c:\users\isabelle\documents\github\unox\unox\include\noiseutils.h(1217): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
-include\noiseutils.cpp(61): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-include\noiseutils.cpp(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-include\noiseutils.cpp(867): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  Logic.cpp
+Logic.cpp(231): warning C4305: 'argument': truncation from 'int' to 'char'
+Logic.cpp(231): warning C4309: 'argument': truncation of constant value
+Logic.cpp(236): warning C4305: 'argument': truncation from 'int' to 'char'
+Logic.cpp(236): warning C4309: 'argument': truncation of constant value
+Logic.cpp(237): warning C4305: 'argument': truncation from 'int' to 'char'
+Logic.cpp(237): warning C4309: 'argument': truncation of constant value
   Generating code
-  63 of 662 functions ( 9.5%) were compiled, the rest were copied from previous compilation.
-    54 functions were new in current compilation
-    37 functions had inline decision re-evaluated but remain unchanged
+  1 of 609 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-libnoise.lib(libnoise.dll) : error LNK2026: module unsafe for SAFESEH image.
-C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.exe : fatal error LNK1281: Unable to generate SAFESEH image.
+  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.exe
+  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.pdb (Full PDB)
