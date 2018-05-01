@@ -4,7 +4,10 @@
 #include <random>
 #include <vector>
 #include <iostream>
+#include "Actors.h"
 
+extern void Map_Gen();
 
+void Room(int X, int Y, int width, int height);
 
 #endif

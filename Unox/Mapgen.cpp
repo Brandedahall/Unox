@@ -1,34 +1,38 @@
 #include "Mapgen.h"
 #include <vector>
-#include "Actors.h"
 #include <random>
 #include <iostream>
 
 using namespace std;
 
-std::random_device rd;
-std::mt19937 mt(rd());
-
-int randomInt(int exclusiveMax)
+inline void Map_Gen()
 {
-	std::uniform_int_distribution<> dist(0, exclusiveMax - 1);
-	return dist(mt);
+	default_random_engine rd(std::random_device{}());
+	mt19937 gen(rd());
+	uniform_int_distribution<> Width(1, 59);
+	uniform_int_distribution<> Height(1, 9);
+
+	//Creates a random room.
+	Room(Width(gen), Height(gen), 5, 5);
+
+	
+
 }
 
-int randomInt(int min, int max) // inclusive min/max
+void Room(int X, int Y, int width, int height)
 {
-	std::uniform_int_distribution<> dist(0, max - min);
-	return dist(mt) + min;
+	for (int x = X; x <= X + width; x++)
+	{
+		for (int y = Y; y <= Y + height; y++)
+		{
+			if (x == X || x == X + width || y == Y || y == Y + height)
+			{
+				New_Set(x, y, '%', true, false, 2);
+			}
+			else
+			{
+				New_Set(x, y, '~', true, true, 1);
+			}
+		}
+	}
 }
-
-bool randomBool(double probability = 0.5)
-{
-	std::bernoulli_distribution dist(probability);
-	return dist(mt);
-}
-
-struct Rect
-{
-	int x, y;
-	int width, height;
-};

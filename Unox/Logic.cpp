@@ -3,12 +3,9 @@
 #include "BearLibTerminal.h"
 #include <vector>
 #include <iostream>
-//#include "Mapgen.h"
+#include "Mapgen.h"
 
 using namespace std;
-
-#define MAP_WIDTH = 130;
-#define MAP_HEIGHT = 30;
 
 bool ActorWalk = true;
 bool SetWalk;
@@ -64,7 +61,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	ActorWalk = true;
 	int key = terminal_read();
 	//Moves the player up one square
-	if (key == TK_UP && ActorBag[0].Get_Location_Y() > 1)
+	if (key == TK_UP && ActorBag[0].Get_Location_Y() > 0)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -87,7 +84,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		}
 	}
 	//Moves the player left one square.
-	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() > 1)
+	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() > 0)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -112,7 +109,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player right one square.
-	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 29)
+	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 14)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -136,7 +133,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player down one square.
-	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 129)
+	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 64)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -223,15 +220,12 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 
 void MapFill()
 {
+
+
+
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
-	for (int i = 0; i < 65; i++)
-	{
-		for (int j = 0; j < 15; j++)
-		{
-			New_Set(i, j, 0x1160, true, true, 1); //Creates 65x15 floor tiles. 
-												  //0x1160 = Dirt?
-		}
-	}
+	
+	Map_Gen();
 
 	New_Prop(34, 8, 0x115C, "Short Sword");
 	New_Prop(34, 8, 0x115C, "Long Sword");
@@ -367,10 +361,10 @@ void UI()
 //Required at startup to initialize the map.
 void Init_Map()
 {
-	for (int x = 0; x < 130; x++) 
+	for (int x = 0; x < 65; x++) 
 	{
 		SetBag.push_back(vector<Sets>());
-		for (int y = 0; y < 30; y++) 
+		for (int y = 0; y < 16; y++) 
 		{
 			SetBag[x].push_back(Sets());
 		}
