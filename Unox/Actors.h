@@ -37,6 +37,8 @@ public:
 	void Set_Equippable();
 #pragma endregion
 
+	void Draw();
+
 private:
 	//Int//
 	int X;
@@ -127,6 +129,7 @@ public:
 	void Set_Logic(bool logic);
 	#pragma endregion
 
+	void Draw();
 	void AI();
 	void Movement();
 	vector<Props> Get_Inventory();

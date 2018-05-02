@@ -24,7 +24,7 @@ public:
 	inline void center();
 	inline void PlaceRoom();
 
-public:
+private:
 	int X1, Y1, X2, Y2;
 	int center_x, center_y;
 };

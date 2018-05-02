@@ -8,11 +8,11 @@ using namespace std;
 
 default_random_engine rd(std::random_device{}());
 mt19937 gen(rd());
-uniform_int_distribution<> Width(1, 72);
+uniform_int_distribution<> Width(1, 412);
 uniform_int_distribution<> LengthWidth(4, 12);
-uniform_int_distribution<> Height(1, 17);
+uniform_int_distribution<> Height(1, 187);
 uniform_int_distribution<> LengthHeight(4, 12);
-uniform_int_distribution<> features(10, 25);
+uniform_int_distribution<> features(50, 100);
 
 int Features = features(gen);
 int W, H, LW, LH;

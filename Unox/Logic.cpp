@@ -9,9 +9,21 @@ using namespace std;
 
 bool ActorWalk = true;
 bool SetWalk;
+int Turn_Timer = 0;
+
+int map_x, map_y;
+
+int camera_x = 0, camera_y = 0;
+
+#define Camera_Width 65
+#define Camera_Height 40
+
+#define Map_Width 425
+#define Map_Height 200
 
 extern void GameStart() //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
 {
+	(camera_x, camera_y) = (ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
 	Keyboard();
 	terminal_clear();
 	terminal_refresh();
@@ -21,6 +33,7 @@ extern void GameStart() //The main game logic. The game runs through each of the
 	Map();
 	UI();
 	FOV();
+	Turn_Timer++;
 }
 
 //LOGIC//
@@ -80,6 +93,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() - 1].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_Y(-1);
+			Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y() - 1);
 			ActorBag[0].Set_Logic(true);
 		}
 	}
@@ -176,24 +190,27 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 
 inline void Map() //Basically places everything that's inside the bags onto the screen.
 {
-	for (auto row : SetBag)
+	Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
+
+	for (int x = 0; x < Camera_Width; x++)
 	{
-		for (auto tile : row)
+		for (int y = 0; y < Camera_Height; y++)
 		{
-			if (tile.Get_Visible())
+			(map_x, map_y) = (camera_x + x, camera_y + y);
+			if (SetBag[map_x][map_y].Get_Visible())
 			{
-				switch (tile.Get_Type())
+				switch (SetBag[map_x][map_y].Get_Type())
 				{
 				case 1:
 				{
 					terminal_color("red");
-					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+					terminal_put(SetBag[x][y].Get_Location_X(), SetBag[x][y].Get_Location_Y(), SetBag[x][y].Get_Glyth());
 					terminal_color("white");
 				}
 				case 2:
 				{
 					terminal_color("brown");
-					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
+					terminal_put(SetBag[x][y].Get_Location_X(), SetBag[x][y].Get_Location_Y(), SetBag[x][y].Get_Glyth());
 					terminal_color("white");
 				}
 				default:
@@ -209,12 +226,12 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 
 	for (auto Prop : PropBag)
 	{
-		terminal_put(Prop.Get_Location_X(), Prop.Get_Location_Y(), Prop.Get_Glyth());
+		Prop.Draw();
 	}
 
 	for (auto Actor : ActorBag)
 	{
-		terminal_put(Actor.Get_Location_X(), Actor.Get_Location_Y(), Actor.Get_Glyth());
+		Actor.Draw();
 	}
 }
 
@@ -240,43 +257,43 @@ void UI()
 {
 	for (int i = 0; i < 30; i++)
 	{
-		terminal_put(85, i, 0xB3);
+		terminal_put(65, i, 0xB3);
 	}
-	for (int i = 0; i < 85; i++)
+	for (int i = 0; i < 65; i++)
 	{
 		terminal_put(i, 30, 0xC4);
 	}
-	terminal_put(85, 30, 0xD9);
+	terminal_put(65, 30, 0xD9);
 
 	//Stats//
-	terminal_print(86, 0, "Statistics");
+	terminal_print(66, 0, "Statistics");
 
 	//Health//
 	int Health = ActorBag[0].Get_Health();
 	std::string s = std::to_string(Health);
 	char const *pchar = s.c_str();
-	terminal_print(86, 1, "Health: ");
+	terminal_print(66, 1, "Health: ");
 	terminal_print(93, 1, pchar);
 
 	//Mana//
 	int Mana = ActorBag[0].Get_Mana();
 	s = std::to_string(Mana);
 	pchar = s.c_str();
-	terminal_print(86, 2, "Mana: ");
-	terminal_print(93, 2, pchar);
+	terminal_print(66, 2, "Mana: ");
+	terminal_print(73, 2, pchar);
 
 	//Experience//
 	int Experience = ActorBag[0].Get_Experience();
 	s = std::to_string(Experience);
 	pchar = s.c_str();
-	terminal_print(86, 3, "Exp: ");
-	terminal_print(93, 3, pchar);
+	terminal_print(66, 3, "Exp: ");
+	terminal_print(73, 3, pchar);
 
 	int Level = ActorBag[0].Get_Level();
 	s = std::to_string(Level);
 	pchar = s.c_str();
-	terminal_print(86, 4, "Level: ");
-	terminal_print(93, 4, pchar);
+	terminal_print(66, 4, "Level: ");
+	terminal_print(73, 4, pchar);
 
 	//----------//
 
@@ -288,8 +305,8 @@ void UI()
 	int Strength = ActorBag[0].Get_Strength();
 	s = std::to_string(Strength);
 	pchar = s.c_str();
-	terminal_print(86, 6, "Str: ");
-	terminal_print(93, 6, pchar);
+	terminal_print(66, 6, "Str: ");
+	terminal_print(73, 6, pchar);
 
 	//Willpower//
 	int Willpower = ActorBag[0].Get_Wisdom();
@@ -302,22 +319,28 @@ void UI()
 	int Agility = ActorBag[0].Get_Agility();
 	s = std::to_string(Agility);
 	pchar = s.c_str();
-	terminal_print(86, 8, "Agi: ");
-	terminal_print(93, 8, pchar);
+	terminal_print(66, 8, "Agi: ");
+	terminal_print(73, 8, pchar);
 	
 	//Intelligence//
 	int Intelligence = ActorBag[0].Get_Intelligence();
 	s = std::to_string(Intelligence);
 	pchar = s.c_str();
-	terminal_print(86, 9, "Int: ");
-	terminal_print(93, 9, pchar);
+	terminal_print(66, 9, "Int: ");
+	terminal_print(73, 9, pchar);
 
 	//Perception//
 	int Perception = ActorBag[0].Get_Perception();
 	s = std::to_string(Perception);
 	pchar = s.c_str();
-	terminal_print(86, 10, "Per: ");
-	terminal_print(93, 10, pchar);
+	terminal_print(66, 10, "Per: ");
+	terminal_print(73, 10, pchar);
+
+	//Turn Timer//
+	s = std::to_string(Turn_Timer);
+	pchar = s.c_str();
+	terminal_print(66, 10, "Turn: ");
+	terminal_print(73, 10, pchar);
 
 
 	//Items//
@@ -353,26 +376,40 @@ void UI()
 
 }
 
+void Move_Camera(int target_x, int target_y)
+{
+	int x = target_x - Camera_Width / 2;
+	int y = target_y - Camera_Height / 2;
+
+	if (x < 0) { x = 0; }
+	if (y < 0) { y = 0; }
+	if (x > Map_Width - (Camera_Width - 1)) { x = Map_Width - (Camera_Width - 1); }
+	if (y > Map_Height - (Camera_Height - 1)) { y = Map_Height - (Camera_Height - 1); }
+
+	(camera_x, camera_y) = (x, y);
+}
+
+int Camera_Coords(int x, int y)
+{
+	(x, y) = (x - camera_x, y - camera_y);
+
+	if (x < 0 || y < 0 || x >= Camera_Width || y >= Camera_Height)
+	{
+		return (NULL, NULL);
+	}
+
+	return (x, y);
+}
 
 //Required at startup to initialize the map.
 void Init_Map()
 {
-	for (int x = 0; x < 85; x++) 
+	for (int x = 0; x < Map_Width; x++)
 	{
 		SetBag.push_back(vector<Sets>());
-		for (int y = 0; y < 30; y++) 
+		for (int y = 0; y < Map_Height; y++) 
 		{
 			SetBag[x].push_back(Sets());
-		}
-	}
-
-
-	for (int x = 0; x < 85; x++) 
-	{
-		Overworld.push_back(vector<Sets>());
-		for (int y = 0; y < 30; y++) 
-		{
-			Overworld[x].push_back(Sets());
 		}
 	}
 }

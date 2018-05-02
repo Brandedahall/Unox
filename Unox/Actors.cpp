@@ -1,4 +1,6 @@
 #include "Actors.h"
+#include "bearlibterminal.h"
+#include "Logic.h"
 
 //----------------------------------//
 //Bags//
@@ -40,6 +42,12 @@ void Actors::AI()
 {
 	Movement();
 	//Attack//
+}
+
+void Actors::Draw()
+{
+	(X, Y) = Camera_Coords(X, Y);
+	terminal_put(X, Y, Get_Glyth());
 }
 
 void Actors::Movement()
@@ -139,6 +147,12 @@ void Actors::Movement()
 
 		}
 	}
+}
+
+
+void Props::Draw()
+{
+	terminal_put(Get_Location_X(), Get_Location_Y(), Get_Glyth());
 }
 
 #pragma endregion
