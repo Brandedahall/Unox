@@ -46,8 +46,21 @@ void Actors::AI()
 
 void Actors::Draw()
 {
-	(X, Y) = Camera_Coords(X, Y);
+	Camera_Coords(X, Y);
 	terminal_put(X, Y, Get_Glyth());
+}
+
+void Actors::Camera_Coords(int x, int y)
+{
+	int A = x - camera_x;
+	int B = y - camera_y;
+
+	if (x < 0 || y < 0 || x >= Camera_Width || y >= Camera_Height)
+	{
+
+	}
+	X = A;
+	Y = B;
 }
 
 void Actors::Movement()

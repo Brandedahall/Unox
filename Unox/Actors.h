@@ -130,6 +130,7 @@ public:
 	#pragma endregion
 
 	void Draw();
+	void Camera_Coords(int x, int y);
 	void AI();
 	void Movement();
 	vector<Props> Get_Inventory();

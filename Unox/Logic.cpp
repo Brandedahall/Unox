@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "Mapgen.h"
+#include <utility>
 
 using namespace std;
 
@@ -13,17 +14,14 @@ int Turn_Timer = 0;
 
 int map_x, map_y;
 
-int camera_x = 0, camera_y = 0;
+int camera_x, camera_y;
 
-#define Camera_Width 65
-#define Camera_Height 40
 
-#define Map_Width 425
-#define Map_Height 200
 
 extern void GameStart() //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
 {
-	(camera_x, camera_y) = (ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
+	camera_x = ActorBag[0].Get_Location_X();
+	camera_y = ActorBag[0].Get_Location_Y();
 	Keyboard();
 	terminal_clear();
 	terminal_refresh();
@@ -74,7 +72,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	ActorWalk = true;
 	int key = terminal_read();
 	//Moves the player up one square
-	if (key == TK_UP && ActorBag[0].Get_Location_Y() > 0)
+	if (key == TK_UP)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -93,12 +91,11 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		if (ActorWalk && SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y() - 1].Get_Walkable())
 		{
 			ActorBag[0].Set_Location_Y(-1);
-			Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y() - 1);
 			ActorBag[0].Set_Logic(true);
 		}
 	}
 	//Moves the player left one square.
-	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() > 0)
+	else if (key == TK_LEFT)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -120,10 +117,14 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			ActorBag[0].Set_Location_X(-1);
 			ActorBag[0].Set_Logic(true);
 		}
+		else
+		{
+
+		}
 	}
 
 	//Moves the player right one square.
-	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 40)
+	else if (key == TK_DOWN)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -147,7 +148,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player down one square.
-	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 84)
+	else if (key == TK_RIGHT)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -196,7 +197,8 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 	{
 		for (int y = 0; y < Camera_Height; y++)
 		{
-			(map_x, map_y) = (camera_x + x, camera_y + y);
+			map_x = camera_x + x;
+			map_y = camera_y + y;
 			if (SetBag[map_x][map_y].Get_Visible())
 			{
 				switch (SetBag[map_x][map_y].Get_Type())
@@ -204,17 +206,19 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 				case 1:
 				{
 					terminal_color("red");
-					terminal_put(SetBag[x][y].Get_Location_X(), SetBag[x][y].Get_Location_Y(), SetBag[x][y].Get_Glyth());
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					terminal_color("white");
 				}
 				case 2:
 				{
 					terminal_color("brown");
-					terminal_put(SetBag[x][y].Get_Location_X(), SetBag[x][y].Get_Location_Y(), SetBag[x][y].Get_Glyth());
+					terminal_put(x,y, SetBag[map_x][map_y].Get_Glyth());
 					terminal_color("white");
 				}
 				default:
+				{
 					break;
+				}
 				}
 			}
 			else
@@ -238,7 +242,7 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 void MapFill()
 {
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
-	
+
 	Map_Gen();
 
 	//New_Prop(34, 8, 0x115C, "Short Sword");
@@ -321,7 +325,7 @@ void UI()
 	pchar = s.c_str();
 	terminal_print(66, 8, "Agi: ");
 	terminal_print(73, 8, pchar);
-	
+
 	//Intelligence//
 	int Intelligence = ActorBag[0].Get_Intelligence();
 	s = std::to_string(Intelligence);
@@ -378,28 +382,19 @@ void UI()
 
 void Move_Camera(int target_x, int target_y)
 {
-	int x = target_x - Camera_Width / 2;
-	int y = target_y - Camera_Height / 2;
+	int x = target_x - (Camera_Width / 2);
+	int y = target_y - (Camera_Height / 2);
 
 	if (x < 0) { x = 0; }
 	if (y < 0) { y = 0; }
 	if (x > Map_Width - (Camera_Width - 1)) { x = Map_Width - (Camera_Width - 1); }
 	if (y > Map_Height - (Camera_Height - 1)) { y = Map_Height - (Camera_Height - 1); }
 
-	(camera_x, camera_y) = (x, y);
+	camera_x = x;
+	camera_y = y;
 }
 
-int Camera_Coords(int x, int y)
-{
-	(x, y) = (x - camera_x, y - camera_y);
 
-	if (x < 0 || y < 0 || x >= Camera_Width || y >= Camera_Height)
-	{
-		return (NULL, NULL);
-	}
-
-	return (x, y);
-}
 
 //Required at startup to initialize the map.
 void Init_Map()
@@ -407,7 +402,7 @@ void Init_Map()
 	for (int x = 0; x < Map_Width; x++)
 	{
 		SetBag.push_back(vector<Sets>());
-		for (int y = 0; y < Map_Height; y++) 
+		for (int y = 0; y < Map_Height; y++)
 		{
 			SetBag[x].push_back(Sets());
 		}
