@@ -109,7 +109,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player right one square.
-	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 14)
+	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() < 40)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -133,7 +133,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player down one square.
-	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 64)
+	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() < 84)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -186,13 +186,13 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 				{
 				case 1:
 				{
-					terminal_color("orange");
+					terminal_color("red");
 					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
 					terminal_color("white");
 				}
 				case 2:
 				{
-					terminal_color("red");
+					terminal_color("brown");
 					terminal_put(tile.Get_Location_X(), tile.Get_Location_Y(), tile.Get_Glyth());
 					terminal_color("white");
 				}
@@ -220,21 +220,17 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 
 void MapFill()
 {
-
-
-
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
 	
 	Map_Gen();
 
-	New_Prop(34, 8, 0x115C, "Short Sword");
-	New_Prop(34, 8, 0x115C, "Long Sword");
+	//New_Prop(34, 8, 0x115C, "Short Sword");
+	//New_Prop(34, 8, 0x115C, "Long Sword");
 
 	terminal_layer(2);
-	New_Actor("Player", 33, 8, 0x01, true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	ActorBag[0].Set_Level(1);
 
-	New_Actor("Goblin", 31, 8, 0x47, true, false, 2);
+	//New_Actor("Goblin", 31, 8, 0x47, true, false, 2);
 	ActorBag[0].Set_Health(10);
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
@@ -242,49 +238,49 @@ void MapFill()
 
 void UI()
 {
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 30; i++)
 	{
-		terminal_put(65, i, 0xB3);
+		terminal_put(85, i, 0xB3);
 	}
-	for (int i = 0; i < 65; i++)
+	for (int i = 0; i < 85; i++)
 	{
-		terminal_put(i, 15, 0xC4);
+		terminal_put(i, 30, 0xC4);
 	}
-	terminal_put(65, 15, 0xD9);
+	terminal_put(85, 30, 0xD9);
 
 	//Stats//
-	terminal_print(68, 0, "Statistics");
+	terminal_print(86, 0, "Statistics");
 
 	//Health//
 	int Health = ActorBag[0].Get_Health();
 	std::string s = std::to_string(Health);
 	char const *pchar = s.c_str();
-	terminal_print(66, 1, "Health: ");
-	terminal_print(78, 1, pchar);
+	terminal_print(86, 1, "Health: ");
+	terminal_print(93, 1, pchar);
 
 	//Mana//
 	int Mana = ActorBag[0].Get_Mana();
 	s = std::to_string(Mana);
 	pchar = s.c_str();
-	terminal_print(66, 2, "Mana: ");
-	terminal_print(78, 2, pchar);
+	terminal_print(86, 2, "Mana: ");
+	terminal_print(93, 2, pchar);
 
 	//Experience//
 	int Experience = ActorBag[0].Get_Experience();
 	s = std::to_string(Experience);
 	pchar = s.c_str();
-	terminal_print(66, 3, "Exp: ");
-	terminal_print(78, 3, pchar);
+	terminal_print(86, 3, "Exp: ");
+	terminal_print(93, 3, pchar);
 
 	int Level = ActorBag[0].Get_Level();
 	s = std::to_string(Level);
 	pchar = s.c_str();
-	terminal_print(66, 4, "Level: ");
-	terminal_print(78, 4, pchar);
+	terminal_print(86, 4, "Level: ");
+	terminal_print(93, 4, pchar);
 
 	//----------//
 
-	terminal_print(66, 5, "--Attributes--");
+	terminal_print(86, 5, "--Attributes--");
 
 	//----------//
 
@@ -292,44 +288,44 @@ void UI()
 	int Strength = ActorBag[0].Get_Strength();
 	s = std::to_string(Strength);
 	pchar = s.c_str();
-	terminal_print(66, 6, "Str: ");
-	terminal_print(72, 6, pchar);
+	terminal_print(86, 6, "Str: ");
+	terminal_print(93, 6, pchar);
 
 	//Willpower//
 	int Willpower = ActorBag[0].Get_Wisdom();
 	s = std::to_string(Willpower);
 	pchar = s.c_str();
-	terminal_print(66, 7, "Wil: ");
-	terminal_print(72, 7, pchar);
+	terminal_print(86, 7, "Wil: ");
+	terminal_print(93, 7, pchar);
 
 	//Agility//
 	int Agility = ActorBag[0].Get_Agility();
 	s = std::to_string(Agility);
 	pchar = s.c_str();
-	terminal_print(66, 8, "Agi: ");
-	terminal_print(72, 8, pchar);
+	terminal_print(86, 8, "Agi: ");
+	terminal_print(93, 8, pchar);
 	
 	//Intelligence//
 	int Intelligence = ActorBag[0].Get_Intelligence();
 	s = std::to_string(Intelligence);
 	pchar = s.c_str();
-	terminal_print(66, 9, "Int: ");
-	terminal_print(72, 9, pchar);
+	terminal_print(86, 9, "Int: ");
+	terminal_print(93, 9, pchar);
 
 	//Perception//
 	int Perception = ActorBag[0].Get_Perception();
 	s = std::to_string(Perception);
 	pchar = s.c_str();
-	terminal_print(66, 10, "Per: ");
-	terminal_print(72, 10, pchar);
+	terminal_print(86, 10, "Per: ");
+	terminal_print(93, 10, pchar);
 
 
 	//Items//
-	terminal_print(0, 16, "//--Items on the ground--\\\\");
+	terminal_print(0, 31, "//--Items on the ground--\\\\");
 
 
-	terminal_put(27, 15, 0xC2);
-	for (int i = 16; i < 25; i++)
+	terminal_put(27, 30, 0xC2);
+	for (int i = 31; i < 50; i++)
 	{
 		terminal_put(27, i, 0xB3);
 	}
@@ -337,7 +333,7 @@ void UI()
 	int Num_Items = SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory().size();
 	if (Num_Items == 0)
 	{
-		terminal_print(0, 17, "No Items on the ground");
+		terminal_print(0, 32, "No Items on the ground");
 	}
 	else
 	{
@@ -345,9 +341,9 @@ void UI()
 		{
 			s = std::to_string(i);
 			pchar = s.c_str();
-			terminal_print(0, 17 + i, pchar);
-			terminal_print(1, 17 + i, ".");
-			terminal_print(3, 17 + i, SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory()[i].Get_Name().c_str());
+			terminal_print(0, 32 + i, pchar);
+			terminal_print(1, 32 + i, ".");
+			terminal_print(3, 32 + i, SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory()[i].Get_Name().c_str());
 		}
 	}
 
@@ -361,16 +357,17 @@ void UI()
 //Required at startup to initialize the map.
 void Init_Map()
 {
-	for (int x = 0; x < 65; x++) 
+	for (int x = 0; x < 85; x++) 
 	{
 		SetBag.push_back(vector<Sets>());
-		for (int y = 0; y < 16; y++) 
+		for (int y = 0; y < 30; y++) 
 		{
 			SetBag[x].push_back(Sets());
 		}
 	}
 
-	for (int x = 0; x < 130; x++) 
+
+	for (int x = 0; x < 85; x++) 
 	{
 		Overworld.push_back(vector<Sets>());
 		for (int y = 0; y < 30; y++) 

@@ -29,9 +29,9 @@ void New_Prop(int X, int Y, char Glyth, string Name)
 	PropBag.push_back(Prop);
 	SetBag[X][Y].Set_Inventory(Prop);
 }
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type)
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Placement)
 {
-	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type);
+	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, true);
 	SetId++;
 	SetBag[X][Y] = Set;
 }
@@ -204,9 +204,12 @@ inline Props::~Props()
 {
 }
 
-inline Sets::Sets() {}
+inline Sets::Sets() 
+{
+	Placement = false;
+}
 
-inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type)
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool placement)
 {
 	X = x;
 	Y = y;
@@ -215,6 +218,7 @@ inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable,
 	ID = id;
 	Walkable = walkable;
 	Type = type;
+	Placement = placement;
 }
 
 inline Sets::~Sets()

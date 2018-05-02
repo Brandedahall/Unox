@@ -1,10 +1,6 @@
-﻿  Logic.cpp
-Logic.cpp(244): warning C4305: 'argument': truncation from 'int' to 'char'
-Logic.cpp(244): warning C4309: 'argument': truncation of constant value
-Logic.cpp(245): warning C4305: 'argument': truncation from 'int' to 'char'
-Logic.cpp(245): warning C4309: 'argument': truncation of constant value
+﻿  Mapgen.cpp
   Generating code
-  1 of 632 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  2 of 645 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

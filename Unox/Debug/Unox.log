@@ -1,7 +1,2 @@
-﻿  Logic.cpp
-c:\users\isabelle\documents\github\unox\unox\logic.cpp(230): warning C4305: 'argument': truncation from 'int' to 'char'
-c:\users\isabelle\documents\github\unox\unox\logic.cpp(230): warning C4309: 'argument': truncation of constant value
-c:\users\isabelle\documents\github\unox\unox\logic.cpp(231): warning C4305: 'argument': truncation from 'int' to 'char'
-c:\users\isabelle\documents\github\unox\unox\logic.cpp(231): warning C4309: 'argument': truncation of constant value
-  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe
+﻿  Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Debug\Unox.pdb (Full PDB)

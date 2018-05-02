@@ -177,7 +177,7 @@ class Sets
 public:
 	//Constructor and destructor.
 	Sets();
-	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type);
+	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type, bool Placement);
 	~Sets();
 
 	#pragma region Gets and Sets
@@ -205,6 +205,8 @@ public:
 
 	bool Get_Damaging();
 	void Set_Damaging(bool Damaging);
+
+	bool Get_Placement();
 	#pragma endregion
 
 	//Methods//
@@ -224,6 +226,7 @@ private:
 
 	//Bool//
 	bool Attackable;
+	bool Placement;
 	bool Visible; //Whether the Set object is visible to the character/screen.
 	bool Movable; //Whether characters can move the prop.
 	bool Walkable;//Whether characters can walk through the prop.
@@ -585,6 +588,11 @@ inline void Sets::Set_Damaging(bool damaging)
 	Damaging = damaging;
 }
 
+inline bool Sets::Get_Placement()
+{
+	return Placement;
+}
+
 //Location
 inline int Sets::Get_Location_X()
 {
@@ -615,7 +623,7 @@ inline void Sets::Set_Inventory(Props Item)
 //These methods create new Actors, Props, and Sets.
 void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
 void New_Prop(int X, int Y, char Glyth, string Name);
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Placement);
 
 bool walk(int X, int Y);
 #pragma endregion
