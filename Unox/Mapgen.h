@@ -10,8 +10,11 @@ extern void Map_Gen();
 
 bool Room(int X, int Y, int width, int height);
 
-void init_Map();
+void Create_H_Tunnel(int x1, int x2, int y);
 
+void Create_V_Tunnel(int y1, int y2, int x);
+
+void init_Map();
 
 class Rect
 {
@@ -24,7 +27,7 @@ public:
 	inline void center();
 	inline void PlaceRoom();
 
-private:
+public:
 	int X1, Y1, X2, Y2;
 	int center_x, center_y;
 };

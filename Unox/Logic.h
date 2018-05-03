@@ -18,8 +18,6 @@ void Init_Map();
 
 void Move_Camera(int x, int y);
 
-int Camera_Coords(int x, int y);
-
 //Extern Variables
 extern bool ActorWalk;
 extern bool SetWalk;

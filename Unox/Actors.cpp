@@ -7,7 +7,7 @@
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 vector<Actors> ActorBag = {};
 vector<Props> PropBag = {};
-vector<vector<Sets>> SetBag(30,vector<Sets>(130, Sets()));
+vector<vector<Sets>> SetBag(200,vector<Sets>(425, Sets()));
 vector<vector<Sets>> Overworld(30, vector<Sets>(130, Sets()));
 
 int ActorId = 0;
@@ -167,7 +167,6 @@ void Props::Draw()
 {
 	terminal_put(Get_Location_X(), Get_Location_Y(), Get_Glyth());
 }
-
 #pragma endregion
 
 bool walk(int X, int Y)

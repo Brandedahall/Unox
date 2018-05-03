@@ -3,26 +3,27 @@
 #include <random>
 #include <iostream>
 #include "bearlibterminal.h"
+#include <algorithm>
 
 using namespace std;
 
 default_random_engine rd(std::random_device{}());
 mt19937 gen(rd());
-uniform_int_distribution<> Width(1, 412);
+uniform_int_distribution<> Width(1, 400);
 uniform_int_distribution<> LengthWidth(4, 12);
-uniform_int_distribution<> Height(1, 187);
+uniform_int_distribution<> Height(1, 180);
 uniform_int_distribution<> LengthHeight(4, 12);
 uniform_int_distribution<> features(50, 100);
 
+uniform_int_distribution<> Direction(0, 1);
+
 int Features = features(gen);
-int W, H, LW, LH;
+int W, H, LW, LH, Dir;
 int i = 0;
 
 vector<Rect> Rooms;
 
 bool failed;
-
-uniform_int_distribution<> CorridorLength(7, 10);
 
 void init_Map()
 {
@@ -35,13 +36,14 @@ void init_Map()
 inline void Map_Gen()
 {
 	init_Map();
-	//Creates a random room.
 	for (int x = 0; x < Features; x++)
 	{
 		W = Width(gen);
 		H = Height(gen);
 		LW = LengthWidth(gen);
 		LH = LengthHeight(gen);
+
+		Dir = Direction(gen);
 
 		std::string s = std::to_string(i);
 		char const *pchar = s.c_str();

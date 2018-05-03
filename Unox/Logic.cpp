@@ -17,7 +17,6 @@ int map_x, map_y;
 int camera_x, camera_y;
 
 
-
 extern void GameStart() //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
 {
 	camera_x = ActorBag[0].Get_Location_X();
@@ -316,8 +315,8 @@ void UI()
 	int Willpower = ActorBag[0].Get_Wisdom();
 	s = std::to_string(Willpower);
 	pchar = s.c_str();
-	terminal_print(86, 7, "Wil: ");
-	terminal_print(93, 7, pchar);
+	terminal_print(66, 7, "Wil: ");
+	terminal_print(73, 7, pchar);
 
 	//Agility//
 	int Agility = ActorBag[0].Get_Agility();
@@ -343,8 +342,8 @@ void UI()
 	//Turn Timer//
 	s = std::to_string(Turn_Timer);
 	pchar = s.c_str();
-	terminal_print(66, 10, "Turn: ");
-	terminal_print(73, 10, pchar);
+	terminal_print(66, 11, "Turn: ");
+	terminal_print(73, 11, pchar);
 
 
 	//Items//
@@ -393,8 +392,6 @@ void Move_Camera(int target_x, int target_y)
 	camera_x = x;
 	camera_y = y;
 }
-
-
 
 //Required at startup to initialize the map.
 void Init_Map()
