@@ -16,6 +16,13 @@ int map_x, map_y;
 
 int camera_x, camera_y;
 
+bool _Look;
+
+int Prev_Player_X, Prev_Player_Y;
+int Prev_Player_Glyth = 0x01;
+
+int Prev_X = 0;
+int Prev_Y = 0;
 
 extern void GameStart() //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
 {
@@ -176,6 +183,12 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 
 	}
 
+	//Allows the player to inspect the surroundings
+	else if (key == TK_K)
+	{
+		K_Look();
+	}
+
 	//Closes the program.
 	else if (key == TK_ESCAPE)
 	{
@@ -185,6 +198,94 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	else
 	{
 		Keyboard();
+	}
+}
+
+void K_Look()
+{
+	Prev_Player_X = ActorBag[0].Get_Location_X();
+	Prev_Player_Y = ActorBag[0].Get_Location_Y();
+	Prev_Player_Glyth = ActorBag[0].Get_Glyth();
+
+	_Look = true;
+	while (_Look)
+	{
+		ActorBag[0].Set_Glyth(0x0FA);
+		terminal_clear();
+		Map();
+		UI();
+		terminal_refresh();
+
+		camera_x = ActorBag[0].Get_Location_X();
+		camera_y = ActorBag[0].Get_Location_Y();
+
+		terminal_refresh();
+		int key = terminal_read();
+		//Moves the player up one square.
+		if (key == TK_UP)
+		{
+			ActorBag[0].Set_Location_Y(-1);
+			terminal_clear();
+			Map();
+			UI();
+			terminal_refresh();
+			Prev_Y ++;
+		}
+		//Moves the player left one square.
+		else if (key == TK_LEFT)
+		{
+			ActorBag[0].Set_Location_X(-1);
+			terminal_clear();
+			Map();
+			UI();
+			terminal_refresh();
+			Prev_X ++;
+		}
+
+		//Moves the player right one square.
+		else if (key == TK_DOWN)
+		{
+			ActorBag[0].Set_Location_Y(1);
+			terminal_clear();
+			Map();
+			UI();
+			terminal_refresh();
+
+			Prev_Y --;
+		}
+
+		//Moves the player down one square.
+		else if (key == TK_RIGHT)
+		{
+			ActorBag[0].Set_Location_X(1);
+			terminal_clear();
+			Map();
+			UI();
+			terminal_refresh();
+
+			Prev_X --;
+		}
+		else if (key == TK_SPACE)
+		{
+			_Look = false;
+			ActorBag[0].Set_Location_X(Prev_X);
+			ActorBag[0].Set_Location_Y(Prev_Y);
+			ActorBag[0].Set_Glyth(Prev_Player_Glyth);
+			Prev_X = 0;
+			Prev_Y = 0;
+		}
+		//UI 28,31//
+		terminal_print(28, 32, "Creature Name: ");
+
+		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		{
+			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
+			{
+				string Creature_Name = BagIterator->Get_Name();
+				char const *pchar = Creature_Name.c_str();
+				terminal_print(43, 32, pchar);
+			}
+		}
 	}
 }
 
@@ -211,7 +312,7 @@ inline void Map() //Basically places everything that's inside the bags onto the 
 				case 2:
 				{
 					terminal_color("brown");
-					terminal_put(x,y, SetBag[map_x][map_y].Get_Glyth());
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					terminal_color("white");
 				}
 				default:
@@ -300,7 +401,7 @@ void UI()
 
 	//----------//
 
-	terminal_print(86, 5, "--Attributes--");
+	terminal_print(66, 5, "--Attributes--");
 
 	//----------//
 
@@ -357,6 +458,7 @@ void UI()
 	}
 
 	int Num_Items = SetBag[ActorBag[0].Get_Location_X()][ActorBag[0].Get_Location_Y()].Get_Inventory().size();
+
 	if (Num_Items == 0)
 	{
 		terminal_print(0, 32, "No Items on the ground");
@@ -373,10 +475,7 @@ void UI()
 		}
 	}
 
-
-
-	//Help//
-
+	terminal_print(28, 31, "//--Information--\\\\");
 }
 
 void Move_Camera(int target_x, int target_y)

@@ -10,10 +10,6 @@ extern void Map_Gen();
 
 bool Room(int X, int Y, int width, int height);
 
-void Create_H_Tunnel(int x1, int x2, int y);
-
-void Create_V_Tunnel(int y1, int y2, int x);
-
 void init_Map();
 
 class Rect

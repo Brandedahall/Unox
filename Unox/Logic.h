@@ -8,6 +8,7 @@ inline void SetLogic();
 
 extern void GameStart();
 inline void Keyboard();
+inline void K_Look();
 inline void Map();
 void MapFill();
 void FOV();

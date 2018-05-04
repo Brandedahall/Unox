@@ -97,9 +97,8 @@ public:
 	string Get_Name();
 	void Set_Name(string name);
 
-	char Get_Glyth();
-
-	char Set_Glyth(char glyth);
+	unsigned char Get_Glyth();
+	void Set_Glyth(unsigned char glyth);
 
 	int Get_ID();
 	void Set_ID(int id);
@@ -316,11 +315,11 @@ inline void Actors::Set_Name(string name)
 }
 
 //Glyth
-inline char Actors::Get_Glyth()
+inline unsigned char Actors::Get_Glyth()
 {
 	return Glyth;
 }
-inline char Actors::Set_Glyth(char glyth)
+inline void Actors::Set_Glyth(unsigned char glyth)
 {
 	Glyth = glyth;
 }
