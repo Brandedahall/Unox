@@ -4,7 +4,7 @@
 #include <vector>
 
 using namespace std;
-//----------------------------------//
+//---------Base classes-------------//
 class Props
 {
 public:
@@ -39,7 +39,7 @@ public:
 
 	void Draw();
 
-private:
+protected:
 	//Int//
 	int X;
 	int Y;
@@ -55,8 +55,6 @@ private:
 				//Bool//
 	bool Equippable; //Checks whether the item can be equipped or not.
 };
-
-//----------------------------------//
 
 class Actors
 {
@@ -173,8 +171,6 @@ protected:
 	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
-//----------------------------------//
-
 class Sets
 {
 public:
@@ -237,12 +233,55 @@ private:
 	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
+//----------Derived Classes---------//
+#pragma region Derived Classes
+class Weapon : Props
+{
+public:
+	int GetDamage();
+	void SetDamage(int Damage);
+
+	int GetPrice();
+	void SetPrice(int Price);
+
+	string GetDescription();
+	void SetDescription(string Description);
+
+
+private:
+	int Damage;
+	int Price;
+	string Description;
+};
+
+class Armor : Props
+{
+public:
+	int GetArmourValue();
+	void SetArmourValue(int ArmourValue);
+
+	int GetPrice();
+	void SetPrice(int Price);
+
+	string GetDescription();
+	void SetDescription(string Description);
+private:
+	int ArmourValue;
+	int Price;
+	string Description;
+};
+
+class Item : Props
+{
+
+};
+#pragma endregion
+
 //----------------------------------//
-//Gets and sets//
+//Gets and sets - Base Classes//
 
 #pragma region Gets and sets | Actors
 
-#pragma region Normal G+S
 //Logic//
 inline bool Actors::Get_Logic()
 {
@@ -375,7 +414,7 @@ inline void Actors::Set_Location_Y(int y)
 	Y += y;
 }
 
-#pragma endregion
+
 
 //Stats//
 inline int Actors::Get_Health()
@@ -621,17 +660,144 @@ inline void Sets::Set_Inventory(Props Item)
 #pragma endregion
 
 //----------------------------------//
+//Gets and sets - Derived Classes//
+#pragma region Gets and sets | Weapons
+int Weapon::GetDamage()
+{
+	return Damage;
+}
 
-#pragma region Methods definitions
+void Weapon::SetDamage(int damage)
+{
+	Damage = damage;
+}
+
+int Weapon::GetPrice()
+{
+	return Price;
+}
+void Weapon::SetPrice(int price)
+{
+	Price = price;
+}
+
+string Weapon::GetDescription()
+{
+	char const *pchar = Description.c_str();
+	return pchar;
+}
+void Weapon::SetDescription(string description)
+{
+	Description = description;
+}
+
+#pragma endregion
+
+#pragma region Gets and sets | Armour
+
+int Armor::GetArmourValue()
+{
+	return ArmourValue;
+}
+
+void Armor::SetArmourValue(int armourValue)
+{
+	ArmourValue = armourValue;
+}
+
+int Armor::GetPrice()
+{
+	return Price;
+}
+void Armor::SetPrice(int price)
+{
+	Price = price;
+}
+
+string Armor::GetDescription()
+{
+	char const *pchar = Description.c_str();
+	return pchar;
+}
+void Armor::SetDescription(string description)
+{
+	Description = description;
+}
+
+#pragma endregion
+
+#pragma region Gets and sets | Items
+
+#pragma endregion
+
+//----------------------------------//
 //These methods create new Actors, Props, and Sets.
+#pragma region Methods definitions
 void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
 void New_Prop(int X, int Y, char Glyth, string Name);
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Placement);
 
 bool walk(int X, int Y);
 #pragma endregion
+
+#pragma region Constructors
+//Base Constructors//
+inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
+{
+	Name = name;
+	X = x;
+	Y = y;
+	Glyth = glyth;
+	Visible = visible;
+	ID = id;
+	Logic = true;
+	Walkable = walkable;
+	Type = type;
+}
+
+inline Actors::~Actors()
+{
+}
+
+inline Props::Props(int x, int y, char glyth, int id, string name)
+{
+	X = x;
+	Y = y;
+	Glyth = glyth;
+	ID = id;
+	Name = name;
+}
+
+inline Props::~Props()
+{
+}
+
+inline Sets::Sets()
+{
+	Placement = false;
+}
+
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool placement)
+{
+	X = x;
+	Y = y;
+	Glyth = glyth;
+	Visible = visible;
+	ID = id;
+	Walkable = walkable;
+	Type = type;
+	Placement = placement;
+}
+
+inline Sets::~Sets()
+{
+
+}
+
+#pragma endregion
+
 //----------------------------------//
-//Bags//
+#pragma region Bags
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
 extern vector<Actors> ActorBag;
 extern vector<Props> PropBag;
@@ -642,4 +808,9 @@ extern vector<vector<Sets>> Overworld;
 extern int ActorID;
 extern int ProbID;
 extern int SetID;
+#pragma endregion
+
+
+
+
 #endif

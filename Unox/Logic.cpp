@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//Variables//
 bool ActorWalk = true;
 bool SetWalk;
 int Turn_Timer = 0;
@@ -23,8 +24,10 @@ int Prev_Player_Glyth = 0x01;
 
 int Prev_X = 0;
 int Prev_Y = 0;
+//----------------------------------//
 
-extern void GameStart() //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
+//The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
+extern void GameStart() 
 {
 	camera_x = ActorBag[0].Get_Location_X();
 	camera_y = ActorBag[0].Get_Location_Y();
@@ -39,6 +42,7 @@ extern void GameStart() //The main game logic. The game runs through each of the
 	FOV();
 	Turn_Timer++;
 }
+//----------------------------------//
 
 //LOGIC//
 inline void ActorLogic()
@@ -64,13 +68,14 @@ inline void SetLogic()
 {
 
 }
+//----------------------------------//
 
 //FOV//
-
 void FOV()
 {
 
 }
+//----------------------------------//
 
 //MOVEMENT//
 void Keyboard() //Reads key inputs from the keyboard and moves the player, among other key commands.
@@ -288,8 +293,10 @@ void K_Look()
 		}
 	}
 }
+//----------------------------------//
 
-inline void Map() //Basically places everything that's inside the bags onto the screen.
+//Basically places everything that's inside the bags onto the screen.
+inline void Map() 
 {
 	Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
 
@@ -356,7 +363,9 @@ void MapFill()
 	//New_Actor("Steve", 20, 12, '#', true, false);
 	terminal_layer(1);
 }
+//----------------------------------//
 
+//UI//
 void UI()
 {
 	for (int i = 0; i < 30; i++)
@@ -477,7 +486,6 @@ void UI()
 
 	terminal_print(28, 31, "//--Information--\\\\");
 }
-
 void Move_Camera(int target_x, int target_y)
 {
 	int x = target_x - (Camera_Width / 2);
@@ -491,6 +499,7 @@ void Move_Camera(int target_x, int target_y)
 	camera_x = x;
 	camera_y = y;
 }
+//----------------------------------//
 
 //Required at startup to initialize the map.
 void Init_Map()

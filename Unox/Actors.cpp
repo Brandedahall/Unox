@@ -162,7 +162,6 @@ void Actors::Movement()
 	}
 }
 
-
 void Props::Draw()
 {
 	terminal_put(Get_Location_X(), Get_Location_Y(), Get_Glyth());
@@ -198,59 +197,5 @@ bool walk(int X, int Y)
 }
 
 //----------------------------------//
-#pragma region Constructors
-//Base Constructors//
-inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
-{
-	Name = name;
-	X = x;
-	Y = y;
-	Glyth = glyth;
-	Visible = visible;
-	ID = id;
-	Logic = true;
-	Walkable = walkable;
-	Type = type;
-}
 
-inline Actors::~Actors()
-{
-}
-
-inline Props::Props(int x, int y, char glyth, int id, string name)
-{
-	X = x;
-	Y = y;
-	Glyth = glyth;
-	ID = id;
-	Name = name;
-}
-
-inline Props::~Props()
-{
-}
-
-inline Sets::Sets() 
-{
-	Placement = false;
-}
-
-inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool placement)
-{
-	X = x;
-	Y = y;
-	Glyth = glyth;
-	Visible = visible;
-	ID = id;
-	Walkable = walkable;
-	Type = type;
-	Placement = placement;
-}
-
-inline Sets::~Sets()
-{
-
-}
-
-#pragma endregion
 
