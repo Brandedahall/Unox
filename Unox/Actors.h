@@ -78,7 +78,7 @@ public:
 	void Set_Mana(int mana);
 
 	int Get_Strength();
-	void Get_Strength(int strength);
+	void Set_Strength(int strength);
 
 	int Get_Wisdom();
 	void Set_Wisdom(int wisdom);
@@ -132,6 +132,8 @@ public:
 	void Movement();
 	vector<Props> Get_Inventory();
 	void Set_Inventory(Props Item);
+	int Get_FOV();
+	void Set_FOV(int View_Radius);
 protected:
 	//Int//
 	int X; //X and Y coordinates for each Actor.
@@ -167,6 +169,8 @@ protected:
 	int Intelligence; //How much Intelligence the creature has.
 	int Perception; //How much Perception the creature has.
 
+	int View_Radius;
+
 	//Contents
 	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
@@ -176,25 +180,21 @@ class Sets
 public:
 	//Constructor and destructor.
 	Sets();
-	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type, bool Placement);
+	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type, bool Wall, bool Placement);
 	~Sets();
 
 	#pragma region Gets and Sets
 	//Gets and sets for the private variables.
+	int Get_Type();
 
 	int Get_Location_X();
 	int Get_Location_Y();
-
-	int Get_Type();
 
 	int Get_Damage();
 	void Set_Damage(int Damage);
 
 	char Get_Glyth();
 	void Set_Glyth(char Glyth);
-
-	bool Get_Attackable();
-	void Set_Attackable(bool Attackable);
 
 	bool Get_Walkable();
 	void Set_Walkable(bool Walkable);
@@ -206,6 +206,9 @@ public:
 	void Set_Damaging(bool Damaging);
 
 	bool Get_Placement();
+
+	bool Get_Wall();
+
 	#pragma endregion
 
 	//Methods//
@@ -224,11 +227,11 @@ private:
 	char Glyth; //The visible character which is drawn to the screen.
 
 	//Bool//
-	bool Attackable;
-	bool Placement;
+	bool Placement; //Is it placed down//
+	bool Wall; //Is it a wall?
 	bool Visible; //Whether the Set object is visible to the character/screen.
 	bool Movable; //Whether characters can move the prop.
-	bool Walkable;//Whether characters can walk through the prop.
+	bool Walkable; //Whether characters can walk through the prop.
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
 	vector<Props> Inventory; //Holds all of the creature's inventory.
 };
@@ -281,6 +284,16 @@ class Item : Props
 //Gets and sets - Base Classes//
 
 #pragma region Gets and sets | Actors
+
+inline int Actors::Get_FOV()
+{
+	return View_Radius;
+}
+
+inline void Actors::Set_FOV(int view_radius)
+{
+	View_Radius = view_radius;
+}
 
 //Logic//
 inline bool Actors::Get_Logic()
@@ -439,10 +452,10 @@ inline void Actors::Set_Mana(int mana)
 //Attributes//
 inline int Actors::Get_Strength()
 {
-	return Health;
+	return Strength;
 }
 
-inline void Actors::Get_Strength(int strength)
+inline void Actors::Set_Strength(int strength)
 {
 	Strength = strength;
 }
@@ -566,11 +579,18 @@ inline void Props::Set_Location_Y()
 #pragma endregion
 
 #pragma region Gets and Sets | Sets
+//Wall//
+inline bool Sets::Get_Wall()
+{
+	return Wall;
+}
+
 //Type//
 inline int Sets::Get_Type()
 {
 	return Type;
 }
+
 //Damage//
 inline int Sets::Get_Damage()
 {
@@ -588,16 +608,6 @@ inline char Sets::Get_Glyth()
 inline void Sets::Set_Glyth(char glyth)
 {
 	Glyth = glyth;
-}
-
-//Attackable//
-inline bool Sets::Get_Attackable()
-{
-	return Attackable;
-}
-inline void Sets::Set_Attackable(bool attackable)
-{
-	Attackable = attackable;
 }
 
 //Walkable//
@@ -662,31 +672,31 @@ inline void Sets::Set_Inventory(Props Item)
 //----------------------------------//
 //Gets and sets - Derived Classes//
 #pragma region Gets and sets | Weapons
-int Weapon::GetDamage()
+inline int Weapon::GetDamage()
 {
 	return Damage;
 }
 
-void Weapon::SetDamage(int damage)
+inline void Weapon::SetDamage(int damage)
 {
 	Damage = damage;
 }
 
-int Weapon::GetPrice()
+inline int Weapon::GetPrice()
 {
 	return Price;
 }
-void Weapon::SetPrice(int price)
+inline void Weapon::SetPrice(int price)
 {
 	Price = price;
 }
 
-string Weapon::GetDescription()
+inline string Weapon::GetDescription()
 {
 	char const *pchar = Description.c_str();
 	return pchar;
 }
-void Weapon::SetDescription(string description)
+inline void Weapon::SetDescription(string description)
 {
 	Description = description;
 }
@@ -695,31 +705,31 @@ void Weapon::SetDescription(string description)
 
 #pragma region Gets and sets | Armour
 
-int Armor::GetArmourValue()
+inline int Armor::GetArmourValue()
 {
 	return ArmourValue;
 }
 
-void Armor::SetArmourValue(int armourValue)
+inline void Armor::SetArmourValue(int armourValue)
 {
 	ArmourValue = armourValue;
 }
 
-int Armor::GetPrice()
+inline int Armor::GetPrice()
 {
 	return Price;
 }
-void Armor::SetPrice(int price)
+inline void Armor::SetPrice(int price)
 {
 	Price = price;
 }
 
-string Armor::GetDescription()
+inline string Armor::GetDescription()
 {
 	char const *pchar = Description.c_str();
 	return pchar;
 }
-void Armor::SetDescription(string description)
+inline void Armor::SetDescription(string description)
 {
 	Description = description;
 }
@@ -735,7 +745,7 @@ void Armor::SetDescription(string description)
 #pragma region Methods definitions
 void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
 void New_Prop(int X, int Y, char Glyth, string Name);
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Placement);
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement);
 
 bool walk(int X, int Y);
 #pragma endregion
@@ -775,9 +785,11 @@ inline Props::~Props()
 inline Sets::Sets()
 {
 	Placement = false;
+	Glyth = 0x00;
+	Wall = false;
 }
 
-inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool placement)
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool wall, bool placement)
 {
 	X = x;
 	Y = y;
@@ -786,6 +798,7 @@ inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable,
 	ID = id;
 	Walkable = walkable;
 	Type = type;
+	Wall = wall;
 	Placement = placement;
 }
 

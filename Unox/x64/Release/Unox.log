@@ -1,0 +1,8 @@
+﻿  Actors.cpp
+Actors.cpp(2): fatal error C1083: Cannot open include file: 'bearlibterminal.h': No such file or directory
+  Logic.cpp
+Logic.cpp(3): fatal error C1083: Cannot open include file: 'BearLibTerminal.h': No such file or directory
+  main.cpp
+main.cpp(3): fatal error C1083: Cannot open include file: 'BearLibTerminal.h': No such file or directory
+  Mapgen.cpp
+Mapgen.cpp(5): fatal error C1083: Cannot open include file: 'bearlibterminal.h': No such file or directory

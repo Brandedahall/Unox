@@ -61,11 +61,11 @@ inline void Rect::PlaceRoom()
 		{
 			if (x == X1 || x == X2 || y == Y1 || y == Y2)
 			{
-				New_Set(x, y, '%', true, false, 2, true);
+				New_Set(x, y, '%', false, false,1, true, true);
 			}
 			else
 			{
-				New_Set(x, y, '~', true, true, 1, true);
+				New_Set(x, y, '~', false, true, 2, false, true);
 			}
 		}
 	}

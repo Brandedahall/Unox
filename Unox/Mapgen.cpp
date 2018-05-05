@@ -9,9 +9,9 @@ using namespace std;
 
 default_random_engine rd(std::random_device{}());
 mt19937 gen(rd());
-uniform_int_distribution<> Width(1, 400);
+uniform_int_distribution<> Width(1, 390);
 uniform_int_distribution<> LengthWidth(4, 12);
-uniform_int_distribution<> Height(1, 180);
+uniform_int_distribution<> Height(1, 170);
 uniform_int_distribution<> LengthHeight(4, 12);
 uniform_int_distribution<> features(50, 100);
 
@@ -45,16 +45,12 @@ inline void Map_Gen()
 
 		Dir = Direction(gen);
 
-		std::string s = std::to_string(i);
-		char const *pchar = s.c_str();
-
 		if (Room(W, H, LW, LH))
 		{
 			if (i == 0)
 			{
 				New_Actor("Player", W + (LW / 2), H + (LH / 2), 0x01, true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 			}
-			terminal_print((W + (LW / 2)),(H + (LH / 2)), pchar);
 			i++;
 		}
 		else

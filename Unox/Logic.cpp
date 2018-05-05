@@ -1,7 +1,6 @@
 #include "Logic.h"
 #include "Actors.h"
 #include "BearLibTerminal.h"
-#include <vector>
 #include <iostream>
 #include "Mapgen.h"
 #include <utility>
@@ -24,6 +23,12 @@ int Prev_Player_Glyth = 0x01;
 
 int Prev_X = 0;
 int Prev_Y = 0;
+
+extern int i;
+
+extern vector<const char*> Logs (10, "");
+
+
 //----------------------------------//
 
 //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
@@ -31,15 +36,15 @@ extern void GameStart()
 {
 	camera_x = ActorBag[0].Get_Location_X();
 	camera_y = ActorBag[0].Get_Location_Y();
-	Keyboard();
 	terminal_clear();
-	terminal_refresh();
 	ActorLogic();
 	PropLogic();
 	SetLogic();
 	Map();
-	UI();
 	FOV();
+	UI();
+	terminal_refresh();
+	Keyboard();
 	Turn_Timer++;
 }
 //----------------------------------//
@@ -73,7 +78,51 @@ inline void SetLogic()
 //FOV//
 void FOV()
 {
+	int i, j;
+	float x, y, l;
+	for (i = 0; i < Map_Width; i++)
+	{
+		for (j = 0; j < Map_Height; j++)
+		{
+			x = i - (float)ActorBag[0].Get_Location_X();
+			y = j - (float)ActorBag[0].Get_Location_Y();
+			l = sqrt((x*x) + (y*y));
+			if (l <= ActorBag[0].Get_FOV())
+			{
+				if(DoFov(i,j) == true)
+				{
+					SetBag[i][j].Set_Visible(true);
+				}
+			}
+		}
+	}
+}
 
+bool DoFov(int x, int y)
+{
+	float vx, vy, ox, oy, l;
+	int i;
+	vx = x - (float)ActorBag[0].Get_Location_X();
+	vy = y - (float)ActorBag[0].Get_Location_Y();
+	ox = (float)x + 0.5f;
+	oy = (float)y + 0.5f;
+	l = sqrt((vx*vx) + (vy*vy));
+	vx /= l;
+	vy /= l;
+
+	for (i = 0; i < (int)l + 1; i++)
+	{
+		if (!SetBag[(int)ox][(int)oy].Get_Walkable())
+		{
+			if (!SetBag[(int)ox][(int)oy].Get_Wall())
+			{
+				return false;
+			}
+		}
+		ox += vx;
+		oy += vy;
+	}
+	return true;
 }
 //----------------------------------//
 
@@ -127,10 +176,6 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		{
 			ActorBag[0].Set_Location_X(-1);
 			ActorBag[0].Set_Logic(true);
-		}
-		else
-		{
-
 		}
 	}
 
@@ -357,6 +402,7 @@ void MapFill()
 
 	terminal_layer(2);
 	ActorBag[0].Set_Level(1);
+	ActorBag[0].Set_FOV(4);
 
 	//New_Actor("Goblin", 31, 8, 0x47, true, false, 2);
 	ActorBag[0].Set_Health(10);
@@ -386,7 +432,7 @@ void UI()
 	std::string s = std::to_string(Health);
 	char const *pchar = s.c_str();
 	terminal_print(66, 1, "Health: ");
-	terminal_print(93, 1, pchar);
+	terminal_print(73, 1, pchar);
 
 	//Mana//
 	int Mana = ActorBag[0].Get_Mana();
@@ -484,8 +530,44 @@ void UI()
 		}
 	}
 
+	//Information//
 	terminal_print(28, 31, "//--Information--\\\\");
+	terminal_put(47, 30, 0xC2);
+	for (int i = 31; i < 50; i++)
+	{
+		terminal_put(47, i, 0xB3);
+	}
+
+	//Logs//
+	Log();
 }
+
+void Log()
+{
+	terminal_print(48, 31, "//--Log--\\\\");
+	terminal_put(65, 30, 0xC1);
+
+	for (int i = 66; i < 80; i++)
+	{
+		terminal_put(i, 30, 0xC4);
+	}
+	int x = 0;
+	for (unsigned int i = 32; i <  43; i++)
+	{
+		if (x < 10)
+		{
+			terminal_print(48, i, Logs[x]);
+		}
+		x++;
+	}
+}
+
+void DescriptionFactory(Actors Creature_Recieving, Actors Creature_Dealing)
+{
+
+}
+
+
 void Move_Camera(int target_x, int target_y)
 {
 	int x = target_x - (Camera_Width / 2);
@@ -502,7 +584,7 @@ void Move_Camera(int target_x, int target_y)
 //----------------------------------//
 
 //Required at startup to initialize the map.
-void Init_Map()
+void Init()
 {
 	for (int x = 0; x < Map_Width; x++)
 	{

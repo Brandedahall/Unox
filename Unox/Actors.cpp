@@ -31,9 +31,9 @@ void New_Prop(int X, int Y, char Glyth, string Name)
 	PropBag.push_back(Prop);
 	SetBag[X][Y].Set_Inventory(Prop);
 }
-void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Placement)
+void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement)
 {
-	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, true);
+	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, Wall, true);
 	SetId++;
 	SetBag[X][Y] = Set;
 }
