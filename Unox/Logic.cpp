@@ -19,7 +19,7 @@ int camera_x, camera_y;
 bool _Look;
 
 int Prev_Player_X, Prev_Player_Y;
-int Prev_Player_Glyth = 0x01;
+int Prev_Player_Glyth = '@';
 
 int Prev_X = 0;
 int Prev_Y = 0;
@@ -27,6 +27,20 @@ int Prev_Y = 0;
 extern int i;
 
 extern vector<const char*> Logs (10, "");
+
+default_random_engine rd(std::random_device{}());
+mt19937 gen(rd());
+
+string Weaponadverb[] = { "Awesomely", "Greatly", "Badly", "Super", "Ultra", "Mega", "Horrifyingly", "Accurately", "Very", "Really", "Disappointingly", "Seriously", "Willingly", "Sufficiently", "Largely", "Unbelievably", "Primarily", "Interestingly", "Brightly", "Secretly", "Downright", "Naturally", "Fairly", "Easily", "Intensely", "Blatantly", "Additionally", "Necessarily", "Truly", "Scarcely", "Hardly", "Significantly", "Curiously", "Happily", "Relatively", "Vastly", "Eminently", "Satisfactorily", "Ultimately", "Unbearably", "Awfully", "Intimately", "Desperately", "Conclusively", "Exhaustively", "Erratically", "Enigmatically", "Sarcastically" };
+
+string WeaponAD[] = { "Powerful", "Horrible", "Bad", "Great", "Developed", "Killer", "Cool", "Stupid", "Battle",  "Awesome",  "Persistant",  "Accurate",  "Named",  "Useful",  "Frightning",  "Idiotic",  "Legendary",  "Dumb",  "Spiked",  "Enjoyable",  "Overlooked",  "Sickening",  "Unnecessary",  "Hardcore",  "Evil",  "Good",  "Maniacal",  "Devious",  "Overpowered",  "Underpowered",  "Mediocre",  "Mohawk",  "Invincible",  "Hipster",  "Gangsta",  "Sharp",  "Unsafe",  "Godlike", "Weird", "Hot", "Chaotic", "Smelly", "Bizarre", "Mighty", "Cardboard", "Deadly", "Soft",  "Potent",  "Suppressive",  "Death-dealing",  "Irritating",  "Explosive", };
+
+string WeaponNouns[] = { "Smelling",  "Cooling",  "Flipping",  "Killing",  "Dehydrating",  "Doom",  "Destruction",  "Destroying",  "Poisoning",  "Electrocution",  "Freezing", "Execution",  "Decapitation",  "Eradication",  "Avenging",  "Torture",  "Horror",  "Pain",  "Demolition",  "Deprivation",  "Judgement",  "Disease" };
+
+string Wtype[] = { "Sword", "Axe", "Daggers", "Spear", "Scythe" };
+
+string WeaponEle[] = { "Normal", "Earth", "Fire", "Ice", "Air", "Electric", };
+
 
 
 //----------------------------------//
@@ -37,14 +51,14 @@ extern void GameStart()
 	camera_x = ActorBag[0].Get_Location_X();
 	camera_y = ActorBag[0].Get_Location_Y();
 	terminal_clear();
+	Keyboard();
 	ActorLogic();
 	PropLogic();
 	SetLogic();
+	//FOV();
 	Map();
-	FOV();
 	UI();
 	terminal_refresh();
-	Keyboard();
 	Turn_Timer++;
 }
 //----------------------------------//
@@ -132,7 +146,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	ActorWalk = true;
 	int key = terminal_read();
 	//Moves the player up one square
-	if (key == TK_UP)
+	if (key == TK_UP && ActorBag[0].Get_Location_X() + 1 > 0)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -155,7 +169,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		}
 	}
 	//Moves the player left one square.
-	else if (key == TK_LEFT)
+	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() + 1 > 0)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -180,7 +194,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player right one square.
-	else if (key == TK_DOWN)
+	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() + 1 < Map_Height)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -204,7 +218,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	}
 
 	//Moves the player down one square.
-	else if (key == TK_RIGHT)
+	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() + 1 < Map_Width)
 	{
 		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
@@ -341,13 +355,13 @@ void K_Look()
 //----------------------------------//
 
 //Basically places everything that's inside the bags onto the screen.
-inline void Map() 
+inline void Map()
 {
 	Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
 
-	for (int x = 0; x < Camera_Width; x++)
+	for (int x = 0; x < Camera_Width - 1; x++)
 	{
-		for (int y = 0; y < Camera_Height; y++)
+		for (int y = 0; y < Camera_Height - 1; y++)
 		{
 			map_x = camera_x + x;
 			map_y = camera_y + y;
@@ -357,19 +371,31 @@ inline void Map()
 				{
 				case 1:
 				{
-					terminal_color("red");
+					terminal_color(color_from_name("cyan"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
-					terminal_color("white");
+					break;
 				}
 				case 2:
 				{
-					terminal_color("brown");
+					terminal_color(color_from_name("green"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
-					terminal_color("white");
+					break;
+				}
+				case 3:
+				{
+					terminal_color(color_from_name("light green"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
+				}
+				case 4:
+				{
+					terminal_color(color_from_name("white"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
 				}
 				default:
 				{
-					break;
+					
 				}
 				}
 			}
@@ -395,11 +421,23 @@ void MapFill()
 {
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
 
-	Map_Gen();
-
 	//New_Prop(34, 8, 0x115C, "Short Sword");
 	//New_Prop(34, 8, 0x115C, "Long Sword");
 
+
+	//uniform_int_distribution<> X(100, 100);
+	//uniform_int_distribution<> Y(100, 100);
+
+	//int x = X(gen);
+	//int y = Y(gen);
+	//while (SetBag[x][y].Get_Type() == 1 || SetBag[x][y].Get_Type() == 3 || SetBag[x][y].Get_Type() == 4)
+	//{
+	//	x = X(gen);
+	//	y = Y(gen);
+	//}
+
+
+	New_Actor("Player", 121, 121, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	terminal_layer(2);
 	ActorBag[0].Set_Level(1);
 	ActorBag[0].Set_FOV(4);
@@ -501,6 +539,16 @@ void UI()
 	terminal_print(66, 11, "Turn: ");
 	terminal_print(73, 11, pchar);
 
+	//X//
+	s = std::to_string(ActorBag[0].Get_Location_X());
+	pchar = s.c_str();
+	terminal_print(66, 12, "X: ");
+	terminal_print(73, 12, pchar);
+	//Y//
+	s = std::to_string(ActorBag[0].Get_Location_Y());
+	pchar = s.c_str();
+	terminal_print(66, 13, "Y: ");
+	terminal_print(73, 13, pchar);
 
 	//Items//
 	terminal_print(0, 31, "//--Items on the ground--\\\\");
@@ -561,12 +609,6 @@ void Log()
 		x++;
 	}
 }
-
-void DescriptionFactory(Actors Creature_Recieving, Actors Creature_Dealing)
-{
-
-}
-
 
 void Move_Camera(int target_x, int target_y)
 {

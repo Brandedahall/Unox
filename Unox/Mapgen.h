@@ -6,70 +6,24 @@
 #include <iostream>
 #include "Actors.h"
 
-extern void Map_Gen();
 
-bool Room(int X, int Y, int width, int height);
+//Perlin Noise\\
 
-void init_Map();
-
-class Rect
-{
+class PerlinNoise {
+	// The permutation vector
+	std::vector<int> p;
 public:
-	Rect(int x, int y, int w, int l);
-	Rect();
-	~Rect();
-
-	inline bool intersect(Rect A);
-	inline void center();
-	inline void PlaceRoom();
-
-public:
-	int X1, Y1, X2, Y2;
-	int center_x, center_y;
+	// Initialize with the reference values for the permutation vector
+	PerlinNoise();
+	// Generate a new permutation vector based on the value of seed
+	PerlinNoise(unsigned int seed);
+	// Get a noise value, for 2D images z can have any value
+	double noise(double x, double y, double z);
+private:
+	double fade(double t);
+	double lerp(double t, double a, double b);
+	double grad(int hash, double x, double y, double z);
 };
 
-inline Rect::Rect() {};
-
-inline Rect::Rect(int x, int y, int w, int l)
-{
-	X1 = x;
-	Y1 = y;
-	X2 = x + w;
-	Y2 = y + l;
-}
-
-inline Rect::~Rect()
-{
-}
-
-inline void Rect::center()
-{
-	center_x = (X1 + X2) / 2;
-	center_y = (Y1  + Y2) / 2;
-}
-
-inline bool Rect::intersect(Rect A)
-{
-	return (X1 <= A.X2 && X2 >= A.X1 && Y1 <= A.Y2 && Y2 >= A.Y1);
-}
-
-inline void Rect::PlaceRoom()
-{
-	for (int x = X1; x <= X2; x++)
-	{
-		for (int y = Y1; y <= Y2; y++)
-		{
-			if (x == X1 || x == X2 || y == Y1 || y == Y2)
-			{
-				New_Set(x, y, '%', false, false,1, true, true);
-			}
-			else
-			{
-				New_Set(x, y, '~', false, true, 2, false, true);
-			}
-		}
-	}
-}
-
-extern vector<Rect> Rooms;
+void gen_Perlin(const unsigned int &seed);
 #endif
