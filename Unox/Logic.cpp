@@ -5,8 +5,6 @@
 #include "Mapgen.h"
 #include <utility>
 
-using namespace std;
-
 //Variables//
 bool ActorWalk = true;
 bool SetWalk;
@@ -26,27 +24,27 @@ int Prev_Y = 0;
 
 extern int i;
 
-extern vector<const char*> Logs (10, "");
+extern std::vector<const char*> Logs(10, "");
 
-default_random_engine rd(std::random_device{}());
-mt19937 gen(rd());
+std::default_random_engine rd(std::random_device{}());
+std::mt19937 gen(rd());
 
-string Weaponadverb[] = { "Awesomely", "Greatly", "Badly", "Super", "Ultra", "Mega", "Horrifyingly", "Accurately", "Very", "Really", "Disappointingly", "Seriously", "Willingly", "Sufficiently", "Largely", "Unbelievably", "Primarily", "Interestingly", "Brightly", "Secretly", "Downright", "Naturally", "Fairly", "Easily", "Intensely", "Blatantly", "Additionally", "Necessarily", "Truly", "Scarcely", "Hardly", "Significantly", "Curiously", "Happily", "Relatively", "Vastly", "Eminently", "Satisfactorily", "Ultimately", "Unbearably", "Awfully", "Intimately", "Desperately", "Conclusively", "Exhaustively", "Erratically", "Enigmatically", "Sarcastically" };
+std::string Weaponadverb[] = { "Awesomely", "Greatly", "Badly", "Super", "Ultra", "Mega", "Horrifyingly", "Accurately", "Very", "Really", "Disappointingly", "Seriously", "Willingly", "Sufficiently", "Largely", "Unbelievably", "Primarily", "Interestingly", "Brightly", "Secretly", "Downright", "Naturally", "Fairly", "Easily", "Intensely", "Blatantly", "Additionally", "Necessarily", "Truly", "Scarcely", "Hardly", "Significantly", "Curiously", "Happily", "Relatively", "Vastly", "Eminently", "Satisfactorily", "Ultimately", "Unbearably", "Awfully", "Intimately", "Desperately", "Conclusively", "Exhaustively", "Erratically", "Enigmatically", "Sarcastically" };
 
-string WeaponAD[] = { "Powerful", "Horrible", "Bad", "Great", "Developed", "Killer", "Cool", "Stupid", "Battle",  "Awesome",  "Persistant",  "Accurate",  "Named",  "Useful",  "Frightning",  "Idiotic",  "Legendary",  "Dumb",  "Spiked",  "Enjoyable",  "Overlooked",  "Sickening",  "Unnecessary",  "Hardcore",  "Evil",  "Good",  "Maniacal",  "Devious",  "Overpowered",  "Underpowered",  "Mediocre",  "Mohawk",  "Invincible",  "Hipster",  "Gangsta",  "Sharp",  "Unsafe",  "Godlike", "Weird", "Hot", "Chaotic", "Smelly", "Bizarre", "Mighty", "Cardboard", "Deadly", "Soft",  "Potent",  "Suppressive",  "Death-dealing",  "Irritating",  "Explosive", };
+std::string WeaponAD[] = { "Powerful", "Horrible", "Bad", "Great", "Developed", "Killer", "Cool", "Stupid", "Battle",  "Awesome",  "Persistant",  "Accurate",  "Named",  "Useful",  "Frightning",  "Idiotic",  "Legendary",  "Dumb",  "Spiked",  "Enjoyable",  "Overlooked",  "Sickening",  "Unnecessary",  "Hardcore",  "Evil",  "Good",  "Maniacal",  "Devious",  "Overpowered",  "Underpowered",  "Mediocre",  "Mohawk",  "Invincible",  "Hipster",  "Gangsta",  "Sharp",  "Unsafe",  "Godlike", "Weird", "Hot", "Chaotic", "Smelly", "Bizarre", "Mighty", "Cardboard", "Deadly", "Soft",  "Potent",  "Suppressive",  "Death-dealing",  "Irritating",  "Explosive", };
 
-string WeaponNouns[] = { "Smelling",  "Cooling",  "Flipping",  "Killing",  "Dehydrating",  "Doom",  "Destruction",  "Destroying",  "Poisoning",  "Electrocution",  "Freezing", "Execution",  "Decapitation",  "Eradication",  "Avenging",  "Torture",  "Horror",  "Pain",  "Demolition",  "Deprivation",  "Judgement",  "Disease" };
+std::string WeaponNouns[] = { "Smelling",  "Cooling",  "Flipping",  "Killing",  "Dehydrating",  "Doom",  "Destruction",  "Destroying",  "Poisoning",  "Electrocution",  "Freezing", "Execution",  "Decapitation",  "Eradication",  "Avenging",  "Torture",  "Horror",  "Pain",  "Demolition",  "Deprivation",  "Judgement",  "Disease" };
 
-string Wtype[] = { "Sword", "Axe", "Daggers", "Spear", "Scythe" };
+std::string Wtype[] = { "Sword", "Axe", "Daggers", "Spear", "Scythe" };
 
-string WeaponEle[] = { "Normal", "Earth", "Fire", "Ice", "Air", "Electric", };
+std::string WeaponEle[] = { "Normal", "Earth", "Fire", "Ice", "Air", "Electric", };
 
 
 
 //----------------------------------//
 
 //The main game logic. The game runs through each of these methods, before moving back to main() and refreshing the terminal. One pass through equals one turn.
-extern void GameStart() 
+extern void GameStart()
 {
 	camera_x = ActorBag[0].Get_Location_X();
 	camera_y = ActorBag[0].Get_Location_Y();
@@ -55,7 +53,7 @@ extern void GameStart()
 	ActorLogic();
 	PropLogic();
 	SetLogic();
-	//FOV();
+	FOV();
 	Map();
 	UI();
 	terminal_refresh();
@@ -66,7 +64,7 @@ extern void GameStart()
 //LOGIC//
 inline void ActorLogic()
 {
-	for (vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
+	for (std::vector<Actors>::iterator BagIterator = ActorBag.begin(); BagIterator != ActorBag.end(); ++BagIterator)
 	{
 		if (BagIterator->Get_Logic() == true && BagIterator->Get_ID() > 0)
 		{
@@ -77,7 +75,7 @@ inline void ActorLogic()
 
 inline void PropLogic()
 {
-	for (vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
+	for (std::vector<Props>::iterator BagIterator = PropBag.begin(); BagIterator != PropBag.end(); ++BagIterator)
 	{
 
 	}
@@ -103,10 +101,15 @@ void FOV()
 			l = sqrt((x*x) + (y*y));
 			if (l <= ActorBag[0].Get_FOV())
 			{
-				if(DoFov(i,j) == true)
+				if (DoFov(i, j))
 				{
 					SetBag[i][j].Set_Visible(true);
+					SetBag[i][j].Set_Fog(false);
 				}
+			}
+			else
+			{
+				SetBag[i][j].Set_Fog(true);
 			}
 		}
 	}
@@ -146,9 +149,9 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	ActorWalk = true;
 	int key = terminal_read();
 	//Moves the player up one square
-	if (key == TK_UP && ActorBag[0].Get_Location_X() + 1 > 0)
+	if (key == TK_UP && ActorBag[0].Get_Location_Y() - 1 > 0)
 	{
-		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() - 1 == BagIterator->Get_Location_Y())
 			{
@@ -169,9 +172,9 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 		}
 	}
 	//Moves the player left one square.
-	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() + 1 > 0)
+	else if (key == TK_LEFT && ActorBag[0].Get_Location_X() - 1 > 0)
 	{
-		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() - 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
@@ -196,7 +199,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	//Moves the player right one square.
 	else if (key == TK_DOWN && ActorBag[0].Get_Location_Y() + 1 < Map_Height)
 	{
-		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() + 1 == BagIterator->Get_Location_Y())
 			{
@@ -220,7 +223,7 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	//Moves the player down one square.
 	else if (key == TK_RIGHT && ActorBag[0].Get_Location_X() + 1 < Map_Width)
 	{
-		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() + 1 == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
@@ -293,7 +296,7 @@ void K_Look()
 			Map();
 			UI();
 			terminal_refresh();
-			Prev_Y ++;
+			Prev_Y++;
 		}
 		//Moves the player left one square.
 		else if (key == TK_LEFT)
@@ -303,7 +306,7 @@ void K_Look()
 			Map();
 			UI();
 			terminal_refresh();
-			Prev_X ++;
+			Prev_X++;
 		}
 
 		//Moves the player right one square.
@@ -315,7 +318,7 @@ void K_Look()
 			UI();
 			terminal_refresh();
 
-			Prev_Y --;
+			Prev_Y--;
 		}
 
 		//Moves the player down one square.
@@ -327,7 +330,7 @@ void K_Look()
 			UI();
 			terminal_refresh();
 
-			Prev_X --;
+			Prev_X--;
 		}
 		else if (key == TK_SPACE)
 		{
@@ -341,11 +344,11 @@ void K_Look()
 		//UI 28,31//
 		terminal_print(28, 32, "Creature Name: ");
 
-		for (vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
+		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
-				string Creature_Name = BagIterator->Get_Name();
+				std::string Creature_Name = BagIterator->Get_Name();
 				char const *pchar = Creature_Name.c_str();
 				terminal_print(43, 32, pchar);
 			}
@@ -355,7 +358,7 @@ void K_Look()
 //----------------------------------//
 
 //Basically places everything that's inside the bags onto the screen.
-inline void Map()
+void Map()
 {
 	Move_Camera(ActorBag[0].Get_Location_X(), ActorBag[0].Get_Location_Y());
 
@@ -365,43 +368,73 @@ inline void Map()
 		{
 			map_x = camera_x + x;
 			map_y = camera_y + y;
-			if (SetBag[map_x][map_y].Get_Visible())
+			if (SetBag[map_x][map_y].Get_Visible() && !SetBag[map_x][map_y].Get_Fog())
 			{
 				switch (SetBag[map_x][map_y].Get_Type())
 				{
-				case 1:
+				case 1: //Water
 				{
 					terminal_color(color_from_name("cyan"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					break;
 				}
-				case 2:
+				case 2: //Sand
 				{
-					terminal_color(color_from_name("green"));
+					terminal_color(color_from_name("light yellow"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					break;
 				}
-				case 3:
+				case 3: // Floors
 				{
 					terminal_color(color_from_name("light green"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					break;
 				}
-				case 4:
+				case 4: //Trees
 				{
-					terminal_color(color_from_name("white"));
+					terminal_color(color_from_name("lightest green"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					break;
 				}
 				default:
 				{
-					
+
 				}
 				}
 			}
-			else
+			else if (SetBag[map_x][map_y].Get_Fog() && SetBag[map_x][map_y].Get_Visible())
 			{
+				switch (SetBag[map_x][map_y].Get_Type())
+				{
+				case 1: //Water
+				{
+					terminal_color(color_from_name("grey"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
+				}
+				case 2: //Sand
+				{
+					terminal_color(color_from_name("grey"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
+				}
+				case 3: // Floors
+				{
+					terminal_color(color_from_name("grey"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
+				}
+				case 4: //Trees
+				{
+					terminal_color(color_from_name("grey"));
+					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
+					break;
+				}
+				default:
+				{
 
+				}
+				}
 			}
 		}
 	}
@@ -421,23 +454,19 @@ void MapFill()
 {
 	terminal_layer(1); //Sets the terminal layer. Dictates which layer to draw on.
 
-	//New_Prop(34, 8, 0x115C, "Short Sword");
-	//New_Prop(34, 8, 0x115C, "Long Sword");
+	std::uniform_int_distribution<> X(1, Map_Height - 1);
+	std::uniform_int_distribution<> Y(1, Map_Width - 1);
 
+	int x = X(gen);
+	int y = Y(gen);
 
-	//uniform_int_distribution<> X(100, 100);
-	//uniform_int_distribution<> Y(100, 100);
+	while (SetBag[x][y].Get_Walkable())
+	{
+		x = X(gen);
+		y = Y(gen);
+	}
 
-	//int x = X(gen);
-	//int y = Y(gen);
-	//while (SetBag[x][y].Get_Type() == 1 || SetBag[x][y].Get_Type() == 3 || SetBag[x][y].Get_Type() == 4)
-	//{
-	//	x = X(gen);
-	//	y = Y(gen);
-	//}
-
-
-	New_Actor("Player", 121, 121, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", 65, 65, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	terminal_layer(2);
 	ActorBag[0].Set_Level(1);
 	ActorBag[0].Set_FOV(4);
@@ -452,6 +481,8 @@ void MapFill()
 //UI//
 void UI()
 {
+	terminal_color("white");
+
 	for (int i = 0; i < 30; i++)
 	{
 		terminal_put(65, i, 0xB3);
@@ -600,7 +631,7 @@ void Log()
 		terminal_put(i, 30, 0xC4);
 	}
 	int x = 0;
-	for (unsigned int i = 32; i <  43; i++)
+	for (unsigned int i = 32; i < 43; i++)
 	{
 		if (x < 10)
 		{
@@ -630,7 +661,7 @@ void Init()
 {
 	for (int x = 0; x < Map_Width; x++)
 	{
-		SetBag.push_back(vector<Sets>());
+		SetBag.push_back(std::vector<Sets>());
 		for (int y = 0; y < Map_Height; y++)
 		{
 			SetBag[x].push_back(Sets());

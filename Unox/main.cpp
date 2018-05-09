@@ -8,10 +8,9 @@
 
 void main() //Main entry point of the program.
 {
-	default_random_engine rd(std::random_device{}());
-	mt19937 gen(rd());
-	uniform_int_distribution<> X(1, 2147483647);
-
+	std::default_random_engine rd(std::random_device{}());
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> X(1, 2147483647);
 
 	Init();
 	gen_Perlin(X(gen));

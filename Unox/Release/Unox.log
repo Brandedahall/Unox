@@ -1,11 +1,8 @@
-﻿  Actors.cpp
-  Logic.cpp
-  Mapgen.cpp
-  main.cpp
+﻿  Logic.cpp
   Generating code
-  346 of 748 functions (46.3%) were compiled, the rest were copied from previous compilation.
-    159 functions were new in current compilation
-    34 functions had inline decision re-evaluated but remain unchanged
+  3 of 758 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    9 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.exe
   Unox.vcxproj -> C:\Users\Isabelle\Documents\GitHub\Unox\Release\Unox.pdb (Full PDB)

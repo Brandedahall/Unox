@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cmath>
 #include <numeric>
+#include "Mapgen.h"
 
 using namespace std;
 
@@ -92,11 +93,6 @@ double PerlinNoise::grad(int hash, double x, double y, double z) {
 	return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
 }
 
-
-
-
-
-
 void gen_Perlin(const unsigned int &seed) {
 	// Create a PerlinNoise object with a random permutation vector generated with seed
 	PerlinNoise pn(seed);
@@ -110,17 +106,24 @@ void gen_Perlin(const unsigned int &seed) {
 			double n = pn.noise(10 * x, 10 * y, 0.8);
 
 			// Water (or a Lake)
-			if (n < 0.4) {
-				New_Set(i, j, '~', true, false, 1, false, true);
+			if (n < 0.4) 
+			{
+				New_Set(i, j, '~', false, false, 1, true, true);
 			}
-
+			// sand
+			else if (n >= 0.4 && n < 0.42) 
+			{
+				New_Set(i, j, 's', false, true, 2, false, true);
+			}
 			// Floors
-			else if (n >= 0.4 && n < 0.6) {
-				New_Set(i, j, '_', true, true, 2, false, true);
+			else if (n >= 0.42 && n < 0.6) 
+			{
+				New_Set(i, j, 0x060, false, true, 3, false, true);
 			}
 			//Trees
-			else if (n >= 0.6 && n < 0.9) {
-				New_Set(i, j, '^', true, false, 3, true, true);
+			else if (n >= 0.6 && n < 0.9) 
+			{
+				New_Set(i, j, '^', false, false, 4, true, true);
 			}
 		}
 	}

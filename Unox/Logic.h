@@ -36,7 +36,7 @@ extern int camera_x, camera_y;
 #define Camera_Width 65
 #define Camera_Height 30
 
-#define Map_Width 130
-#define Map_Height 130
+#define Map_Width 512
+#define Map_Height 512
 
 #endif

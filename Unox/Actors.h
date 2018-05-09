@@ -3,13 +3,12 @@
 
 #include <vector>
 
-using namespace std;
 //---------Base classes-------------//
 class Props
 {
 public:
 	//Constructor and destructor.
-	Props(int X, int Y, char Glyth, int ID, string Name);
+	Props(int X, int Y, char Glyth, int ID, std::string Name);
 	~Props();
 
 #pragma region Gets and Sets
@@ -27,7 +26,7 @@ public:
 	int Get_Type();
 	void Set_Type();
 
-	string Get_Name();
+	std::string Get_Name();
 	void Set_Name();
 
 	char Get_Glyth();
@@ -47,7 +46,7 @@ protected:
 	int Type; //Uses a lookup table to determine the type of object.
 
 			  //String//
-	string Name; //Name of the Prop.
+	std::string Name; //Name of the Prop.
 
 				 //Char//
 	char Glyth; //The visible character which is drawn to the screen.
@@ -60,7 +59,7 @@ class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID, int Type);
+	Actors(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID, int Type);
 	~Actors();
 
 	//Gets and sets for the private variables.
@@ -92,8 +91,8 @@ public:
 	int Get_Perception();
 	void Set_Perception(int perception);
 
-	string Get_Name();
-	void Set_Name(string name);
+	std::string Get_Name();
+	void Set_Name(std::string name);
 
 	unsigned char Get_Glyth();
 	void Set_Glyth(unsigned char glyth);
@@ -130,7 +129,7 @@ public:
 	void Camera_Coords(int x, int y);
 	void AI();
 	void Movement();
-	vector<Props> Get_Inventory();
+	std::vector<Props> Get_Inventory();
 	void Set_Inventory(Props Item);
 	int Get_FOV();
 	void Set_FOV(int View_Radius);
@@ -144,7 +143,7 @@ protected:
 	int Type; //Uses a lookup table to determine the type of Actor.
 
 	//String//
-	string Name; //Name of the actor.
+	std::string Name; //Name of the actor.
 
 	//Char//
 	char Glyth;//The visible character which is drawn to the screen.
@@ -172,7 +171,7 @@ protected:
 	int View_Radius;
 
 	//Contents
-	vector<Props> Inventory; //Holds all of the creature's inventory.
+	std::vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
 class Sets
@@ -205,6 +204,9 @@ public:
 	bool Get_Damaging();
 	void Set_Damaging(bool Damaging);
 
+	bool Get_Fog();
+	void Set_Fog(bool Fog);
+
 	bool Get_Placement();
 
 	bool Get_Wall();
@@ -212,7 +214,7 @@ public:
 	#pragma endregion
 
 	//Methods//
-	vector<Props> Get_Inventory();
+	std::vector<Props> Get_Inventory();
 	void Set_Inventory(Props Item);
 
 private:
@@ -233,7 +235,8 @@ private:
 	bool Movable; //Whether characters can move the prop.
 	bool Walkable; //Whether characters can walk through the prop.
 	bool Damaging; //Whether the prop damages an actor if the actor walks across it.
-	vector<Props> Inventory; //Holds all of the creature's inventory.
+	bool Fog;
+	std::vector<Props> Inventory; //Holds all of the creature's inventory.
 };
 
 //----------Derived Classes---------//
@@ -247,14 +250,14 @@ public:
 	int GetPrice();
 	void SetPrice(int Price);
 
-	string GetDescription();
-	void SetDescription(string Description);
+	std::string GetDescription();
+	void SetDescription(std::string Description);
 
 
 private:
 	int Damage;
 	int Price;
-	string Description;
+	std::string Description;
 };
 
 class Armor : Props
@@ -266,12 +269,12 @@ public:
 	int GetPrice();
 	void SetPrice(int Price);
 
-	string GetDescription();
-	void SetDescription(string Description);
+	std::string GetDescription();
+	void SetDescription(std::string Description);
 private:
 	int ArmourValue;
 	int Price;
-	string Description;
+	std::string Description;
 };
 
 class Item : Props
@@ -357,11 +360,11 @@ inline void Actors::Set_Experience(int experience)
 }
 
 //Name
-inline string Actors::Get_Name()
+inline std::string Actors::Get_Name()
 {
 	return Name;
 }
-inline void Actors::Set_Name(string name)
+inline void Actors::Set_Name(std::string name)
 {
 	Name = name;
 }
@@ -500,7 +503,7 @@ inline void Actors::Set_Perception(int perception)
 	Perception = perception;
 }
 
-inline vector<Props> Actors::Get_Inventory()
+inline std::vector<Props> Actors::Get_Inventory()
 {
 	return Inventory;
 }
@@ -532,7 +535,7 @@ inline void Props::Set_Type()
 }
 
 //Name//
-inline string Props::Get_Name()
+inline std::string Props::Get_Name()
 {
 	return Name;
 }
@@ -657,7 +660,7 @@ inline int Sets::Get_Location_Y()
 }
 
 
-inline vector<Props> Sets::Get_Inventory()
+inline std::vector<Props> Sets::Get_Inventory()
 {
 	return Inventory;
 }
@@ -665,6 +668,16 @@ inline vector<Props> Sets::Get_Inventory()
 inline void Sets::Set_Inventory(Props Item)
 {
 	Inventory.push_back(Item);
+}
+
+inline bool Sets::Get_Fog()
+{
+	return Fog;
+}
+
+inline void Sets::Set_Fog(bool fog)
+{
+	Fog = fog;
 }
 
 #pragma endregion
@@ -691,12 +704,12 @@ inline void Weapon::SetPrice(int price)
 	Price = price;
 }
 
-inline string Weapon::GetDescription()
+inline std::string Weapon::GetDescription()
 {
 	char const *pchar = Description.c_str();
 	return pchar;
 }
-inline void Weapon::SetDescription(string description)
+inline void Weapon::SetDescription(std::string description)
 {
 	Description = description;
 }
@@ -724,12 +737,12 @@ inline void Armor::SetPrice(int price)
 	Price = price;
 }
 
-inline string Armor::GetDescription()
+inline std::string Armor::GetDescription()
 {
 	char const *pchar = Description.c_str();
 	return pchar;
 }
-inline void Armor::SetDescription(string description)
+inline void Armor::SetDescription(std::string description)
 {
 	Description = description;
 }
@@ -743,8 +756,8 @@ inline void Armor::SetDescription(string description)
 //----------------------------------//
 //These methods create new Actors, Props, and Sets.
 #pragma region Methods definitions
-void New_Actor(string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
-void New_Prop(int X, int Y, char Glyth, string Name);
+void New_Actor(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
+void New_Prop(int X, int Y, char Glyth, std::string Name);
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement);
 
 bool walk(int X, int Y);
@@ -752,7 +765,7 @@ bool walk(int X, int Y);
 
 #pragma region Constructors
 //Base Constructors//
-inline Actors::Actors(string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
+inline Actors::Actors(std::string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
 {
 	Name = name;
 	X = x;
@@ -769,7 +782,7 @@ inline Actors::~Actors()
 {
 }
 
-inline Props::Props(int x, int y, char glyth, int id, string name)
+inline Props::Props(int x, int y, char glyth, int id, std::string name)
 {
 	X = x;
 	Y = y;
@@ -812,10 +825,10 @@ inline Sets::~Sets()
 //----------------------------------//
 #pragma region Bags
 //These are used to store the numerous Creatures, Objects and Destructable Enviroments in the game.
-extern vector<Actors> ActorBag;
-extern vector<Props> PropBag;
-extern vector<vector<Sets>> SetBag;
-extern vector<vector<Sets>> Overworld;
+extern std::vector<Actors> ActorBag;
+extern std::vector<Props> PropBag;
+extern std::vector<std::vector<Sets>> SetBag;
+extern std::vector<std::vector<Sets>> Overworld;
 
 //IDs for the objects within the bags. Just in case they need to be found using ID's. Possibly for time-sensitive spells, lasting damage etc.
 extern int ActorID;
