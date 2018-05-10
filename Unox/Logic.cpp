@@ -39,7 +39,8 @@ std::string Wtype[] = { "Sword", "Axe", "Daggers", "Spear", "Scythe" };
 
 std::string WeaponEle[] = { "Normal", "Earth", "Fire", "Ice", "Air", "Electric", };
 
-
+bool inventory;
+bool Description;
 
 //----------------------------------//
 
@@ -105,6 +106,10 @@ void FOV()
 				{
 					SetBag[i][j].Set_Visible(true);
 					SetBag[i][j].Set_Fog(false);
+				}
+				else
+				{
+
 				}
 			}
 			else
@@ -243,17 +248,23 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 			ActorBag[0].Set_Logic(true);
 		}
 	}
-
 	//Increments the game logic by one turn.
 	else if (key == TK_SPACE)
 	{
 
 	}
 
+	else if (key == TK_I)
+	{
+		Player_Inventory();
+		terminal_refresh();
+	}
+
 	//Allows the player to inspect the surroundings
 	else if (key == TK_K)
 	{
 		K_Look();
+		terminal_refresh();
 	}
 
 	//Closes the program.
@@ -332,7 +343,7 @@ void K_Look()
 
 			Prev_X--;
 		}
-		else if (key == TK_SPACE)
+		else if (key == TK_SPACE || key == TK_ESCAPE)
 		{
 			_Look = false;
 			ActorBag[0].Set_Location_X(Prev_X);
@@ -340,17 +351,27 @@ void K_Look()
 			ActorBag[0].Set_Glyth(Prev_Player_Glyth);
 			Prev_X = 0;
 			Prev_Y = 0;
+			terminal_clear();
+			terminal_refresh();
 		}
 		//UI 28,31//
-		terminal_print(28, 32, "Creature Name: ");
 
 		for (std::vector<Actors>::iterator BagIterator = ActorBag.begin() + 1; BagIterator != ActorBag.end(); ++BagIterator)
 		{
 			if (ActorBag[0].Get_Location_X() == BagIterator->Get_Location_X() && ActorBag[0].Get_Location_Y() == BagIterator->Get_Location_Y())
 			{
+				//Name
 				std::string Creature_Name = BagIterator->Get_Name();
 				char const *pchar = Creature_Name.c_str();
-				terminal_print(43, 32, pchar);
+				terminal_print(28, 32, "Name: ");
+				terminal_print(34, 32, pchar);
+				
+				//Health
+				int Creature_Health = BagIterator->Get_Health();
+				std::string Health = std::to_string(Creature_Health);
+				char const *C_Health = Health.c_str();
+				terminal_print(28, 33, "Health: ");
+				terminal_print(36, 33, C_Health);
 			}
 		}
 	}
@@ -380,7 +401,7 @@ void Map()
 				}
 				case 2: //Sand
 				{
-					terminal_color(color_from_name("light yellow"));
+					terminal_color(color_from_name("red"));
 					terminal_put(x, y, SetBag[map_x][map_y].Get_Glyth());
 					break;
 				}
@@ -446,6 +467,7 @@ void Map()
 
 	for (auto Actor : ActorBag)
 	{
+		terminal_color(color_from_name(Actor.Get_Color()));
 		Actor.Draw();
 	}
 }
@@ -460,13 +482,13 @@ void MapFill()
 	int x = X(gen);
 	int y = Y(gen);
 
-	while (SetBag[x][y].Get_Walkable())
+	while (!SetBag[x][y].Get_Walkable())
 	{
 		x = X(gen);
 		y = Y(gen);
 	}
 
-	New_Actor("Player", 65, 65, '@', true, false, 1); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
+	New_Actor("Player", x, y, '@', true, false, 1, "white"); //Creates a new actor (the player) and pushes it into the Vector ActorBag.
 	terminal_layer(2);
 	ActorBag[0].Set_Level(1);
 	ActorBag[0].Set_FOV(4);
@@ -654,8 +676,128 @@ void Move_Camera(int target_x, int target_y)
 	camera_x = x;
 	camera_y = y;
 }
-//----------------------------------//
 
+void Player_Inventory()
+{	
+	inventory = true;
+	//X = 1, Y = 1 // Top left of the screen down to the bottom right of the screen
+
+	while (inventory)
+	{
+		int index = 0;
+		int i = 0;
+		std::string s;
+		char const *pchar;
+		for (int i = 0; i <= Camera_Width; i++)
+		{
+			for (int j = 0; j <= Camera_Height; j++)
+			{
+				terminal_put(i, j, ' ');
+			}
+		}
+		UI();
+		Log();
+
+		terminal_print(1,1, "//~~~~~Inventory~~~~~\\\\");
+
+		if (ActorBag[0].Get_Inventory().size() == 0)
+		{
+			terminal_print(1, 3, "No Items in your inventory. Get looting!");
+		}
+		else
+		{
+			for each (auto item in ActorBag[0].Get_Inventory())
+			{
+					s = std::to_string(i);
+					pchar = s.c_str();
+
+					terminal_print(1, 3 + i, pchar);
+					terminal_print(2, 3 + i, ".");
+
+					pchar = ActorBag[0].Get_Inventory()[i].Get_Name().c_str();
+					terminal_print(4, 3 + i, pchar);
+
+					terminal_print(1, 3 + index, "*");
+					i++;
+			}
+		}
+		terminal_refresh();
+		int key = terminal_read();
+		if (key == TK_UP && index != 0)
+		{
+			index--;
+		}
+		else if (key == TK_DOWN && index < 20)
+		{
+			index++;
+		}
+		//Use item
+		else if (key == TK_ENTER || key == TK_SPACE)
+		{
+			if (ActorBag[0].Get_Inventory().size() > 0)
+			{
+				if (ActorBag[0].Get_Inventory()[index].Get_Exists())
+				{
+					ActorBag[0].Get_Inventory()[index] = Props();
+				}
+				else
+				{
+
+				}
+			}
+		}
+		//Look at item
+		else if (key == TK_I)
+		{
+			if (ActorBag[0].Get_Inventory().size() > 0)
+			{
+				if (ActorBag[0].Get_Inventory()[index].Get_Exists())
+				{
+					DescriptionPanel(index);
+				}
+				else
+				{
+
+				}
+			}
+		}
+
+		else if (key == TK_ESCAPE)
+		{
+			inventory = false;
+			terminal_clear();
+			terminal_refresh();
+		}
+	}
+}
+
+void DescriptionPanel(int index)
+{
+	Description = true;
+	while (Description)
+	{
+
+		for (int i = 23; i < 33; i++)
+		{
+			for (int j = 5; j < 25; j++)
+			{
+				terminal_print(i, j, " ");
+			}
+		}
+
+		const char *pchar = ActorBag[0].Get_Inventory()[index].Get_Description().c_str();
+		terminal_print(24, 6, pchar);
+
+		int key = terminal_read();
+		if (key = TK_ESCAPE || TK_SPACE)
+		{
+			Description = false;
+		}
+	}
+
+}
+
+//----------------------------------//
 //Required at startup to initialize the map.
 void Init()
 {

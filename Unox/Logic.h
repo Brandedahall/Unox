@@ -1,8 +1,5 @@
 #ifndef _LOGIC_H_    // To make sure you don't declare the function more than once by including the header multiple times.
 #define _LOGIC_H_
-
-
-
 //Logic//
 inline void ActorLogic();
 inline void PropLogic();
@@ -13,6 +10,9 @@ inline void Keyboard();
 inline void K_Look();
 inline void Map();
 void MapFill();
+
+void Player_Inventory();
+void DescriptionPanel(int index);
 
 void UI();
 

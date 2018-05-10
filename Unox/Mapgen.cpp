@@ -7,9 +7,8 @@
 #include <algorithm>
 #include <cmath>
 #include <numeric>
+#include <cstdint>  // int32_t/uint8_t
 #include "Mapgen.h"
-
-using namespace std;
 
 PerlinNoise::PerlinNoise() {
 
@@ -105,26 +104,41 @@ void gen_Perlin(const unsigned int &seed) {
 
 			double n = pn.noise(10 * x, 10 * y, 0.8);
 
-			// Water (or a Lake)
-			if (n < 0.4) 
-			{
-				New_Set(i, j, '~', false, false, 1, true, true);
-			}
-			// sand
-			else if (n >= 0.4 && n < 0.42) 
-			{
-				New_Set(i, j, 's', false, true, 2, false, true);
-			}
-			// Floors
-			else if (n >= 0.42 && n < 0.6) 
-			{
-				New_Set(i, j, 0x060, false, true, 3, false, true);
-			}
-			//Trees
-			else if (n >= 0.6 && n < 0.9) 
-			{
-				New_Set(i, j, '^', false, false, 4, true, true);
-			}
+			TileSelect(i, j, n);
 		}
 	}
+}
+
+void TileSelect(int i, int j, double n)
+{
+	// Water (or a Lake)
+	if (n < 0.45)
+	{
+		New_Set(i, j, '~', false, false, 1, true, true);
+	}
+	// sand
+	else if (n >= 0.45 && n < 0.48)
+	{
+		New_Set(i, j, 0x060, false, true, 2, false, true);
+	}
+	// Floors
+	else if (n >= 0.48 && n < 0.55)
+	{
+		New_Set(i, j, 0x060, false, true, 3, false, true);
+	}
+	//Trees
+	else if (n >= 0.55 && n < 0.7)
+	{
+		New_Set(i, j, '^', false, false, 4, true, true);
+	}
+	//Mountains
+	else if (n >= 0.7)
+	{
+		New_Set(i, j, 'M', false, false, 4, true, true);
+	}
+}
+
+void MapMaker(const unsigned int &seed)
+{
+	gen_Perlin(seed);
 }

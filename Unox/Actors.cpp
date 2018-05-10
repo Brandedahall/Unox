@@ -18,9 +18,9 @@ bool Walk_ = true;
 
 #pragma region Methods
 //----------------------------------//
-void New_Actor(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type)
+void New_Actor(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, char* Color)
 {
-	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId, Type);
+	Actors Actor = Actors(Name, X, Y, Glyth, Visible, Walkable, ActorId, Type, Color);
 	ActorId +=1;
 	ActorBag.push_back(Actor);
 }
@@ -33,9 +33,15 @@ void New_Prop(int X, int Y, char Glyth, std::string Name)
 }
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement)
 {
-	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, Wall, true);
+	Sets Set = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, Wall);
 	SetId++;
 	SetBag[X][Y] = Set;
+}
+
+void Change_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement)
+{
+	SetBag[X][Y].~Sets();
+	SetBag[X][Y] = Sets(X, Y, Glyth, Visible, SetId, Walkable, Type, Wall);
 }
 
 void Actors::AI()

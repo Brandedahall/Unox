@@ -12,11 +12,12 @@ void main() //Main entry point of the program.
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> X(1, 2147483647);
 
-	Init();
-	gen_Perlin(X(gen));
+	Init(); //Required to fill the 2d vector with objects.
+	MapMaker(X(gen));
 	terminal_open(); //Opens the terminal window.
 	terminal_set("window: title='Unox', size=80x50"); //Sets with title, size and minimum size of the terminal.
 	terminal_set("font: tileset.bmp, size = 16x16");
+
 	MapFill(); //Places the temporary player character. \\TO BE REPLACED//
 	terminal_refresh(); //Refreshes the terminal so that it shows up.
 	while (true) //Cannot be exited out of, by normal means.

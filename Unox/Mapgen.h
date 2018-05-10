@@ -5,7 +5,7 @@
 #include <vector>
 #include <iostream>
 #include "Actors.h"
-
+#include <cstddef>  // size_t
 
 //Perlin Noise\\
 
@@ -26,4 +26,6 @@ private:
 };
 
 void gen_Perlin(const unsigned int &seed);
+void MapMaker(const unsigned int &seed);
+void TileSelect(int i, int j, double n);
 #endif

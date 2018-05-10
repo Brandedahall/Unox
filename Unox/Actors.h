@@ -8,6 +8,7 @@ class Props
 {
 public:
 	//Constructor and destructor.
+	Props();
 	Props(int X, int Y, char Glyth, int ID, std::string Name);
 	~Props();
 
@@ -15,25 +16,31 @@ public:
 	//Gets and sets for the private variables.
 
 	int Get_Location_X();
-	void Set_Location_X();
+	void Set_Location_X(int X);
 
 	int Get_Location_Y();
-	void Set_Location_Y();
+	void Set_Location_Y(int Y);
+
+	bool Get_Exists();
+	void Set_Exists(bool Exists);
 
 	int Get_ID();
-	void Set_ID();
+	void Set_ID(int ID);
 
 	int Get_Type();
-	void Set_Type();
+	void Set_Type(int Type);
 
 	std::string Get_Name();
-	void Set_Name();
+	void Set_Name(std::string Name);
+
+	std::string Get_Description();
+	void Set_Get_Description(std::string Description);
 
 	char Get_Glyth();
-	void Set_Glyth();
+	void Set_Glyth(char Glyth);
 
 	bool Get_Equippable();
-	void Set_Equippable();
+	void Set_Equippable(bool Equippable);
 #pragma endregion
 
 	void Draw();
@@ -47,19 +54,22 @@ protected:
 
 			  //String//
 	std::string Name; //Name of the Prop.
+	std::string Description; //Description of the Prop.
 
 				 //Char//
 	char Glyth; //The visible character which is drawn to the screen.
 
 				//Bool//
 	bool Equippable; //Checks whether the item can be equipped or not.
+
+	bool Exists;
 };
 
 class Actors
 {
 public:
 	//Constructor and destructor.
-	Actors(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID, int Type);
+	Actors(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int ID, int Type, char* color);
 	~Actors();
 
 	//Gets and sets for the private variables.
@@ -123,6 +133,10 @@ public:
 
 	bool Get_Logic();
 	void Set_Logic(bool logic);
+
+	const char* Get_Color();
+	void Set_Color(char* color);
+
 	#pragma endregion
 
 	void Draw();
@@ -141,6 +155,8 @@ protected:
 	int ID; //The Id of the Actor.
 	int Reach; //How far the Actor can attack from.
 	int Type; //Uses a lookup table to determine the type of Actor.
+
+	const char* Color;
 
 	//String//
 	std::string Name; //Name of the actor.
@@ -179,7 +195,7 @@ class Sets
 public:
 	//Constructor and destructor.
 	Sets();
-	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type, bool Wall, bool Placement);
+	Sets(int X, int Y, char Glyth, bool Visible, int ID, bool Walkable, int Type, bool Wall);
 	~Sets();
 
 	#pragma region Gets and Sets
@@ -420,6 +436,7 @@ inline void Actors::Set_Location_X(int x)
 	X += x;
 }
 
+//Location//
 inline int Actors::Get_Location_Y()
 {
 	return Y;
@@ -430,6 +447,16 @@ inline void Actors::Set_Location_Y(int y)
 	Y += y;
 }
 
+//Color//
+inline const char* Actors::Get_Color()
+{
+	return Color;
+}
+
+inline void Actors::Set_Color(char* color)
+{
+	Color = color;
+}
 
 
 //Stats//
@@ -521,8 +548,30 @@ inline int Props::Get_ID()
 {
 	return ID;
 }
-inline void Props::Set_ID()
+inline void Props::Set_ID(int id)
 {
+	ID = id;
+}
+
+//Exists//
+inline bool Props::Get_Exists()
+{
+	return Exists;
+}
+
+inline void Props::Set_Exists(bool exists)
+{
+	Exists = exists;
+}
+
+//Description//
+inline std::string Props::Get_Description()
+{
+	return Description;
+}
+inline void Props::Set_Get_Description(std::string description)
+{
+	Description = description;
 }
 
 //Type//
@@ -530,8 +579,9 @@ inline int Props::Get_Type()
 {
 	return Type;
 }
-inline void Props::Set_Type()
+inline void Props::Set_Type(int type)
 {
+	Type = type;
 }
 
 //Name//
@@ -539,8 +589,9 @@ inline std::string Props::Get_Name()
 {
 	return Name;
 }
-inline void Props::Set_Name()
+inline void Props::Set_Name(std::string name)
 {
+	Name = name;
 }
 
 //Glyth//
@@ -548,8 +599,9 @@ inline char Props::Get_Glyth()
 {
 	return Glyth;
 }
-inline void Props::Set_Glyth()
+inline void Props::Set_Glyth(char glyth)
 {
+	Glyth = glyth;
 }
 
 //Equippable//
@@ -557,8 +609,9 @@ inline bool Props::Get_Equippable()
 {
 	return Equippable;
 }
-inline void Props::Set_Equippable()
+inline void Props::Set_Equippable(bool equippable)
 {
+	Equippable = equippable;
 }
 
 //Location
@@ -567,8 +620,9 @@ inline int Props::Get_Location_X()
 	return X;
 }
 
-inline void Props::Set_Location_X()
+inline void Props::Set_Location_X(int x)
 {
+	X = x;
 }
 
 inline int Props::Get_Location_Y()
@@ -576,8 +630,9 @@ inline int Props::Get_Location_Y()
 	return Y;
 }
 
-inline void Props::Set_Location_Y()
+inline void Props::Set_Location_Y(int y)
 {
+	Y = y;
 }
 #pragma endregion
 
@@ -756,16 +811,17 @@ inline void Armor::SetDescription(std::string description)
 //----------------------------------//
 //These methods create new Actors, Props, and Sets.
 #pragma region Methods definitions
-void New_Actor(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type);
+void New_Actor(std::string Name, int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, char* Color);
 void New_Prop(int X, int Y, char Glyth, std::string Name);
 void New_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement);
+void Change_Set(int X, int Y, char Glyth, bool Visible, bool Walkable, int Type, bool Wall, bool Placement);
 
 bool walk(int X, int Y);
 #pragma endregion
 
 #pragma region Constructors
 //Base Constructors//
-inline Actors::Actors(std::string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type)
+inline Actors::Actors(std::string name, int x, int y, char glyth, bool visible, bool walkable, int id, int type, char* color)
 {
 	Name = name;
 	X = x;
@@ -776,10 +832,16 @@ inline Actors::Actors(std::string name, int x, int y, char glyth, bool visible, 
 	Logic = true;
 	Walkable = walkable;
 	Type = type;
+	Color = color;
 }
 
 inline Actors::~Actors()
 {
+}
+
+inline Props::Props()
+{
+	Exists = false;
 }
 
 inline Props::Props(int x, int y, char glyth, int id, std::string name)
@@ -802,7 +864,7 @@ inline Sets::Sets()
 	Wall = false;
 }
 
-inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool wall, bool placement)
+inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable, int type, bool wall)
 {
 	X = x;
 	Y = y;
@@ -812,7 +874,7 @@ inline Sets::Sets(int x, int y, char glyth, bool visible, int id, bool walkable,
 	Walkable = walkable;
 	Type = type;
 	Wall = wall;
-	Placement = placement;
+	Placement = true;
 }
 
 inline Sets::~Sets()
