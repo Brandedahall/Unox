@@ -62,6 +62,20 @@ extern void GameStart()
 }
 //----------------------------------//
 
+//Required at startup to initialize the map.
+void Init()
+{
+	for (int x = 0; x < Map_Width; x++)
+	{
+		SetBag.push_back(std::vector<Sets>());
+		for (int y = 0; y < Map_Height; y++)
+		{
+			SetBag[x].push_back(Sets());
+		}
+	}
+}
+
+
 //LOGIC//
 inline void ActorLogic()
 {
@@ -148,7 +162,7 @@ bool DoFov(int x, int y)
 }
 //----------------------------------//
 
-//MOVEMENT//
+//Keyboard Input//
 void Keyboard() //Reads key inputs from the keyboard and moves the player, among other key commands.
 {
 	ActorWalk = true;
@@ -265,6 +279,11 @@ void Keyboard() //Reads key inputs from the keyboard and moves the player, among
 	{
 		K_Look();
 		terminal_refresh();
+	}
+
+	else if (key == TK_P)
+	{
+		Player_Information();
 	}
 
 	//Closes the program.
@@ -559,7 +578,7 @@ void UI()
 	terminal_print(73, 6, pchar);
 
 	//Willpower//
-	int Willpower = ActorBag[0].Get_Wisdom();
+	int Willpower = ActorBag[0].Get_Willpower();
 	s = std::to_string(Willpower);
 	pchar = s.c_str();
 	terminal_print(66, 7, "Wil: ");
@@ -663,20 +682,6 @@ void Log()
 	}
 }
 
-void Move_Camera(int target_x, int target_y)
-{
-	int x = target_x - (Camera_Width / 2);
-	int y = target_y - (Camera_Height / 2);
-
-	if (x < 0) { x = 0; }
-	if (y < 0) { y = 0; }
-	if (x > Map_Width - (Camera_Width - 1)) { x = Map_Width - (Camera_Width - 1); }
-	if (y > Map_Height - (Camera_Height - 1)) { y = Map_Height - (Camera_Height - 1); }
-
-	camera_x = x;
-	camera_y = y;
-}
-
 void Player_Inventory()
 {	
 	inventory = true;
@@ -708,6 +713,8 @@ void Player_Inventory()
 		{
 			for each (auto item in ActorBag[0].Get_Inventory())
 			{
+				if (ActorBag[0].Get_Inventory()[i].Get_Exists())
+				{
 					s = std::to_string(i);
 					pchar = s.c_str();
 
@@ -719,6 +726,11 @@ void Player_Inventory()
 
 					terminal_print(1, 3 + index, "*");
 					i++;
+				}
+				else
+				{
+
+				}
 			}
 		}
 		terminal_refresh();
@@ -797,16 +809,23 @@ void DescriptionPanel(int index)
 
 }
 
-//----------------------------------//
-//Required at startup to initialize the map.
-void Init()
+void Player_Information()
 {
-	for (int x = 0; x < Map_Width; x++)
-	{
-		SetBag.push_back(std::vector<Sets>());
-		for (int y = 0; y < Map_Height; y++)
-		{
-			SetBag[x].push_back(Sets());
-		}
-	}
+
+}
+
+//----------------------------------//
+
+void Move_Camera(int target_x, int target_y)
+{
+	int x = target_x - (Camera_Width / 2);
+	int y = target_y - (Camera_Height / 2);
+
+	if (x < 0) { x = 0; }
+	if (y < 0) { y = 0; }
+	if (x > Map_Width - (Camera_Width - 1)) { x = Map_Width - (Camera_Width - 1); }
+	if (y > Map_Height - (Camera_Height - 1)) { y = Map_Height - (Camera_Height - 1); }
+
+	camera_x = x;
+	camera_y = y;
 }

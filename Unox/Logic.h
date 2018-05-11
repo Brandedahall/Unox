@@ -13,6 +13,7 @@ void MapFill();
 
 void Player_Inventory();
 void DescriptionPanel(int index);
+void Player_Information();
 
 void UI();
 

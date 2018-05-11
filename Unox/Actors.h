@@ -89,8 +89,8 @@ public:
 	int Get_Strength();
 	void Set_Strength(int strength);
 
-	int Get_Wisdom();
-	void Set_Wisdom(int wisdom);
+	int Get_Willpower();
+	void Set_Willpower(int willpower);
 
 	int Get_Agility();
 	void Set_Agility(int agility);
@@ -179,7 +179,7 @@ protected:
 	int Mana; //How much Magical points the creature has.
 	//Attributes
 	int Strength; //How much Strength the creature has.
-	int Wisdom; //How much Wisdom the creature has.
+	int Willpower; //How much Wisdom the creature has.
 	int Agility; //How much Agility the creature has.
 	int Intelligence; //How much Intelligence the creature has.
 	int Perception; //How much Perception the creature has.
@@ -490,14 +490,14 @@ inline void Actors::Set_Strength(int strength)
 	Strength = strength;
 }
 
-inline int Actors::Get_Wisdom()
+inline int Actors::Get_Willpower()
 {
-	return Wisdom;
+	return Willpower;
 }
 
-inline void Actors::Set_Wisdom(int wisdom)
+inline void Actors::Set_Willpower(int willpower)
 {
-	Wisdom = wisdom;
+	Willpower = willpower;
 }
 
 inline int Actors::Get_Agility()
@@ -897,8 +897,5 @@ extern int ActorID;
 extern int ProbID;
 extern int SetID;
 #pragma endregion
-
-
-
 
 #endif

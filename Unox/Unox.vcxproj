@@ -160,12 +160,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors.cpp" />
+    <ClCompile Include="Character_Gen.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mapgen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actors.h" />
+    <ClInclude Include="Character_Gen.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Mapgen.h" />
